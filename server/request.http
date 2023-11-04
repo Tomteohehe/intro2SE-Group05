@@ -1,0 +1,59 @@
+
+# GET http://localhost:5000/api/auth
+
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json 
+
+{
+    "username": "abcd",
+    "password": "abcd",
+    "email": "hoangtranthong03@gmail.com"
+}
+
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json 
+
+{
+    "username": "123",
+    "password": "123"
+}
+
+
+###
+GET http://localhost:5000/api/auth/alluser
+
+
+###
+POST http://localhost:5000/api/post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQ1MjYzODM3MDUyNGQ3OTM3YTA2ZDkiLCJpYXQiOjE2OTkwMzA1ODR9.uzO1lHHHGor9eU4503Fc4EVYXuDgU6GLVLqBxxVTsKY
+
+{
+    "title": "title2",
+    "description": "description",
+    "url": "google.com"
+}
+
+
+###
+GET http://localhost:5000/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+
+
+###
+PUT http://localhost:5000/api/post/6545259d858f03654821d325
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+
+{
+    "title": "New title3",
+    "description": "New description3",
+    "url": "https://example.com"
+}
+
+
+###
+DELETE http://localhost:5000/api/post/6545259d858f03654821d325
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
