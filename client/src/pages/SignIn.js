@@ -29,7 +29,7 @@ const SignInPage = () => {
     formState: { isSubmitting, isValid, errors },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
 
@@ -46,16 +46,16 @@ const SignInPage = () => {
   }, []);
 
   const handleSignIn = async (values) => {
-    if (!isValid) return;
-    // try {
-    //   await signInWithEmailAndPassword(auth, values.email, values.password);
-    //   toast.success("Welcome back!");
-    //   navigate("/");
-    // } catch (error) {
-    //   if (error?.toString()?.slice(37, 51) === "user-not-found")
-    //     toast.error("Email does not exist!");
-    //   else toast.error("Wrong password!");
-    // }
+    console.log(values);
+    try {
+      // await signInWithEmailAndPassword(auth, values.email, values.password);
+      toast.success("Welcome back!");
+      navigate("/");
+    } catch (error) {
+      if (error?.toString()?.slice(37, 51) === "user-not-found")
+        toast.error("Email does not exist!");
+      else toast.error("Wrong password!");
+    }
   };
 
   return (

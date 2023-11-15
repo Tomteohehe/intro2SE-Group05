@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../components/label";
 import { useForm } from "react-hook-form";
 import Input from "../components/input/Input";
@@ -32,29 +32,29 @@ const SignUpPage = () => {
     formState: { isValid, isSubmitting, errors },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
+    // resolver: yupResolver(schema),
   });
 
   const handleSignUp = async (values) => {
     if (!isValid) return;
     console.log(values);
-    // try {
-    //   await createUserWithEmailAndPassword(auth, values.email, values.password);
-    //   await updateProfile(auth.currentUser, {
-    //     displayName: values.fullname,
-    //   });
-    //   // await setDoc(doc(db, "users", auth.currentUser.uid), {
-    //   //   fullname: values.fullname,
-    //   //   email: values.email,
-    //   //   password: values.password,
-    //   //   username: slugify(values.fullname, { lower: true }),
-    //   //   createdAt: serverTimestamp(),
-    //   });
-    //   toast.success("Sign up successfully!");
-    //   navigate("/");
-    // } catch (error) {
-    //   toast.error("Email already in use, please use another email!");
-    // }
+    try {
+      // await createUserWithEmailAndPassword(auth, values.email, values.password);
+      // await updateProfile(auth.currentUser, {
+      //   displayName: values.fullname,
+      // });
+      // await setDoc(doc(db, "users", auth.currentUser.uid), {
+      //   fullname: values.fullname,
+      //   email: values.email,
+      //   password: values.password,
+      //   username: slugify(values.fullname, { lower: true }),
+      //   createdAt: serverTimestamp(),
+      // });
+      toast.success("Sign up successfully!");
+      navigate("/");
+    } catch (error) {
+      toast.error("Email already in use, please use another email!");
+    }
   };
 
   useEffect(() => {

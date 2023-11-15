@@ -1,7 +1,7 @@
+import { LoadingSpinner } from "components/loading";
 import React from "react";
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
-import { LoadingSpinner } from "components/loading";
 
 const ButtonStyles = styled.button`
   cursor: pointer;
@@ -61,7 +61,7 @@ const Button = ({
   }
   return (
     <ButtonStyles type={type} kind={kind} onClick={onClick} {...props}>
-      {children}
+      {child}
     </ButtonStyles>
   );
 };
