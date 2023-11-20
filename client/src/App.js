@@ -7,6 +7,7 @@ import DashboardPage from "pages/DashboardPage";
 import PostManage from "module/post/PostManage";
 import PostAddNew from "module/post/PostAddNew";
 import UserProfile from "module/user/UserProfile";
+import DetailPage from "pages/DetailPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
         <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
+        <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
         <Route element={<DashboardLayout></DashboardLayout>}>
           <Route
             path="/dashboard"
