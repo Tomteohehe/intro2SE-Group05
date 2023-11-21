@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Swiper } from "swiper/react";
 import Heading from "../../components/layout/Heading";
+import PostFeature from "module/post/PostFeature";
 
 const HomeFeatureStyles = styled.div`
   .view-all {
@@ -29,15 +30,15 @@ const HomeFeature = () => {
   return (
     <HomeFeatureStyles className="home-block">
       <div className="container">
-        <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-          <div className="flex items-center justify-between">
-            <Heading>Feature</Heading>
-            <span onClick={() => navigate("/blog")} className="view-all">
-              View all
-            </span>
-          </div>
-          <div className="grid-layout"></div>
-        </Swiper>
+        <div className="flex items-center justify-between">
+          <Heading>Feature</Heading>
+          <span onClick={() => navigate("/blog")} className="view-all">
+            View all
+          </span>
+        </div>
+        <div className="grid-layout">
+          <PostFeature></PostFeature>
+        </div>
       </div>
     </HomeFeatureStyles>
   );

@@ -80,6 +80,11 @@ a {
   @apply grid grid-cols-1 lg:grid-cols-2 lg:gap-x-10 mb-5 lg:mb-10;
 }
 
+.newest-item-sidebar {
+  padding: 2em 1em;
+  border-radius: 10px;
+  background-color: rgba(6, 3, 6, 0.1);
+}
 .solo-form-layout {
   @apply grid grid-cols-1 lg:gap-x-10 mb-5 lg:mb-10;
 }
