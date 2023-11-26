@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Label } from "../components/label";
 import { useForm } from "react-hook-form";
 import Input from "../components/input/Input";
@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import AuthenticationPage from "./AuthenticationPage";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
+import { authContext } from "../contexts/authContext"
 
 const schema = yup.object({
   fullname: yup.string().required("Please enter your fullname"),
@@ -25,6 +26,7 @@ const schema = yup.object({
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const { registerUser } = useContext(authContext);
 
   const {
     control,
@@ -36,24 +38,19 @@ const SignUpPage = () => {
   });
 
   const handleSignUp = async (values) => {
-    if (!isValid) return;
-    console.log(values);
+    const {name, email, password } = values
     try {
-      // await createUserWithEmailAndPassword(auth, values.email, values.password);
-      // await updateProfile(auth.currentUser, {
-      //   displayName: values.fullname,
-      // });
-      // await setDoc(doc(db, "users", auth.currentUser.uid), {
-      //   fullname: values.fullname,
-      //   email: values.email,
-      //   password: values.password,
-      //   username: slugify(values.fullname, { lower: true }),
-      //   createdAt: serverTimestamp(),
-      // });
-      toast.success("Sign up successfully!");
-      navigate("/");
-    } catch (error) {
-      toast.error("Email already in use, please use another email!");
+      const registerData = await registerUser({email, password})
+      if (registerData['success']){
+        toast.success("New user has been registered successfully");
+        console.log(registerData.message)
+      }
+      else {
+        toast.error(registerData['message'])
+      }
+    }
+    catch (error) {
+      console.log(error)
     }
   };
 

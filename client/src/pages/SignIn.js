@@ -34,7 +34,6 @@ const SignInPage = () => {
     mode: "onChange",
     // resolver: yupResolver(schema),
   });
-  const navigate = useNavigate();
 
   useEffect(() => {
     const arrErrors = Object.values(errors);
@@ -50,12 +49,11 @@ const SignInPage = () => {
 
   const handleSignIn = async (values) => {
     const { email, password } = values
-    console.log({email, password})
     try {
       const loginData = await loginUser({email, password})
       if (loginData['success']){
         toast.success("Welcome back!");
-        navigate("/");
+        console.log(loginData.message)
       }
       else {
         toast.error(loginData['message'])

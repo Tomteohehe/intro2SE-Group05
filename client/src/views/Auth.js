@@ -1,11 +1,35 @@
 import React from 'react'
-import Login from '../component/auth/Login'
+import { useContext } from 'react';
+import SignInPage from "../pages/SignIn";
+import SignUpPage from "../pages/SignUp";
+import { authContext } from '../contexts/authContext';
+import { Navigate } from 'react-router-dom';
+import Spinner from 'react-bootstrap/Spinner';
 
 const Auth = ({ authRoute }) => {
+  const {authState: {authLoading, isAuthenticated}} = useContext(authContext)
+  let body
+
+  if (authLoading) {
+    body = (
+      <div>
+        <Spinner animation='border' variant='info'/>
+      </div>
+    )
+  }
+  else if (isAuthenticated) return <Navigate to= "/dashboard" />
+  else {
+    body = (
+      <>
+        {authRoute === 'sign-in' && <SignInPage />}
+        {authRoute === 'sign-up' && <SignUpPage />}
+      </>
+    )
+  }
+
   return (
     <>
-        Hehge
-        {authRoute === 'login' && <Login />}
+      {body}
     </>
   )
 }
