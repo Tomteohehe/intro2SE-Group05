@@ -2,9 +2,7 @@ import DashboardLayout from "module/dashboard/DashboardLayout";
 import HomePage from "./pages/HomePage";
 import { Route, Routes } from "react-router-dom";
 import Auth from './views/Auth'
-import AuthContextProvider from "./contexts/authContext";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
-import Blog from './pages/Blog'
 import DashboardPage from "pages/DashboardPage";
 import PostManage from "module/post/PostManage";
 import PostAddNew from "module/post/PostAddNew";
