@@ -15,7 +15,9 @@ const ProtectedRoute = ( {Component} ) => {
 
   return (
     isAuthenticated ? (
-        <Component />
+        <>
+          <Component />
+        </>
       ) : (
         <Navigate to="/sign-in" />
     )
