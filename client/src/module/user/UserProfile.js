@@ -28,7 +28,7 @@ const UserProfile = () => {
   return (
     <div>
       <DashboardHeading
-        title="Account information"
+        title="Account Information"
         desc="Update your account information"
       ></DashboardHeading>
       <form>

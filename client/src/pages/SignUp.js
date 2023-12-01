@@ -10,10 +10,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import AuthenticationPage from "./AuthenticationPage";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
-import { authContext } from "../contexts/authContext"
+import { authContext } from "../contexts/authContext";
 
 const schema = yup.object({
-  fullname: yup.string().required("Please enter your fullname"),
+  username: yup.string().required("Please enter your username"),
   email: yup
     .string()
     .email("Your email is not valid!")
@@ -38,19 +38,17 @@ const SignUpPage = () => {
   });
 
   const handleSignUp = async (values) => {
-    const {name, email, password } = values
+    const { name, email, password } = values;
     try {
-      const registerData = await registerUser({email, password})
-      if (registerData['success']){
+      const registerData = await registerUser({ email, password });
+      if (registerData["success"]) {
         toast.success("New user has been registered successfully");
-        console.log(registerData.message)
+        console.log(registerData.message);
+      } else {
+        toast.error(registerData["message"]);
       }
-      else {
-        toast.error(registerData['message'])
-      }
-    }
-    catch (error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -73,13 +71,13 @@ const SignUpPage = () => {
         autoComplete="off"
       >
         <Field>
-          <Label htmlFor="fullname" className="label">
-            Fullname
+          <Label htmlFor="username" className="label">
+            Username
           </Label>
           <Input
             type="text"
-            name="fullname"
-            placeholder="Enter your fullname"
+            name="username"
+            placeholder="Enter your username"
             control={control}
           />
         </Field>

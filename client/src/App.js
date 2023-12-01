@@ -1,7 +1,7 @@
 import DashboardLayout from "module/dashboard/DashboardLayout";
 import HomePage from "./pages/HomePage";
 import { Route, Routes } from "react-router-dom";
-import Auth from './views/Auth'
+import Auth from "./views/Auth";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 import DashboardPage from "pages/DashboardPage";
 import PostManage from "module/post/PostManage";
@@ -14,8 +14,8 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path='/sign-in' element={<Auth authRoute='sign-in' />} />
-        <Route path='/sign-up' element={<Auth authRoute='sign-up' />} />
+        <Route path="/sign-in" element={<Auth authRoute="sign-in" />} />
+        <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
         <Route element={<ProtectedRoute Component={DashboardLayout} />}>
           <Route
@@ -37,7 +37,7 @@ function App() {
         </Route>
       </Routes>
     </div>
-  )
+  );
 }
 
 export default App;

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+
 const User = require('../models/users')
 const verifyToken = require('../middleware/auth')
 
@@ -26,6 +27,8 @@ router.get('/', verifyToken, async(req, res) => {
 // @route POST api/auth/register
 // desc Register user
 // @access Public
+
+// router.get('/', (req, res) => res.send('USER ROUTE ') )
 
 router.post('/register', async(req, res) => {
     const {email, password} = req.body
@@ -59,7 +62,7 @@ router.post('/register', async(req, res) => {
 // @access Public
 
 router.post('/login', async(req, res) => {
-    const {email, password} = req.body
+    const {username, password} = req.body
 
     if(!email || !password){
         return res.status(400).json({success: false, message: 'Missing username and/or password'})
@@ -85,9 +88,9 @@ router.post('/login', async(req, res) => {
     }   
 })
 
-router.get('/alluser', async(req, res) => {
-    const allUser = await User.find()
-    res.json(allUser)
-})
+router.get("/alluser", async (req, res) => {
+  const allUser = await User.find();
+  res.json(allUser);
+});
 
-module.exports = router
+module.exports = router;
