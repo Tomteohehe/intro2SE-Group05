@@ -29,7 +29,29 @@ const PostAddNew = () => {
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  const categories = [
+    {
+      id: 1,
+      name: "Lifestyle",
+    },
+    {
+      id: 2,
+      name: "Fitness",
+    },
+    {
+      id: 3,
+      name: "Knowledge",
+    },
+    {
+      id: 4,
+      name: "Culture",
+    },
+    {
+      id: 5,
+      name: "Religion",
+    },
+  ];
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
@@ -87,10 +109,10 @@ const PostAddNew = () => {
     document.title = "GoaTalks - Add new post";
   }, []);
 
-  // const handleClickOption = (item) => {
-  //   setValue("categoryId", item.id);
-  //   setSelectCategory(item);
-  // };
+  const handleClickOption = (item) => {
+    setValue("categoryId", item.id);
+    setSelectCategory(item);
+  };
 
   const modules = useMemo(
     () => ({
@@ -139,7 +161,7 @@ const PostAddNew = () => {
   return (
     <>
       <DashboardHeading
-        title="Add post"
+        title="Write New Post"
         desc="Let your thoughts spreading"
       ></DashboardHeading>
       <form>
@@ -178,7 +200,7 @@ const PostAddNew = () => {
             <Dropdown>
               <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
               <Dropdown.List>
-                {/* {categories.length > 0 &&
+                {categories.length > 0 &&
                   categories.map((item) => (
                     <Dropdown.Option
                       key={item.id}
@@ -186,7 +208,7 @@ const PostAddNew = () => {
                     >
                       {item.name}
                     </Dropdown.Option>
-                  ))} */}
+                  ))}
               </Dropdown.List>
             </Dropdown>
             {/* {selectCategory?.name && (

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button } from "components/button";
 import { Field } from "components/field";
 import ImageUpload from "components/image/ImageUpload";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
 import TextArea from "components/input/TextArea";
+import { authContext } from "contexts/authContext";
 
 const UserProfile = () => {
   const {
@@ -18,10 +19,16 @@ const UserProfile = () => {
     mode: "onChange",
   });
 
+  const {
+    authState: {
+      user: {email, password}
+    }
+  } = useContext(authContext)
+
   return (
     <div>
       <DashboardHeading
-        title="Account information"
+        title="Account Information"
         desc="Update your account information"
       ></DashboardHeading>
       <form>
@@ -36,7 +43,7 @@ const UserProfile = () => {
             <Input
               control={control}
               name="username"
-              placeholder="Enter your username"
+              placeholder= "Enter your username"
             ></Input>
           </Field>
           <Field>
@@ -45,7 +52,7 @@ const UserProfile = () => {
               control={control}
               name="email"
               type="email"
-              placeholder="Enter your email address"
+              placeholder= {email}
             ></Input>
           </Field>
         </div>
@@ -60,7 +67,7 @@ const UserProfile = () => {
           </Field>
           <Field>
             <Label>Password</Label>
-            <InputPasswordToggle control={control}></InputPasswordToggle>
+            <InputPasswordToggle control={control} defaultValue={`${password}`}></InputPasswordToggle>
           </Field>
         </div>
         <div className="solo-form-layout">

@@ -1,8 +1,8 @@
 import DashboardLayout from "module/dashboard/DashboardLayout";
 import HomePage from "./pages/HomePage";
-import SignInPage from "./pages/SignIn";
-import SignUpPage from "./pages/SignUp";
 import { Route, Routes } from "react-router-dom";
+import Auth from "./views/Auth";
+import ProtectedRoute from "./components/routing/ProtectedRoute";
 import DashboardPage from "pages/DashboardPage";
 import PostManage from "module/post/PostManage";
 import PostAddNew from "module/post/PostAddNew";
@@ -14,11 +14,10 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<HomePage></HomePage>}></Route>
-        <Route path="/sign-up" element={<SignUpPage></SignUpPage>}></Route>
-        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
-        <Route path="/sign-in" element={<SignInPage></SignInPage>}></Route>
+        <Route path="/sign-in" element={<Auth authRoute="sign-in" />} />
+        <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
-        <Route element={<DashboardLayout></DashboardLayout>}>
+        <Route element={<ProtectedRoute Component={DashboardLayout} />}>
           <Route
             path="/dashboard"
             element={<DashboardPage></DashboardPage>}

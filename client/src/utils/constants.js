@@ -1,3 +1,5 @@
+export const LOCAL_STORAGE_TOKEN_NAME = 'GoaTalks'
+
 export const theme = {
   primary: "#1DC071",
   secondary: "#A4D96C",

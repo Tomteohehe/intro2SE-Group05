@@ -41,11 +41,11 @@ const InputStyles = styled.div`
  * @param {*} control - control from react hook form
  * @returns Input
  */
-const Input = ({ name = "", type = "text", children, control, ...props }) => {
+const Input = ({ name = "", type = "text", children, control, defaultvalue, ...props }) => {
   const { field } = useController({
     control,
     name,
-    defaultValue: "",
+    defaultValue: defaultvalue,
   });
   return (
     <InputStyles hasIcon={children ? true : false}>
