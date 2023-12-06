@@ -4,14 +4,14 @@ const router = express.Router()
 const Post = require('../models/post')
 const verifyToken = require('../middleware/auth')
 
-// @route GET api/posts
+// @route GET api/post
 // @desc Get posts
 // @access Private
 
 router.get('/', verifyToken, async(req, res) => {
     try {
         const posts = await Post.find({user: req.userId}).populate('user', ['username'])
-        res.json({success: true, message: posts})
+        res.json({success: true, posts})
     }   
     catch(error) {
         console.log(error)
@@ -24,12 +24,12 @@ router.get('/', verifyToken, async(req, res) => {
 
 
 
-// @route POST api/posts
+// @route POST api/post
 // desc create post
 // @access private
 
 router.post('/', verifyToken, async(req, res) => {
-    const {title, description, url} = req.body
+    const { title, category, content } = req.body
 
     // simple validation
 
@@ -38,8 +38,7 @@ router.post('/', verifyToken, async(req, res) => {
     }
 
     try {
-        const newPost = new Post({title, description, url:
-            (url.startsWith('https://')) ? url : `https://${url}`,
+        const newPost = new Post({title, category, content,
             user: req.userId
         })
 
@@ -56,12 +55,12 @@ router.post('/', verifyToken, async(req, res) => {
     }
 })
 
-// @route PUT api/posts
+// @route PUT api/post
 // @desc Update post
 // @access Private
 
 router.put('/:id', verifyToken, async(req, res) => {
-    const {title, description, url} = req.body
+    const { title, category, content } = req.body
     if(!title) {
         return res.status(400).json({success: false, message: 'Title is required'})
     }
@@ -69,8 +68,8 @@ router.put('/:id', verifyToken, async(req, res) => {
     try {
         let updatedPost = {
             title, 
-            description: description || '', 
-            url: (url.startsWith('https://')) ? url : `https://${url}` || ''
+            category, 
+            content
         }
 
         const updateCondition = {_id: req.params.id, user: req.userId}
@@ -93,7 +92,7 @@ router.put('/:id', verifyToken, async(req, res) => {
     }
 })
 
-// @route DELETE api/posts
+// @route DELETE api/post
 // @desc Delete post
 // @access Private
 

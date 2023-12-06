@@ -38,12 +38,11 @@ const SignUpPage = () => {
   });
 
   const handleSignUp = async (values) => {
-    const { name, email, password } = values;
+    const { username, email, password } = values;
     try {
-      const registerData = await registerUser({ email, password });
+      const registerData = await registerUser({ username, email, password });
       if (registerData["success"]) {
-        toast.success("New user has been registered successfully");
-        console.log(registerData.message);
+        toast.success(`You are a GOAT now, ${username}!`);
       } else {
         toast.error(registerData["message"]);
       }

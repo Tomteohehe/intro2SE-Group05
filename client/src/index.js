@@ -9,18 +9,21 @@ import { theme } from "utils/constants";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthContextProvider from "./contexts/authContext";
+import PostContextProvider from "./contexts/postContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <App />
-          <ToastContainer pauseOnHover={false} />
-        </BrowserRouter>
-      </ThemeProvider>
+      <PostContextProvider>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <App />
+            <ToastContainer pauseOnHover={false} />
+          </BrowserRouter>
+        </ThemeProvider>
+      </PostContextProvider>
     </AuthContextProvider>
   </React.StrictMode>
 );

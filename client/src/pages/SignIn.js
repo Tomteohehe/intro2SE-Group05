@@ -51,9 +51,8 @@ const SignInPage = () => {
     const { email, password } = values
     try {
       const loginData = await loginUser({email, password})
-      console.log(loginData)
       if (loginData['success']){
-        toast.success("Welcome back!");
+        toast.success(`Welcome back, ${loginData['username']}!`);
         console.log(loginData.message)
       }
       else {

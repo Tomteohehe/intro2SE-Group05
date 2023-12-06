@@ -82,9 +82,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
             <PostTable></PostTable>
-          </tr>
         </tbody>
       </Table>
       <div className="mt-10 text-center">

@@ -19,7 +19,7 @@ Content-Type: application/json
 
 {
     "email": "hoangtranthong03@gmail.com",
-    "password": "abcd"
+    "password": "12345"
 }
 
 
@@ -30,32 +30,46 @@ GET http://localhost:5000/api/auth/alluser
 ###
 POST http://localhost:5000/api/post
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQ1MjYzODM3MDUyNGQ3OTM3YTA2ZDkiLCJpYXQiOjE2OTkwMzA1ODR9.uzO1lHHHGor9eU4503Fc4EVYXuDgU6GLVLqBxxVTsKY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDE3ODMzMzV9.Mst9G8_pW1Mlh0xkcZL04HGRnZ7z7Qle5OWOguxp4nc
 
 {
-    "title": "title2",
-    "description": "description",
-    "url": "google.com"
+    "title": "title3",
+    // "category": "Fitness",
+    "content": "content3"
 }
 
 
 ###
 GET http://localhost:5000/api/post
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDE3ODMzMzV9.Mst9G8_pW1Mlh0xkcZL04HGRnZ7z7Qle5OWOguxp4nc
 
 
 ###
-PUT http://localhost:5000/api/post/6545259d858f03654821d325
+PUT http://localhost:5000/api/post/656f3a65fdc6099a358a7485
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDE3ODMzMzV9.Mst9G8_pW1Mlh0xkcZL04HGRnZ7z7Qle5OWOguxp4nc
 
 {
-    "title": "New title3",
-    "description": "New description3",
-    "url": "https://example.com"
+    "title": "Update title2",
+    //"category": "Lifestyle",
+    "content": "Update content2"
 }
 
 
 ###
 DELETE http://localhost:5000/api/post/6545259d858f03654821d325
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+
+
+###
+PUT http://localhost:5000/api/auth/656989a6138c084bde317bf1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTY5ODlhNjEzOGMwODRiZGUzMTdiZjEiLCJpYXQiOjE3MDE0NDE3Nzd9.V-RS2Nk6AqEIH_IwmOzP4CLQcVgD07rHItckwzkJjbg
+
+{
+    "username": "thon",
+    "email": "thong@gmail.com",
+    "password": "123",
+    "contact": "",
+    "description": "description"
+}

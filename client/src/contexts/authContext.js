@@ -21,7 +21,7 @@ const AuthContextProvider = ({ children }) => {
 
     try {
       const response = await axios.get("http://localhost:5000/api/auth");
-      if (response.data.success) {
+        if (response.data.success) {
         dispatch({
           type: "SET_AUTH",
           payload: { isAuthenticated: true, user: response.data.user },
@@ -85,6 +85,31 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // update User
+  const updateUser = async (User, id) => {
+    try {
+			const response = await axios.put(
+				`http://localhost:5000/api/auth/${id}`, User
+			)
+      /*
+			if (response.data.success) {
+				dispatch({
+					type: 'SET_AUTH',
+					payload: { isAuthenticated: true, user: response.data.user }
+				})
+			}
+      */
+      await loadUser();
+      return response.data;
+		} 
+    catch (error) {
+			if (error.response.data) {
+        return error.response.data;
+      } 
+      else return { success: false, message: error.message };
+		}
+  }
+
   // log out
   const logoutUser = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
@@ -95,7 +120,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   //context data
-  const authContextData = { loginUser, authState, registerUser, logoutUser };
+  const authContextData = { loginUser, authState, registerUser, logoutUser, updateUser };
 
   // return provider
   return (

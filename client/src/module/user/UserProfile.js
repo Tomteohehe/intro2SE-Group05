@@ -14,6 +14,7 @@ import { authContext } from "contexts/authContext";
 const UserProfile = () => {
   const {
     control,
+    handleSubmit,
     formState: { isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
@@ -21,9 +22,46 @@ const UserProfile = () => {
 
   const {
     authState: {
-      user: {email, password}
-    }
+      user
+    },
+    updateUser
   } = useContext(authContext)
+
+  const updateuser = async (values) => {
+    /*
+    let last_username, last_password, last_email, last_description, last_number
+    last_username = values.username ? values.form_username : username
+    last_password = values.password ? values.password : password
+    last_email = values.email ? values.email : email
+    last_description = values.textarea ? values.textarea : ""
+    last_number = values.number ? values.number : ""
+    let last_values = {last_username, last_email, last_number, last_password, last_description}
+    */
+    console.log(values)
+    let { username, email, contact, password, textarea } = values
+    username = username == undefined ? user.username : username
+    password = password == undefined ? user.password : password
+    email = email == undefined ? user.email : email
+    const description = textarea !== "" ? textarea : user.description
+    //console.log({username, email, password, contact, description})
+    const id = user._id
+    console.log({username, email, password, contact, description, id})
+    try {
+      const updateData = await updateUser({username, email, password, contact, description, id}, user._id)
+      if (updateData['success']){
+        toast.success(`User updated successfully`);
+        console.log(updateData['message'])
+        setTimeout(1000)
+        window.location.reload(true)
+      }
+      else {
+        toast.error(updateData['message'])
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -31,7 +69,11 @@ const UserProfile = () => {
         title="Account Information"
         desc="Update your account information"
       ></DashboardHeading>
-      <form>
+      <form
+        classname="form"
+        onSubmit={handleSubmit(updateuser)}
+        autoComplete="off"
+      >
         <div className="flex items-center solo-form-layout">
           <Field>
             <ImageUpload></ImageUpload>
@@ -43,7 +85,7 @@ const UserProfile = () => {
             <Input
               control={control}
               name="username"
-              placeholder= "Enter your username"
+              placeholder= {user.username}
             ></Input>
           </Field>
           <Field>
@@ -52,7 +94,7 @@ const UserProfile = () => {
               control={control}
               name="email"
               type="email"
-              placeholder= {email}
+              placeholder= {user.email}
             ></Input>
           </Field>
         </div>
@@ -61,13 +103,13 @@ const UserProfile = () => {
             <Label>Contact Number</Label>
             <Input
               control={control}
-              name="phone"
-              placeholder="Enter your phone number"
+              name="contact"
+              placeholder= {user.contact}
             ></Input>
           </Field>
           <Field>
             <Label>Password</Label>
-            <InputPasswordToggle control={control} defaultValue={`${password}`}></InputPasswordToggle>
+            <InputPasswordToggle control={control} defaultValue={`${user.password}`}></InputPasswordToggle>
           </Field>
         </div>
         <div className="solo-form-layout">
@@ -75,7 +117,7 @@ const UserProfile = () => {
           <TextArea
             control={control}
             name="textarea"
-            placeholder="Write something about you"
+            placeholder= {user.description}
           ></TextArea>
         </div>
         <Button
