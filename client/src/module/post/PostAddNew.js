@@ -12,6 +12,7 @@ import { Dropdown } from "components/dropdown";
 import { Button } from "components/button";
 import DashboardHeading from "module/dashboard/DashboardHeading";
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { imgbbAPI } from "config/apiConfig";
 
@@ -114,49 +115,49 @@ const PostAddNew = () => {
     setSelectCategory(item);
   };
 
-  const modules = useMemo(
-    () => ({
-      toolbar: [
-        ["bold", "italic", "underline", "strike"],
-        ["blockquote", "code-block"],
-        [{ header: 1 }, { header: 2 }], // custom button values
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["link", "image"],
-      ],
-      // imageUploader: {
-      //   upload: async (file) => {
-      //     const bodyFormData = new FormData();
-      //     bodyFormData.append("image", file);
-      //     const response = await axios({
-      //       method: "post",
-      //       url: imgbbAPI,
-      //       data: bodyFormData,
-      //       headers: {
-      //         "Content-Type": "multipart/form-data",
-      //       },
-      //     });
-      //     return response.data.data.url;
-      //   },
-      // },
-    }),
-    []
-  );
+  // const modules = useMemo(
+  //   () => ({
+  //     toolbar: [
+  //       ["bold", "italic", "underline", "strike"],
+  //       ["blockquote", "code-block"],
+  //       [{ header: 1 }, { header: 2 }], // custom button values
+  //       [{ list: "ordered" }, { list: "bullet" }],
+  //       [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  //       ["link", "image"],
+  //     ],
+  //     // imageUploader: {
+  //     //   upload: async (file) => {
+  //     //     const bodyFormData = new FormData();
+  //     //     bodyFormData.append("image", file);
+  //     //     const response = await axios({
+  //     //       method: "post",
+  //     //       url: imgbbAPI,
+  //     //       data: bodyFormData,
+  //     //       headers: {
+  //     //         "Content-Type": "multipart/form-data",
+  //     //       },
+  //     //     });
+  //     //     return response.data.data.url;
+  //     //   },
+  //     // },
+  //   }),
+  //   []
+  // );
 
-  // const modules = {
-  //   toolbar: [
-  //     [{ font: [] }],
-  //     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  //     ["bold", "italic", "underline", "strike"],
-  //     [{ color: [] }, { background: [] }],
-  //     [{ script: "sub" }, { script: "super" }],
-  //     ["blockquote", "code-block"],
-  //     [{ list: "ordered" }, { list: "bullet" }],
-  //     [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
-  //     ["link", "image", "video"],
-  //     ["clean"],
-  //   ],
-  // };
+  const modules = {
+    toolbar: [
+      [{ font: [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote", "code-block"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+      ["link", "image", "video"],
+      ["clean"],
+    ],
+  };
 
   return (
     <>
@@ -188,11 +189,11 @@ const PostAddNew = () => {
           <Field>
             <Label>Image</Label>
             <ImageUpload
-            // onChange={handleSelectImage}
-            // handleRemoveImage={handleRemoveImage}
-            // className="h-[250px] shadow-lg"
-            // progress={progress}
-            // image={image}
+              // onChange={handleSelectImage}
+              // handleRemoveImage={handleRemoveImage}
+              className="h-[250px] shadow-lg w-full"
+              // progress={progress}
+              // image={image}
             ></ImageUpload>
           </Field>
           <Field>
@@ -211,14 +212,14 @@ const PostAddNew = () => {
                   ))}
               </Dropdown.List>
             </Dropdown>
-            {/* {selectCategory?.name && (
+            {selectCategory?.name && (
               <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
                 {selectCategory?.name}
               </span>
-            )} */}
+            )}
           </Field>
         </div>
-        <div className="form-layout">
+        <div className="solo-form-layout">
           <div className="mb-10">
             <Field>
               <Label>Content</Label>

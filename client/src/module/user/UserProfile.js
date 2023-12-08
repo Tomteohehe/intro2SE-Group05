@@ -21,11 +21,9 @@ const UserProfile = () => {
   });
 
   const {
-    authState: {
-      user
-    },
-    updateUser
-  } = useContext(authContext)
+    authState: { user },
+    updateUser,
+  } = useContext(authContext);
 
   const updateuser = async (values) => {
     /*
@@ -37,31 +35,32 @@ const UserProfile = () => {
     last_number = values.number ? values.number : ""
     let last_values = {last_username, last_email, last_number, last_password, last_description}
     */
-    console.log(values)
-    let { username, email, contact, password, textarea } = values
-    username = username == undefined ? user.username : username
-    password = password == undefined ? user.password : password
-    email = email == undefined ? user.email : email
-    const description = textarea !== "" ? textarea : user.description
+    console.log(values);
+    let { username, email, contact, password, textarea } = values;
+    username = username == undefined ? user.username : username;
+    password = password == undefined ? user.password : password;
+    email = email == undefined ? user.email : email;
+    const description = textarea !== "" ? textarea : user.description;
     //console.log({username, email, password, contact, description})
-    const id = user._id
-    console.log({username, email, password, contact, description, id})
+    const id = user._id;
+    console.log({ username, email, password, contact, description, id });
     try {
-      const updateData = await updateUser({username, email, password, contact, description, id}, user._id)
-      if (updateData['success']){
+      const updateData = await updateUser(
+        { username, email, password, contact, description, id },
+        user._id
+      );
+      if (updateData["success"]) {
         toast.success(`User updated successfully`);
-        console.log(updateData['message'])
-        setTimeout(1000)
-        window.location.reload(true)
+        console.log(updateData["message"]);
+        setTimeout(1000);
+        window.location.reload(true);
+      } else {
+        toast.error(updateData["message"]);
       }
-      else {
-        toast.error(updateData['message'])
-      }
+    } catch (error) {
+      console.log(error);
     }
-    catch (error) {
-      console.log(error)
-    }
-  }
+  };
 
   return (
     <div>
@@ -74,9 +73,9 @@ const UserProfile = () => {
         onSubmit={handleSubmit(updateuser)}
         autoComplete="off"
       >
-        <div className="flex items-center solo-form-layout">
+        <div className="solo-form-layout">
           <Field>
-            <ImageUpload></ImageUpload>
+            <ImageUpload className="p-5 rounded-full"></ImageUpload>
           </Field>
         </div>
         <div className="form-layout">
@@ -85,7 +84,7 @@ const UserProfile = () => {
             <Input
               control={control}
               name="username"
-              placeholder= {user.username}
+              placeholder={user.username}
             ></Input>
           </Field>
           <Field>
@@ -94,7 +93,7 @@ const UserProfile = () => {
               control={control}
               name="email"
               type="email"
-              placeholder= {user.email}
+              placeholder={user.email}
             ></Input>
           </Field>
         </div>
@@ -104,12 +103,15 @@ const UserProfile = () => {
             <Input
               control={control}
               name="contact"
-              placeholder= {user.contact}
+              placeholder={user.contact}
             ></Input>
           </Field>
           <Field>
             <Label>Password</Label>
-            <InputPasswordToggle control={control} defaultValue={`${user.password}`}></InputPasswordToggle>
+            <InputPasswordToggle
+              control={control}
+              defaultValue={`${user.password}`}
+            ></InputPasswordToggle>
           </Field>
         </div>
         <div className="solo-form-layout">
@@ -117,7 +119,7 @@ const UserProfile = () => {
           <TextArea
             control={control}
             name="textarea"
-            placeholder= {user.description}
+            placeholder={user.description}
           ></TextArea>
         </div>
         <Button
