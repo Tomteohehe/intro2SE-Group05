@@ -1,6 +1,6 @@
 import Toggle from "components/toggle/Toggle";
 import slugify from "slugify";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useContext } from "react";
 import ImageUpload from "components/image/ImageUpload";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -15,16 +15,24 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { imgbbAPI } from "config/apiConfig";
+import { postContext } from "../../contexts/postContext";
+import { useNavigate } from "react-router-dom";
 
 const PostAddNew = () => {
+  const navigate = useNavigate()
+
+  const {
+    addPost
+  } = useContext(postContext)
+
   const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
       slug: "",
       status: 2,
-      categoryId: "",
-      hot: false,
+      categoryName: "",
+      hot: false, 
       image: "",
     },
   });
@@ -56,38 +64,54 @@ const PostAddNew = () => {
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
-  // const addPostHandler = async (values) => {
-  //   setLoading(true);
-  //   try {
-  //     const cloneValues = { ...values };
-  //     cloneValues.slug = slugify(values.slug || values.title, { lower: true });
-  //     cloneValues.status = Number(values.status);
-  //     const colRef = collection(db, "users", userInfo.uid, "posts");
-  //     await addDoc(colRef, {
-  //       ...cloneValues,
-  //       content,
-  //       image,
-  //       userId: userInfo.uid,
-  //       createdAt: serverTimestamp(),
-  //     });
-  //     toast.success("Create new post successfully!");
-  //     reset({
-  //       content: "",
-  //       title: "",
-  //       slug: "",
-  //       status: 2,
-  //       categoryId: "",
-  //       hot: false,
-  //       image: "",
-  //     });
-  //     handleResetUpload();
-  //     setSelectCategory({});
-  //   } catch (error) {
-  //     setLoading(false);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const addPostHandler = async (values) => {
+    //console.log(content)
+    // console.log(values)
+    const { title, slug, status, categoryName, hot } = values
+    const category = categoryName
+    const simplePostInfo = { title, category, content }
+    try {
+      const newPostData = await addPost(simplePostInfo);
+      if (newPostData["success"]) {
+        toast.success(`New post added successfully`);
+        navigate("/manage/posts")
+      } else {
+        toast.error(newPostData["message"]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // setLoading(true);
+    // try {
+    //   const cloneValues = { ...values };
+    //   cloneValues.slug = slugify(values.slug || values.title, { lower: true });
+    //   cloneValues.status = Number(values.status);
+    //   const colRef = collection(db, "users", userInfo.uid, "posts");
+    //   await addDoc(colRef, {
+    //     ...cloneValues,
+    //     content,
+    //     image,
+    //     userId: userInfo.uid,
+    //     createdAt: serverTimestamp(),
+    //   });
+    //   toast.success("Create new post successfully!");
+    //   reset({
+    //     content: "",
+    //     title: "",
+    //     slug: "",
+    //     status: 2,
+    //     categoryId: "",
+    //     hot: false,
+    //     image: "",
+    //   });
+    //   handleResetUpload();
+    //   setSelectCategory({});
+    // } catch (error) {
+    //   setLoading(false);
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
 
   // useEffect(() => {
   //   async function getData() {
@@ -111,7 +135,7 @@ const PostAddNew = () => {
   }, []);
 
   const handleClickOption = (item) => {
-    setValue("categoryId", item.id);
+    setValue("categoryName", item.name)
     setSelectCategory(item);
   };
 
@@ -165,7 +189,11 @@ const PostAddNew = () => {
         title="Write New Post"
         desc="Let your thoughts spreading"
       ></DashboardHeading>
-      <form>
+      <form
+        className="form"
+        onSubmit={handleSubmit(addPostHandler)}
+        autoComplete="off"
+      >
         <div className="form-layout">
           <Field>
             <Label>Title</Label>
@@ -227,6 +255,7 @@ const PostAddNew = () => {
                 <ReactQuill
                   modules={modules}
                   theme="snow"
+                  name="content"
                   value={content}
                   onChange={setContent}
                 />
