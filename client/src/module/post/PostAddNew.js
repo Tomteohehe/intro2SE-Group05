@@ -17,13 +17,14 @@ import axios from "axios";
 import { imgbbAPI } from "config/apiConfig";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
+import CloudinaryUploader from "components/image/CloudinaryUploader";
+import { Image, Transformation } from "cloudinary-react";
+import { Helmet } from "react-helmet";
 
 const PostAddNew = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {
-    addPost
-  } = useContext(postContext)
+  const { addPost } = useContext(postContext);
 
   const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
     mode: "onChange",
@@ -31,14 +32,14 @@ const PostAddNew = () => {
       title: "",
       slug: "",
       status: 2,
+      categoryId: "",
       categoryName: "",
-      hot: false, 
+      hot: false,
       image: "",
     },
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  // const [categories, setCategories] = useState([]);
   const categories = [
     {
       id: 1,
@@ -67,14 +68,14 @@ const PostAddNew = () => {
   const addPostHandler = async (values) => {
     //console.log(content)
     // console.log(values)
-    const { title, slug, status, categoryName, hot } = values
-    const category = categoryName
-    const simplePostInfo = { title, category, content }
+    const { title, slug, status, categoryName, hot } = values;
+    const category = categoryName;
+    const simplePostInfo = { title, category, content };
     try {
       const newPostData = await addPost(simplePostInfo);
       if (newPostData["success"]) {
         toast.success(`New post added successfully`);
-        navigate("/manage/posts")
+        navigate("/manage/posts");
       } else {
         toast.error(newPostData["message"]);
       }
@@ -135,7 +136,8 @@ const PostAddNew = () => {
   }, []);
 
   const handleClickOption = (item) => {
-    setValue("categoryName", item.name)
+    setValue("categoryId", item.id);
+    setValue("categoryName", item.name);
     setSelectCategory(item);
   };
 
@@ -216,13 +218,25 @@ const PostAddNew = () => {
         <div className="form-layout">
           <Field>
             <Label>Image</Label>
-            <ImageUpload
+            {/* <ImageUpload
               // onChange={handleSelectImage}
               // handleRemoveImage={handleRemoveImage}
               className="h-[250px] shadow-lg w-full"
               // progress={progress}
               // image={image}
-            ></ImageUpload>
+            ></ImageUpload> */}
+            <Helmet>
+              <script
+                src="https://upload-widget.cloudinary.com/global/all.js"
+                type="text/javascript"
+              />
+            </Helmet>
+            <Image cloudName="aoh4fpwm" publicId="image1">
+              <Transformation width="300" height="200" crop="fill" />
+            </Image>
+
+            {/* Render the CloudinaryUploader component */}
+            <CloudinaryUploader />
           </Field>
           <Field>
             <Label>Category</Label>

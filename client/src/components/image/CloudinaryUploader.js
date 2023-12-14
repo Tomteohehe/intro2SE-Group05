@@ -1,0 +1,22 @@
+import { useEffect, useRef } from "react";
+
+const CloudinaryUploader = () => {
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+  useEffect(() => {
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget(
+      {
+        cloudName: "dsiqywipd",
+        uploadPreset: "bqwxyyix",
+      },
+      function (error, result) {
+        console.log(result);
+      }
+    );
+  }, []);
+
+  return <button onClick={() => widgetRef.current.open()}>Upload Image</button>;
+};
+
+export default CloudinaryUploader;
