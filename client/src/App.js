@@ -8,8 +8,27 @@ import PostManage from "module/post/PostManage";
 import PostAddNew from "module/post/PostAddNew";
 import UserProfile from "module/user/UserProfile";
 import DetailPage from "pages/DetailPage";
+import UserInfo from "module/user/UserInfo";
 
 function App() {
+  const data = [
+    {
+      id: 1,
+      title: "No room for self doubt",
+    },
+    {
+      id: 2,
+      title: "Huynh Vinh Do",
+    },
+    {
+      id: 3,
+      title: "A whole universe in a single atom",
+    },
+    {
+      id: 4,
+      title: "Fuck you I am great",
+    },
+  ];
   return (
     <div>
       <Routes>
@@ -17,6 +36,10 @@ function App() {
         <Route path="/sign-in" element={<Auth authRoute="sign-in" />} />
         <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
+        <Route
+          path="/user-info"
+          element={<UserInfo data={data}></UserInfo>}
+        ></Route>
         <Route element={<ProtectedRoute Component={DashboardLayout} />}>
           <Route
             path="/dashboard"
