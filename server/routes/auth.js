@@ -3,6 +3,13 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const User = require('../models/users')
 const verifyToken = require('../middleware/auth')
+const Cloudinary = require('cloudinary').v2
+
+Cloudinary.config({ 
+    cloud_name: 'df6zgjkcl', 
+    api_key: '742437577848943', 
+    api_secret: 'z3G0kvjVvwXgMVlzbEYyI6NiRkI' 
+});
 
 // @route GET api/auth
 // @desc check if user logged in

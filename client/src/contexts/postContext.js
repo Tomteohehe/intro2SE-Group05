@@ -25,9 +25,24 @@ const PostContextProvider = ({children}) => {
             return error.response.data ? error.response.data : { success: false, message: 'Server error' }
         }
     }
+
+    // add post
+    const addPost = async Post => {
+		try {
+			const response = await axios.post('http://localhost:5000/api/post', Post)
+			if (response.data.success) {
+				dispatch({ type: 'ADD_POST', payload: response.data.post })
+				return response.data
+			}
+		} catch (error) {
+			return error.response.data
+				? error.response.data
+				: { success: false, message: 'Server error' }
+		}
+	}
     
     // post context data
-    const postContextData = { postState, getAllPosts }
+    const postContextData = { postState, getAllPosts, addPost }
 
     return (
         <postContext.Provider value={postContextData}>
