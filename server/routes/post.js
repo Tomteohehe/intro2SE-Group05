@@ -22,14 +22,12 @@ router.get('/', verifyToken, async(req, res) => {
     }
 })
 
-
-
 // @route POST api/post
 // desc create post
 // @access private
 
 router.post('/', verifyToken, async(req, res) => {
-    const { title, category, content } = req.body
+    const { title, category, image, content } = req.body
 
     // simple validation
 
@@ -38,7 +36,7 @@ router.post('/', verifyToken, async(req, res) => {
     }
 
     try {
-        const newPost = new Post({title, category, content,
+        const newPost = new Post({title, category, image, content,
             user: req.userId
         })
 
@@ -60,7 +58,7 @@ router.post('/', verifyToken, async(req, res) => {
 // @access Private
 
 router.put('/:id', verifyToken, async(req, res) => {
-    const { title, category, content } = req.body
+    const { title, category, image, content } = req.body
     if(!title) {
         return res.status(400).json({success: false, message: 'Title is required'})
     }
@@ -68,7 +66,8 @@ router.put('/:id', verifyToken, async(req, res) => {
     try {
         let updatedPost = {
             title, 
-            category, 
+            category,
+            image,
             content
         }
 
@@ -87,7 +86,7 @@ router.put('/:id', verifyToken, async(req, res) => {
         console.log(error)
         res.status(500).json({
             success: false,
-            message: 'internal server error'
+            message: 'Internal server error'
         })
     }
 })
@@ -112,9 +111,14 @@ router.delete('/:id', verifyToken, async(req, res) => {
         console.log(error)
         res.status(500).json({
             success: false,
-            message: 'internal server error'
+            message: 'Internal server error'
         })
     }
 })
+
+router.get("/allpost", async (req, res) => {
+    const allPost = await Post.find();
+    res.json(allPost);
+});
 
 module.exports = router

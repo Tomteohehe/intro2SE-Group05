@@ -18,26 +18,42 @@ const PostTable = () => {
   //   fetchUser();
   // }, [post.userId]);
 
-  // const handleDeletePost = async (postId) => {
-  //   const colRef = doc(db, "users", userInfo?.uid, "posts", postId);
-  //   Swal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#1DC071",
-  //     cancelButtonColor: "#ef233c",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       await deleteDoc(colRef);
-  //       Swal.fire("Deleted!", "Your post has been deleted.", "success");
-  //     }
-  //   });
-  // };
+  const handleDeletePost = async (postId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1DC071",
+      cancelButtonColor: "#ef233c",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const deleted = await deletePost(postId)
+          if(deleted['success']){
+            Swal.fire("Deleted!", "Your post has been deleted.", "success");
+            setTimeout(function(){
+              window.location.reload();
+            }, 2000)
+            
+          }
+          else {
+            Swal.fire("Error occured")
+          }
+          
+        }
+        catch (error) {
+          console.log(error);
+        }
+      }
+        
+    });
+  };
   const {
     postState: { posts, postsLoading },
-    getAllPosts
+    getAllPosts,
+    deletePost
   } = useContext(postContext)
   
 
@@ -53,7 +69,7 @@ const PostTable = () => {
               <div className="flex items-center gap-x-3">
                 <img
                   src={
-                    "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80"
+                    post.image ? post.image : require("../../assets/logo.png")
                   }
                   alt=""
                   className="w-[66px] h-[55px] rounded object-cover"
@@ -79,7 +95,7 @@ const PostTable = () => {
                   // onClick={() => navigate(`/manage/update-post?id=${post.id}`)}
                 ></ActionEdit>
                 <ActionDelete
-                  // onClick={() => handleDeletePost(post.id)}
+                  onClick={() => handleDeletePost(post._id)}
                 ></ActionDelete>
                 </div>
             </td>

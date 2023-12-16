@@ -12,7 +12,7 @@ import AuthContextProvider from "./contexts/authContext";
 import PostContextProvider from "./contexts/postContext";
 import { Provider } from "react-redux";
 import store from "store/store";
-import { CloudinaryContext } from "cloudinary-react";
+import { CloudinaryContext }  from "cloudinary-react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

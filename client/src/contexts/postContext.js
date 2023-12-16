@@ -40,9 +40,23 @@ const PostContextProvider = ({children}) => {
 				: { success: false, message: 'Server error' }
 		}
 	}
+
+    // delete post
+	const deletePost = async postId => {
+		try {
+			const response = await axios.delete(`http://localhost:5000/api/post/${postId}`)
+			if (response.data.success) {
+				dispatch({ type: 'DELETE_POST', payload: postId })
+                return response.data
+            }
+
+		} catch (error) {
+			console.log(error)
+		}
+	}
     
     // post context data
-    const postContextData = { postState, getAllPosts, addPost }
+    const postContextData = { postState, getAllPosts, addPost, deletePost }
 
     return (
         <postContext.Provider value={postContextData}>

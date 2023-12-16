@@ -25,6 +25,9 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/api/auth/alluser
 
+###
+GET http://localhost:5000/api/post/allpost
+
 
 ###
 POST http://localhost:5000/api/post
@@ -56,8 +59,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN
 
 
 ###
-DELETE http://localhost:5000/api/post/6545259d858f03654821d325
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNkMTMzMWZjNjM1MzE0ZDYxYzhjNzAiLCJpYXQiOjE2OTkwNjQ3MTZ9.DWrv7eZuuDQiaYJTi4GXuBBM6kxseoh4Fgobij6z27w
+DELETE http://localhost:5000/api/post/657d8f6884d0d464b9263309
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDI3NDIwOTV9.VexxJQpOknYKlXU-Xz1AMa-jGnwhm8DyiFlVWySr_oM
 
 
 ###

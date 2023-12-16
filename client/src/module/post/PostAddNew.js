@@ -65,12 +65,15 @@ const PostAddNew = () => {
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
+  const [url, updateUrl] = useState()
+  const [error, updateError] = useState()
+
   const addPostHandler = async (values) => {
     //console.log(content)
-    // console.log(values)
     const { title, slug, status, categoryName, hot } = values;
     const category = categoryName;
-    const simplePostInfo = { title, category, content };
+    const image = url;
+    const simplePostInfo = { title, category, image, content };
     try {
       const newPostData = await addPost(simplePostInfo);
       if (newPostData["success"]) {
@@ -140,6 +143,18 @@ const PostAddNew = () => {
     setValue("categoryName", item.name);
     setSelectCategory(item);
   };
+
+  function handleOnUpload(error, result, widget) {
+    if ( error ) {
+      updateError(error);
+      widget.close({
+        quiet: true
+      });
+      return;
+    }
+    updateUrl(result?.info?.secure_url);
+    setValue("image", url)
+  }
 
   // const modules = useMemo(
   //   () => ({
@@ -225,18 +240,39 @@ const PostAddNew = () => {
               // progress={progress}
               // image={image}
             ></ImageUpload> */}
+            {/*
             <Helmet>
               <script
                 src="https://upload-widget.cloudinary.com/global/all.js"
                 type="text/javascript"
               />
             </Helmet>
+            */}
+            {/*}
             <Image cloudName="aoh4fpwm" publicId="image1">
               <Transformation width="300" height="200" crop="fill" />
             </Image>
 
             {/* Render the CloudinaryUploader component */}
-            <CloudinaryUploader />
+            {/*<CloudinaryUploader /> */}
+            <CloudinaryUploader onUpload={handleOnUpload}>
+              {({ open }) => {
+                function handleOnClick(e) {
+                  e.preventDefault();
+                  open();
+                }
+                return (
+                  <button onClick={handleOnClick}>
+                    Upload an Image
+                  </button>
+                )
+              }}
+            </CloudinaryUploader>
+            {url && (
+              <>
+                <img src={ url } alt="Uploaded resource" />
+              </>
+            )}
           </Field>
           <Field>
             <Label>Category</Label>
