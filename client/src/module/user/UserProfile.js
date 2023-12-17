@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "components/button";
 import { Field } from "components/field";
-import ImageUpload from "components/image/ImageUpload";
 import { Input } from "components/input";
 import { Label } from "components/label";
 import DashboardHeading from "module/dashboard/DashboardHeading";
@@ -10,6 +9,7 @@ import { toast } from "react-toastify";
 import InputPasswordToggle from "components/input/InputPasswordToggle";
 import TextArea from "components/input/TextArea";
 import { authContext } from "contexts/authContext";
+import CloudinaryUploader from "components/image/CloudinaryUploader";
 
 const UserProfile = () => {
   const {
@@ -25,6 +25,8 @@ const UserProfile = () => {
     updateUser,
   } = useContext(authContext);
 
+  const [url, updateUrl] = useState()
+  const [error, updateError] = useState()
   const updateuser = async (values) => {
     /*
     let last_username, last_password, last_email, last_description, last_number
@@ -35,25 +37,30 @@ const UserProfile = () => {
     last_number = values.number ? values.number : ""
     let last_values = {last_username, last_email, last_number, last_password, last_description}
     */
-    console.log(values);
+    // console.log(values);
+    // console.log(url);
+    const image = url;
+    let avatar;
     let { username, email, contact, password, textarea } = values;
     username = username == undefined ? user.username : username;
     password = password == undefined ? user.password : password;
     email = email == undefined ? user.email : email;
+    contact = contact == undefined ? user.contact : contact;
+    avatar = url == undefined ? user.avatar : url;
     const description = textarea !== "" ? textarea : user.description;
-    //console.log({username, email, password, contact, description})
+    // console.log({username, email, password, contact, description})
     const id = user._id;
-    console.log({ username, email, password, contact, description, id });
+    // console.log({ username, email, password, contact, description, id });
     try {
       const updateData = await updateUser(
-        { username, email, password, contact, description, id },
+        { username, email, password, avatar, contact, description, id },
         user._id
       );
       if (updateData["success"]) {
         toast.success(`User updated successfully`);
         console.log(updateData["message"]);
         setTimeout(1000);
-        window.location.reload(true);
+        window.location.reload();
       } else {
         toast.error(updateData["message"]);
       }
@@ -61,6 +68,17 @@ const UserProfile = () => {
       console.log(error);
     }
   };
+
+  function handleOnUpload(error, result, widget) {
+    if ( error ) {
+      updateError(error);
+      widget.close({
+        quiet: true
+      });
+      return;
+    }
+    updateUrl(result?.info?.secure_url);
+  }
 
   return (
     <div>
@@ -73,9 +91,23 @@ const UserProfile = () => {
         onSubmit={handleSubmit(updateuser)}
         autoComplete="off"
       >
-        <div className="solo-form-layout">
+        <div className="form-layout">
           <Field>
-            <ImageUpload className="p-5 rounded-full"></ImageUpload>
+            <Label>Image</Label>
+            <img src={url ? url : user.avatar}></img>
+            <CloudinaryUploader onUpload={handleOnUpload}>
+              {({ open }) => {
+                function handleOnClick(e) {
+                  e.preventDefault();
+                  open();
+                }
+                return (
+                  <button onClick={handleOnClick}>
+                    Update Avatar
+                  </button>
+                )
+              }}
+            </CloudinaryUploader>
           </Field>
         </div>
         <div className="form-layout">

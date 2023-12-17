@@ -14,6 +14,9 @@ const user = new schema({
     type: String,
     required: true,
   },
+  avatar: {
+    type: String
+  },
   contact: {
     type: String,
     required: false,

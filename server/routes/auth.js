@@ -98,7 +98,8 @@ router.put('/:id', verifyToken, async(req, res) => {
     let updatedUser = {
         username, 
         email, 
-        password, 
+        password,
+        avatar,
         contact, 
         description,
         id
@@ -107,7 +108,8 @@ router.put('/:id', verifyToken, async(req, res) => {
     const implementUser = {
         username : updatedUser.username, 
         email : updatedUser.email, 
-        password : updatedUser.password, 
+        password : updatedUser.password,
+        avatar : updatedUser.avatar,
         contact : updatedUser.contact, 
         description : updatedUser.description
     }
