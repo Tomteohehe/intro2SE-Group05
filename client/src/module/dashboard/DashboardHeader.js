@@ -1,8 +1,10 @@
 import { Button } from "components/button";
 import React from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.png";
+import { authContext } from "contexts/authContext";
 
 const DashboardHeaderStyles = styled.div`
   background-color: white;
@@ -46,6 +48,10 @@ const DashboardHeaderStyles = styled.div`
 `;
 
 const DashboardHeader = () => {
+  const {
+    authState: { user },
+  } = useContext(authContext);
+  
   return (
     <DashboardHeaderStyles>
       <NavLink to="/" className="logo">
@@ -58,7 +64,7 @@ const DashboardHeader = () => {
         </Button>
         <NavLink to="/manage/update-user" className="header-avatar">
           <img
-            src={`https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80`}
+            src= {user.avatar}
             alt=""
           />
         </NavLink>
