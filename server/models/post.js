@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+var d = new Date()
+
 const PostSchema = new Schema({
     title: {
         type: String,
@@ -24,8 +26,8 @@ const PostSchema = new Schema({
     },
 
     date: {
-        type: Date,
-        default: Date.now
+        type: String,
+        default: d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()
     },
 
     user: {

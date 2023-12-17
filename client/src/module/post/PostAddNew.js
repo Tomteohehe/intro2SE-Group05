@@ -263,7 +263,7 @@ const PostAddNew = () => {
                 }
                 return (
                   <button onClick={handleOnClick}>
-                    Upload an Image
+                    <img src= {require("../../assets/upload.jpg")}/>
                   </button>
                 )
               }}

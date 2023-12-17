@@ -76,7 +76,7 @@ const PostTable = () => {
                 />
                 <div className="flex-1">
                   <h3 className="font-semibold">{post.title}</h3>
-                  <time className="text-sm text-gray-500">Date: 18 Nov</time>
+                  <time className="text-sm text-gray-500">{post.date}</time>
                 </div>
               </div>
             </td>
