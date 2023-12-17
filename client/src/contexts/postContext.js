@@ -26,6 +26,20 @@ const PostContextProvider = ({children}) => {
         }
     }
 
+    // get detailed post
+    const getDetailedPost = async PostId => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/post/${PostId}`)
+            if(response.data.success) {
+                dispatch({ type: 'POSTS_LOADED_SUCCESS', payload: response.data.post })
+                return response.data
+            }
+        }
+        catch (error) {
+            return error.response.data ? error.response.data : { success: false, message: 'Server error' }
+        }
+    }
+
     // add post
     const addPost = async Post => {
 		try {
@@ -56,7 +70,7 @@ const PostContextProvider = ({children}) => {
 	}
     
     // post context data
-    const postContextData = { postState, getAllPosts, addPost, deletePost }
+    const postContextData = { postState, getAllPosts, addPost, deletePost, getDetailedPost }
 
     return (
         <postContext.Provider value={postContextData}>

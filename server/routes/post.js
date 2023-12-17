@@ -53,6 +53,24 @@ router.post('/', verifyToken, async(req, res) => {
     }
 })
 
+// @route GET api/post
+// @desc Get detail post
+// @access Private
+
+router.get('/:id', verifyToken, async(req, res) => {
+    try {
+        const detailedPost = await Post.find({_id: req.params.id, user: req.userId}).populate('user', ['username'])
+        res.json({success: true, post: detailedPost})
+    }   
+    catch(error) {
+        console.log(error)
+        res.status(500).json({
+            success: false,
+            message: 'internal server error'
+        })
+    }
+})
+
 // @route PUT api/post
 // @desc Update post
 // @access Private
