@@ -1,82 +1,95 @@
 import { createContext, useReducer } from "react";
-import { postReducer } from '../reducers/postReducer';
+import { postReducer } from "../reducers/postReducer";
 import axios from "axios";
 
-export const postContext = createContext()
+export const postContext = createContext();
 
-const PostContextProvider = ({children}) => {
-    // state 
-    const [postState, dispatch] = useReducer(postReducer, {
-        post: null,
-        posts: [],
-        postsLoading: true,
-    })
+const PostContextProvider = ({ children }) => {
+  // state
+  const [postState, dispatch] = useReducer(postReducer, {
+    post: null,
+    posts: [],
+    postsLoading: true,
+  });
 
-
-    // get all posts
-    const getAllPosts = async() => {
-        try {
-            const response = await axios.get('http://localhost:5000/api/post')
-            if(response.data.success) {
-                dispatch({ type: 'POSTS_LOADED_SUCCESS', payload: response.data.posts })
-            }
-        }
-        catch (error) {
-            return error.response.data ? error.response.data : { success: false, message: 'Server error' }
-        }
+  // get all posts
+  const getAllPosts = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/post");
+      if (response.data.success) {
+        dispatch({
+          type: "POSTS_LOADED_SUCCESS",
+          payload: response.data.posts,
+        });
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
     }
+  };
 
-    // get detailed post
-    const getDetailedPost = async PostId => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/post/${PostId}`)
-            if(response.data.success) {
-                dispatch({ type: 'POSTS_LOADED_SUCCESS', payload: response.data.post })
-                return response.data
-            }
-        }
-        catch (error) {
-            return error.response.data ? error.response.data : { success: false, message: 'Server error' }
-        }
+  // get detailed post
+  const getDetailedPost = async (PostId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/post/${PostId}`
+      );
+      if (response.data.success) {
+        dispatch({ type: "POSTS_LOADED_SUCCESS", payload: response.data.post });
+        return response.data;
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
     }
+  };
 
-    // add post
-    const addPost = async Post => {
-		try {
-			const response = await axios.post('http://localhost:5000/api/post', Post)
-			if (response.data.success) {
-				dispatch({ type: 'ADD_POST', payload: response.data.post })
-				return response.data
-			}
-		} catch (error) {
-			return error.response.data
-				? error.response.data
-				: { success: false, message: 'Server error' }
-		}
-	}
+  // add post
+  const addPost = async (Post) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/post", Post);
+      if (response.data.success) {
+        dispatch({ type: "ADD_POST", payload: response.data.post });
+        return response.data;
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
 
-    // delete post
-	const deletePost = async postId => {
-		try {
-			const response = await axios.delete(`http://localhost:5000/api/post/${postId}`)
-			if (response.data.success) {
-				dispatch({ type: 'DELETE_POST', payload: postId })
-                return response.data
-            }
+  // delete post
+  const deletePost = async (postId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/post/${postId}`
+      );
+      if (response.data.success) {
+        dispatch({ type: "DELETE_POST", payload: postId });
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-		} catch (error) {
-			console.log(error)
-		}
-	}
-    
-    // post context data
-    const postContextData = { postState, getAllPosts, addPost, deletePost, getDetailedPost }
+  // post context data
+  const postContextData = {
+    postState,
+    getAllPosts,
+    addPost,
+    deletePost,
+    getDetailedPost,
+  };
 
-    return (
-        <postContext.Provider value={postContextData}>
-            {children}
-        </postContext.Provider>
-    )
-}
+  return (
+    <postContext.Provider value={postContextData}>
+      {children}
+    </postContext.Provider>
+  );
+};
 
-export default PostContextProvider
+export default PostContextProvider;

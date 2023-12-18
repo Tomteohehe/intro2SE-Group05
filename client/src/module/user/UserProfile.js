@@ -25,8 +25,8 @@ const UserProfile = () => {
     updateUser,
   } = useContext(authContext);
 
-  const [url, updateUrl] = useState()
-  const [error, updateError] = useState()
+  const [url, updateUrl] = useState();
+  const [error, updateError] = useState();
   const updateuser = async (values) => {
     /*
     let last_username, last_password, last_email, last_description, last_number
@@ -70,10 +70,10 @@ const UserProfile = () => {
   };
 
   function handleOnUpload(error, result, widget) {
-    if ( error ) {
+    if (error) {
       updateError(error);
       widget.close({
-        quiet: true
+        quiet: true,
       });
       return;
     }
@@ -94,7 +94,11 @@ const UserProfile = () => {
         <div className="form-layout">
           <Field>
             <Label>Image</Label>
-            <img src={url ? url : user.avatar}></img>
+            <img
+              className="w-[50%] h-[90%] mb-3"
+              src={url ? url : user.avatar}
+              alt="UserAvatar"
+            ></img>
             <CloudinaryUploader onUpload={handleOnUpload}>
               {({ open }) => {
                 function handleOnClick(e) {
@@ -102,10 +106,13 @@ const UserProfile = () => {
                   open();
                 }
                 return (
-                  <button onClick={handleOnClick}>
+                  <button
+                    className="p-3 text-sm text-white bg-green-500 rounded-md"
+                    onClick={handleOnClick}
+                  >
                     Update Avatar
                   </button>
-                )
+                );
               }}
             </CloudinaryUploader>
           </Field>

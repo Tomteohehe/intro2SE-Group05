@@ -93,18 +93,10 @@ const PostDetailsPageStyles = styled.div`
   }
 `;
 
-const DetailPage = ({ id = "657dabc9a49f34c49dda1ea3" }) => {
+const DetailPage = () => {
   const { slug } = useParams();
-  const {
-    postState: { posts, postsLoading },
-    getAllPosts,
-    getDetailedPost,
-    deletePost,
-  } = useContext(postContext);
-
-  useState(() => getAllPosts(), []);
-  useState(() => getDetailedPost(id), []);
-  
+  const id = "657e64ce7add08a3ea88f64a";
+  const { getDetailedPost } = useContext(postContext);
 
   // const userId = slug?.substr(0, slug.indexOf("-"));
   // const slugCopy = slug?.substr(userId.length + 1, slug.length);
@@ -118,10 +110,17 @@ const DetailPage = ({ id = "657dabc9a49f34c49dda1ea3" }) => {
   // const formatDate = new Date(date).toLocaleDateString("vi-VI");
 
   // if (!slugCopy || !postInfo.title) return <PageNotFound></PageNotFound>;
+  const getPost = async (postId) => {
+    try {
+      const data = await getDetailedPost(postId);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const filteredPost = posts.filter((post) => post._id === id);
-  console.log(posts);
-  console.log(filteredPost);
+  getPost(id);
+
   return (
     <>
       <PostDetailsPageStyles>

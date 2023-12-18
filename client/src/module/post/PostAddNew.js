@@ -1,6 +1,6 @@
 import Toggle from "components/toggle/Toggle";
 import slugify from "slugify";
-import React, { useEffect, useMemo, useState, useContext } from "react";
+import React, { useEffect, useMemo, useState, useContext, useRef } from "react";
 import ImageUpload from "components/image/ImageUpload";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -20,9 +20,12 @@ import { useNavigate } from "react-router-dom";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
 import { Image, Transformation } from "cloudinary-react";
 import { Helmet } from "react-helmet";
+import { validateFieldsNatively } from "@hookform/resolvers";
 
 const PostAddNew = () => {
   const navigate = useNavigate();
+
+  const [isDefaultImageVisible, setDefaultImageVisible] = useState(true);
 
   const { addPost } = useContext(postContext);
 
@@ -65,8 +68,8 @@ const PostAddNew = () => {
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
-  const [url, updateUrl] = useState()
-  const [error, updateError] = useState()
+  const [url, updateUrl] = useState();
+  const [error, updateError] = useState();
 
   const addPostHandler = async (values) => {
     //console.log(content)
@@ -145,16 +148,22 @@ const PostAddNew = () => {
   };
 
   function handleOnUpload(error, result, widget) {
-    if ( error ) {
+    if (error) {
       updateError(error);
       widget.close({
-        quiet: true
+        quiet: true,
       });
       return;
     }
     updateUrl(result?.info?.secure_url);
-    setValue("image", url)
+    setValue("image", url);
+    // Hide the default image after upload
+    setDefaultImageVisible(false);
   }
+
+  const handleRechooseImage = () => {
+    setDefaultImageVisible(true);
+  };
 
   // const modules = useMemo(
   //   () => ({
@@ -262,15 +271,41 @@ const PostAddNew = () => {
                   open();
                 }
                 return (
-                  <button onClick={handleOnClick}>
-                    <img src= {require("../../assets/upload.jpg")}/>
-                  </button>
-                )
+                  <>
+                    {!isDefaultImageVisible && (
+                      <div>
+                        {/* Render the uploaded image */}
+                        {/* Add logic to render the uploaded image based on your implementation */}
+                        {/* For example, you might use an <img> tag with the uploaded image source */}
+                        {/* Add a button beneath the uploaded image for rechoosing */}
+                        <button
+                          className="p-3 text-sm text-white bg-green-500 rounded-md"
+                          onClick={handleOnClick}
+                        >
+                          Rechoose Image
+                        </button>
+                      </div>
+                    )}
+
+                    {isDefaultImageVisible && (
+                      <button
+                        className="flex items-start justify-center w-full h-full border-r-2 border-gray-700"
+                        onClick={handleOnClick}
+                      >
+                        <img
+                          className="w-[50%] h-[90%]"
+                          src={require("../../assets/img-upload.png")}
+                          alt="ImgUpload"
+                        />
+                      </button>
+                    )}
+                  </>
+                );
               }}
             </CloudinaryUploader>
             {url && (
               <>
-                <img src={ url } alt="Uploaded resource" />
+                <img src={url} alt="Uploaded resource" />
               </>
             )}
           </Field>

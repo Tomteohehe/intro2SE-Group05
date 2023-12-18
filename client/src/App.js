@@ -36,6 +36,7 @@ function App() {
         <Route path="/sign-in" element={<Auth authRoute="sign-in" />} />
         <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
+        <Route path="/admin" element={<DetailPage></DetailPage>}></Route>
         <Route
           path="/user-info"
           element={<UserInfo data={data}></UserInfo>}

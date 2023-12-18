@@ -29,8 +29,8 @@ GET http://localhost:5000/api/auth/alluser
 GET http://localhost:5000/api/post/allpost
 
 ###
-GET http://localhost:5000/api/post/657dabc9a49f34c49dda1ea3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDE3ODMzMzV9.Mst9G8_pW1Mlh0xkcZL04HGRnZ7z7Qle5OWOguxp4nc
+GET http://localhost:5000/api/post/657e64ce7add08a3ea88f64a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDI4MDg5MzJ9.YoWG8CZoof9POhUPxxVKJ9Cn6Z3eArYCj0XK62MFr48
 
 ###
 POST http://localhost:5000/api/post
