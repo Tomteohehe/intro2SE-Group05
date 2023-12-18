@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Row } from "react-bootstrap";
-import { postContext } from "../../contexts/postContext"
+import { postContext } from "../../contexts/postContext";
 
 const PostTable = () => {
   // useEffect(() => {
@@ -42,78 +42,70 @@ const PostTable = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const deleted = await deletePost(postId)
-          if(deleted['success']){
+          const deleted = await deletePost(postId);
+          if (deleted["success"]) {
             Swal.fire("Deleted!", "Your post has been deleted.", "success");
-            setTimeout(function(){
+            setTimeout(function () {
               window.location.reload();
-            }, 2000)
-            
+            }, 2000);
+          } else {
+            Swal.fire("Error occured");
           }
-          else {
-            Swal.fire("Error occured")
-          }
-          
-        }
-        catch (error) {
+        } catch (error) {
           console.log(error);
         }
       }
-        
     });
   };
   const {
     postState: { posts, postsLoading },
     getAllPosts,
     deletePost,
-    getDetailedPost
-  } = useContext(postContext)
-  
+    getDetailedPost,
+  } = useContext(postContext);
 
-  useState(() => getAllPosts(), [])
+  useState(() => getAllPosts(), []);
   const index = 1;
 
   return (
     <>
-        {posts.map(post => (
-          <tr>
-            <td title="No risk No story">{`0000${index}`}</td>
-            <td>
-              <div className="flex items-center gap-x-3">
-                <img
-                  src={
-                    post.image ? post.image : require("../../assets/logo.png")
-                  }
-                  alt=""
-                  className="w-[66px] h-[55px] rounded object-cover"
-                />
-                <div className="flex-1">
-                  <h3 className="font-semibold">{post.title}</h3>
-                  <time className="text-sm text-gray-500">{post.date}</time>
-                </div>
+      {posts.map((post) => (
+        <tr>
+          <td title="No risk No story">{`0000${index}`}</td>
+          <td>
+            <div className="flex items-center gap-x-3">
+              <img
+                src={post.image ? post.image : require("../../assets/logo.png")}
+                alt=""
+                className="w-[66px] h-[55px] rounded object-cover"
+              />
+              <div className="flex-1">
+                <h3 className="font-semibold">{post.title}</h3>
+                <time className="text-sm text-gray-500">{post.date}</time>
               </div>
-            </td>
-            <td>
-              <span className="text-gray-500">{post.category}</span>
-            </td>
-            <td>
-              <span className="text-gray-500">{post.user.username}</span>
-            </td>
-            <td>
-              <div className="flex items-center text-gray-500 gap-x-3">
-                <ActionView
-                  // onClick={() => navigate(`/${post.userId}-${post.slug}`)}
-                ></ActionView>
-                <ActionEdit
-                 // onClick={() => editPost(post._id)}
-                ></ActionEdit>
-                <ActionDelete
-                  onClick={() => handleDeletePost(post._id)}
-                ></ActionDelete>
-                </div>
-            </td>
-          </tr>
-        ))}
+            </div>
+          </td>
+          <td>
+            <span className="text-gray-500">{post.category}</span>
+          </td>
+          <td>
+            <span className="text-gray-500">{post.user.username}</span>
+          </td>
+          <td>
+            <div className="flex items-center text-gray-500 gap-x-3">
+              <ActionView
+              // onClick={() => navigate(`/${post.userId}-${post.slug}`)}
+              ></ActionView>
+              <ActionEdit
+              // onClick={() => editPost(post._id)}
+              ></ActionEdit>
+              <ActionDelete
+                onClick={() => handleDeletePost(post._id)}
+              ></ActionDelete>
+            </div>
+          </td>
+        </tr>
+      ))}
     </>
   );
 };

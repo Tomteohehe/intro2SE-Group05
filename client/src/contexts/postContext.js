@@ -10,8 +10,8 @@ const PostContextProvider = ({children}) => {
         post: null,
         posts: [],
         postsLoading: true,
-
     })
+
 
     // get all posts
     const getAllPosts = async() => {
