@@ -134,12 +134,6 @@ const UserInfo = ({ data }) => {
                 <div className="small_container">
                   <div className="flex items-center justify-between">
                     <Heading>Posts</Heading>
-                    {/* <span
-                      onClick={() => Navigate("/blog")}
-                      className="view-all"
-                    >
-                      View all
-                    </span> */}
                   </div>
                   <div className="grid-layout">
                     <PostNewestSmall></PostNewestSmall>
