@@ -61,7 +61,6 @@ const PostTable = () => {
     postState: { posts, postsLoading },
     getAllPosts,
     deletePost,
-    getDetailedPost,
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);

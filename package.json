@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.0",
+    "@mui/x-data-grid": "^6.18.5",
+    "@mui/x-data-grid-generator": "^6.18.5",
     "cloudinary": "^1.41.0",
     "cloudinary-react": "^1.8.1",
     "sweetalert2": "^11.10.0"

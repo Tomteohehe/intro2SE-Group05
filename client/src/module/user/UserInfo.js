@@ -40,11 +40,13 @@ const UserInfoStyles = styled.div`
     opacity: 0.5;
   }
 
+  .profile_container {
+    transform: translateX(-6%);
+  }
   .user_avt {
     width: 200px;
     height: 200px;
     border-radius: 100%;
-    transform: translateX(-20%);
 
     img {
       width: 100%;
@@ -55,10 +57,9 @@ const UserInfoStyles = styled.div`
   }
   .fl_button {
     color: white;
-    transform: translateY(220%);
     background-color: ${theme.primary};
     cursor: pointer;
-    padding: calc(0.7em + 0.5vw);
+    padding: calc(1em + 0.5vw);
     line-height: 1;
     border-radius: calc(0.1em + 0.4vw);
     font-weight: 600;
@@ -68,12 +69,16 @@ const UserInfoStyles = styled.div`
     justify-content: center;
     align-items: center;
   }
-  .fullname {
+  .user_info {
     text-align: center;
+  }
+
+  .fullname {
+    font-size: 24px;
   }
 `;
 
-const UserInfo = ({ data }) => {
+const UserInfo = () => {
   const searchTerm = useSelector((state) => state);
 
   const searchTitle = (data, searchTerm) => {
@@ -82,7 +87,7 @@ const UserInfo = ({ data }) => {
     );
   };
 
-  const filteredData = searchTitle(data, searchTerm);
+  // const filteredData = searchTitle(data, searchTerm);
 
   return (
     <UserInfoStyles>
@@ -103,32 +108,44 @@ const UserInfo = ({ data }) => {
           ></img>
           <div className="absolute background_blur"></div>
           <div className="small_container">
-            <div className="mb-20 profile_container">
-              <div className="flex w-full justify-evenly">
-                <div className="flex items-center gap-4 justify-evenly follow_info">
-                  <div>
-                    <p className="font-bold text-center text-black">10M</p>
-                    <span className="text-sm text-gray-500">Followers</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-center text-black">0</p>
-                    <span className="text-sm text-gray-500">Following</span>
-                  </div>
-                  <div>
-                    <p className="font-bold text-center text-black">69</p>
-                    <span className="text-sm text-gray-500">Posts</span>
-                  </div>
-                </div>
-                <div className="user_avt">
-                  <img src={BackgroundImage} alt="Avatar" />
+            <div className="flex items-center justify-center gap-16 mb-10 profile_container">
+              <div className="flex items-center gap-4 justify-evenly follow_info">
+                <div>
+                  <p className="font-bold text-center text-black">10M</p>
+                  <span className="text-sm text-gray-500">Followers</span>
                 </div>
                 <div>
-                  <button className="fl_button">Follow</button>
+                  <p className="font-bold text-center text-black">0</p>
+                  <span className="text-sm text-gray-500">Following</span>
+                </div>
+                <div>
+                  <p className="font-bold text-center text-black">69</p>
+                  <span className="text-sm text-gray-500">Posts</span>
                 </div>
               </div>
+              <div className="user_avt">
+                <img src={BackgroundImage} alt="Avatar" />
+              </div>
+              <div className="">
+                <button className="fl_button">Follow</button>
+              </div>
+            </div>
 
-              <div className="fullname">
-                <p>Andrew Tate</p>
+            <div className="mb-20 user_info">
+              <p className="text-lg font-bold fullname">Andrew Tate</p>
+              <div className="flex justify-center gap-3 mt-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  width="12"
+                  viewBox="0 0 384 512"
+                  className="text-gray-400"
+                >
+                  <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                </svg>
+                <span className="text-xs font-semibold text-gray-400 location">
+                  LOSANGELES, CALIFORNIA
+                </span>
               </div>
               <div className="posts">
                 <div className="small_container">

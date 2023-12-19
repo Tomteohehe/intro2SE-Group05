@@ -1,10 +1,7 @@
 import Toggle from "components/toggle/Toggle";
-import slugify from "slugify";
-import React, { useEffect, useMemo, useState, useContext, useRef } from "react";
-import ImageUpload from "components/image/ImageUpload";
+import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { postStatus } from "utils/constants";
 import { Label } from "components/label";
 import { Input } from "components/input";
 import { Field } from "components/field";
@@ -13,14 +10,9 @@ import { Button } from "components/button";
 import DashboardHeading from "module/dashboard/DashboardHeading";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import axios from "axios";
-import { imgbbAPI } from "config/apiConfig";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
-import { Image, Transformation } from "cloudinary-react";
-import { Helmet } from "react-helmet";
-import { validateFieldsNatively } from "@hookform/resolvers";
 
 const PostAddNew = () => {
   const navigate = useNavigate();
@@ -160,11 +152,6 @@ const PostAddNew = () => {
     // Hide the default image after upload
     setDefaultImageVisible(false);
   }
-
-  const handleRechooseImage = () => {
-    setDefaultImageVisible(true);
-  };
-
   // const modules = useMemo(
   //   () => ({
   //     toolbar: [

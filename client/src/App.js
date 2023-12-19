@@ -9,25 +9,53 @@ import PostAddNew from "module/post/PostAddNew";
 import UserProfile from "module/user/UserProfile";
 import DetailPage from "pages/DetailPage";
 import UserInfo from "module/user/UserInfo";
+import BlogPage from "pages/BlogPage";
+import AdminPage from "pages/AdminPage";
 
 function App() {
-  const data = [
+  const mock_data = [
+    /* your array of objects goes here */
     {
       id: 1,
-      title: "No room for self doubt",
+      title: "Introduction to React",
+      category: "Technology",
+      author: "John Doe",
+      date: "2023-01-15",
+      isAdmin: false,
     },
     {
       id: 2,
-      title: "Huynh Vinh Do",
+      title: "Exploring JavaScript ES6 Features",
+      category: "Programming",
+      author: "Jane Smith",
+      date: "2023-02-02",
+      isAdmin: true,
     },
     {
       id: 3,
-      title: "A whole universe in a single atom",
+      title: "Healthy Eating Habits",
+      category: "Lifestyle",
+      author: "Alex Johnson",
+      date: "2023-03-10",
+      isAdmin: false,
     },
     {
       id: 4,
-      title: "Fuck you I am great",
+      title: "Healthy Eating Habits",
+      category: "Knowledge",
+      author: "Mr Weirdo",
+      date: "2023-03-10",
+      isAdmin: false,
     },
+    {
+      id: 5,
+      title: "Healthy Eating Habits",
+      category: "Fitness",
+      author: "Alex Johnson",
+      date: "2023-03-10",
+      isAdmin: true,
+    },
+    // Add mo
   ];
   return (
     <div>
@@ -36,11 +64,12 @@ function App() {
         <Route path="/sign-in" element={<Auth authRoute="sign-in" />} />
         <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/abc" element={<DetailPage></DetailPage>}></Route>
-        <Route path="/admin" element={<DetailPage></DetailPage>}></Route>
+        <Route path="/admin" element={<AdminPage></AdminPage>}></Route>
         <Route
-          path="/user-info"
-          element={<UserInfo data={data}></UserInfo>}
+          path="/blog"
+          element={<BlogPage data={mock_data}></BlogPage>}
         ></Route>
+        <Route path="/user-info" element={<UserInfo></UserInfo>}></Route>
         <Route element={<ProtectedRoute Component={DashboardLayout} />}>
           <Route
             path="/dashboard"
