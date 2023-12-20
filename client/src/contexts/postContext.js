@@ -9,7 +9,9 @@ const PostContextProvider = ({ children }) => {
   const [postState, dispatch] = useReducer(postReducer, {
     post: null,
     posts: [],
-    postsLoading: true,
+    lastpost: [],
+    smalllastposts: [],
+    postsLoading: true
   });
 
   // get all posts
@@ -19,7 +21,7 @@ const PostContextProvider = ({ children }) => {
       if (response.data.success) {
         dispatch({
           type: "POSTS_LOADED_SUCCESS",
-          payload: response.data.posts,
+          payload: response.data.posts
         });
       }
     } catch (error) {
@@ -32,12 +34,47 @@ const PostContextProvider = ({ children }) => {
   // get detailed post
   const getDetailedPost = async (PostId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/post/${PostId}`
-      );
+      const response = await axios.post("http://localhost:5000/api/post/detailpost", PostId);
       if (response.data.success) {
-        dispatch({ type: "POSTS_LOADED_SUCCESS", payload: response.data.post });
+        dispatch({
+          type: "POSTS_LOADED_SUCCESS",
+          payload: response.data.posts
+        });
         return response.data;
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
+
+  // get newest large post
+  const getNewestLargePost = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/post/newestpostlarge");
+      if (response.data.success) {
+        dispatch({
+          type: "LARGEST_POST",
+          payload: response.data.posts
+        });
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
+
+  // get newest post
+  const getNewestPost = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/post/newestpost");
+      if (response.data.success) {
+        dispatch({
+          type: "NEWEST_POST",
+          payload: response.data.posts
+        });
       }
     } catch (error) {
       return error.response.data
@@ -83,6 +120,8 @@ const PostContextProvider = ({ children }) => {
     addPost,
     deletePost,
     getDetailedPost,
+    getNewestLargePost,
+    getNewestPost
   };
 
   return (

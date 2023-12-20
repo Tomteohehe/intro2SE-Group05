@@ -18,18 +18,18 @@ const PostTable = () => {
   //   fetchUser();
   // }, [post.userId]);
 
-  /*
-  const editPost = async (postId) => {
+  const detailPost = async (PostId) => {
+    const id = PostId
+    const idPostInfo = { id };
     try {
-      const data = await getDetailedPost(postId)
-      console.log(data)
+      const content = await getDetailedPost(idPostInfo)
+      console.log(content)
     }
     catch (error) {
       console.log(error);
     }
   }
-  */
-
+  
   const handleDeletePost = async (postId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -61,6 +61,7 @@ const PostTable = () => {
     postState: { posts, postsLoading },
     getAllPosts,
     deletePost,
+    getDetailedPost
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
@@ -96,7 +97,7 @@ const PostTable = () => {
               // onClick={() => navigate(`/${post.userId}-${post.slug}`)}
               ></ActionView>
               <ActionEdit
-              // onClick={() => editPost(post._id)}
+                onClick={() => detailPost(post._id)}
               ></ActionEdit>
               <ActionDelete
                 onClick={() => handleDeletePost(post._id)}

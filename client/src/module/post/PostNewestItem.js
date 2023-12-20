@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
+import { postContext } from "contexts/postContext";
 
 const PostNewestItemStyles = styled.div`
   display: flex;
@@ -47,32 +48,44 @@ const PostNewestItemStyles = styled.div`
 const POST_PER_PAGE = 1;
 
 const PostNewestItem = ({ user }) => {
+  /*
   const [posts, setPosts] = useState([]);
   const [, setLastDoc] = useState();
   const [, setTotal] = useState(0);
   const filter = "";
 
   console.log(posts);
+  */
 
+  const {
+    postState: { smalllastposts, postsLoading },
+    getNewestPost
+  } = useContext(postContext);
+
+  useState(() => getNewestPost(), []);
   return (
     <>
-      <PostNewestItemStyles>
-        <PostImage
-          url="https://images.unsplash.com/photo-1700141933748-4635f57d694e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-        ></PostImage>
-        <div className="post-content">
-          <PostCategory type="secondary">Religion</PostCategory>
-          <PostTitle size="normal">
-            Chúng ta có đang tiêu thụ nữ tính độc hại
-          </PostTitle>
-          <PostMeta
-            color="gray"
-            authorName="Hoang Tran Thong"
-            date="28 June"
-          ></PostMeta>
-        </div>
-      </PostNewestItemStyles>
+      {smalllastposts.map((post) => (
+        <PostNewestItemStyles>
+          <PostImage
+            url={`${post.image ||
+              `https://images.unsplash.com/photo-1700141933748-4635f57d694e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`
+            }`}
+            alt=""
+          ></PostImage>
+          <div className="post-content">
+            <PostCategory type="secondary">{post.category}</PostCategory>
+            <PostTitle size="normal">
+              {post.title}
+            </PostTitle>
+            <PostMeta
+              color="gray"
+              authorName={post.user.username}
+              date={post.date}
+            ></PostMeta>
+          </div>
+        </PostNewestItemStyles>
+      ))}
     </>
   );
 };

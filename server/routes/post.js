@@ -57,10 +57,47 @@
     // @desc Get detail post
     // @access Private
 
-    router.get('/:id', verifyToken, async(req, res) => {
+    router.post('/detailpost', verifyToken, async(req, res) => {
+        const { id } = req.body
         try {
-            const detailedPost = await Post.find({_id: req.params.id, user: req.userId}).populate('user', ['username'])
-            res.json({success: true, post: detailedPost})
+            const detailedPost = await Post.find({'_id': id}).populate('user', ['username'])
+            res.json({success: true, posts: detailedPost})
+        }   
+        catch(error) {
+            console.log(error)
+            res.status(500).json({
+                success: false,
+                message: 'internal server error'
+            })
+        }
+    })
+
+    // @route GET api/newestpostlarge
+    // @desc Get Newest post released
+    // @access Public
+
+    router.get('/newestpostlarge', async(req, res) => {
+        try {
+            const lastPost = await Post.find().sort({_id:-1}).limit(1).populate('user', ['username'])
+            res.json({success: true, posts: lastPost})
+        }   
+        catch(error) {
+            console.log(error)
+            res.status(500).json({
+                success: false,
+                message: 'internal server error'
+            })
+        }
+    })
+
+    // @route GET api/newestpost
+    // @desc Get Newest post released
+    // @access Public
+
+    router.get('/newestpost', async(req, res) => {
+        try {
+            const somelastPost = await Post.find().sort({_id:-1}).limit(3).skip(1).populate('user', ['username'])
+            res.json({success: true, posts: somelastPost})
         }   
         catch(error) {
             console.log(error)
