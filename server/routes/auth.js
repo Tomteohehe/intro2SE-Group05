@@ -38,11 +38,6 @@ router.post('/register', async(req, res) => {
         if(existUsername){
             return res.status(400).json({success: false, message: 'Username is already in use'})
         }
-
-        const existEmail = await User.findOne({email})
-        if(existEmail){
-            return res.status(400).json({success: false, message: 'Email is already in use'})
-        }
         
         const newUser = new User({ username, email, password })
         await newUser.save()
@@ -64,21 +59,21 @@ router.post('/register', async(req, res) => {
 // @access Public
 
 router.post('/login', async(req, res) => {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    if(!email || !password){
-        return res.status(400).json({success: false, message: 'Missing email and/or password'})
+    if(!username || !password){
+        return res.status(400).json({success: false, message: 'Missing username and/or password'})
     }
     try {
-        const existEmail = await User.findOne({email})
-        if(!existEmail) {
-            return res.status(400).json({success: false, message: 'Error in email or password'})
+        const existUsername = await User.findOne({username})
+        if(!existUsername) {
+            return res.status(400).json({success: false, message: 'Error in username or password'})
         }
-        if(existEmail.password != password){
+        if(existUsername.password != password){
             return res.status(400).json({success: false, message: 'Wrong password'})
         }
-        const accessToken = jwt.sign({userId: existEmail._id}, process.env.ACCESS_TOKEN)
-        res.json({success: true, message: "User logged in successfully", accessToken, username: existEmail.username})
+        const accessToken = jwt.sign({userId: existUsername._id}, process.env.ACCESS_TOKEN)
+        res.json({success: true, message: "User logged in successfully", accessToken, username: existUsername.username})
     }
    
     catch(error){

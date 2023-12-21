@@ -48,9 +48,9 @@ const SignInPage = () => {
   }, []);
 
   const handleSignIn = async (values) => {
-    const { email, password } = values;
+    const { username, password } = values;
     try {
-      const loginData = await loginUser({ email, password });
+      const loginData = await loginUser({ username, password });
       if (loginData["success"]) {
         toast.success(`Welcome back, ${loginData["username"]}!`);
         navigate("/");
