@@ -35,8 +35,6 @@ const HomeNewest = () => {
           <PostNewestLarge></PostNewestLarge>
           <div className="newest-item-sidebar">
             <PostNewestItem></PostNewestItem>
-            <PostNewestItem></PostNewestItem>
-            <PostNewestItem></PostNewestItem>
           </div>
         </div>
       </div>

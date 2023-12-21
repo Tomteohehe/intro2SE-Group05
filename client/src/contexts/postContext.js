@@ -7,7 +7,7 @@ export const postContext = createContext();
 const PostContextProvider = ({ children }) => {
   // state
   const [postState, dispatch] = useReducer(postReducer, {
-    post: null,
+    post: {},
     posts: [],
     allposts: [],
     lastpost: [],

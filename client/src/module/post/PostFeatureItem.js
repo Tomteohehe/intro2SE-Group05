@@ -49,33 +49,31 @@ const PostFeatureItemStyles = styled.div`
   }
 `;
 
-const PostFeatureItem = ({ post }) => {
-  const [category, setCategory] = useState();
-  const [user, setUser] = useState();
+const truncateTitle = (title, maxLength) => {
+  if (title.length <= maxLength) {
+    return title;
+  } else {
+    return title.slice(0, maxLength) + "...";
+  }
+};
 
-  const date = post?.createdAt?.seconds
-    ? new Date(post?.createdAt?.seconds * 1000)
-    : new Date();
-  const formatDate = new Date(date).toLocaleDateString("vi-VI");
+const PostFeatureItem = ({ post }) => {
+  const truncatedTitle = truncateTitle(post?.title, 60);
 
   return (
     <PostFeatureItemStyles>
-      <PostImage
-        url="https://images.unsplash.com/photo-1700366232028-d64ab5f6c3a8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="unsplash"
-        to="/"
-      ></PostImage>
-      {/* <div className="post-overlay"></div> */}
+      <PostImage url={post?.image} alt="unsplash" to="/"></PostImage>
+      <div className="post-overlay"></div>
       <div className="post-content">
         <div className="post-top">
-          <PostCategory>Knowledge</PostCategory>
+          <PostCategory>{post?.category}</PostCategory>
           <PostMeta
             color="inherit"
             authorName="MrWeirdo"
-            date="21 Nov"
+            date={post?.date}
           ></PostMeta>
         </div>
-        <PostTitle size="large">No room for self-doubt</PostTitle>
+        <PostTitle size="large">{truncatedTitle}</PostTitle>
       </div>
     </PostFeatureItemStyles>
   );

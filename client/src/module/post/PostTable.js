@@ -2,6 +2,7 @@ import { ActionDelete, ActionEdit, ActionView } from "components/action";
 import React, { useEffect, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { postContext } from "../../contexts/postContext";
+import { useNavigate } from "react-router-dom";
 
 const PostTable = ({ filterposts }) => {
   const detailPost = async (PostId) => {
@@ -9,7 +10,7 @@ const PostTable = ({ filterposts }) => {
     const idPostInfo = { id };
     try {
       const content = await getDetailedPost(idPostInfo);
-      console.log(content);
+      console.log(content.posts[0]);
     } catch (error) {
       console.log(error);
     }
@@ -44,13 +45,13 @@ const PostTable = ({ filterposts }) => {
   };
   const { deletePost, getDetailedPost } = useContext(postContext);
 
-  const index = 1;
+  const navigate = useNavigate();
 
   return (
     <>
       {filterposts.map((post) => (
         <tr>
-          <td>{`0000${index}`}</td>
+          <td>{`0${index + 1}`}</td>
           <td>
             <div className="flex items-center gap-x-3">
               <img
@@ -72,9 +73,7 @@ const PostTable = ({ filterposts }) => {
           </td>
           <td>
             <div className="flex items-center text-gray-500 gap-x-3">
-              <ActionView
-              // onClick={() => navigate(`/${post.userId}-${post.slug}`)}
-              ></ActionView>
+              <ActionView onClick={() => navigate(`/${post._id}`)}></ActionView>
               <ActionEdit onClick={() => detailPost(post._id)}></ActionEdit>
               <ActionDelete
                 onClick={() => handleDeletePost(post._id)}

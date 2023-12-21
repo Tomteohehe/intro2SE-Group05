@@ -95,31 +95,29 @@ const PostDetailsPageStyles = styled.div`
 
 const DetailPage = () => {
   const { slug } = useParams();
-  const id = "657e64ce7add08a3ea88f64a";
-  const { getDetailedPost } = useContext(postContext);
 
-  // const userId = slug?.substr(0, slug.indexOf("-"));
-  // const slugCopy = slug?.substr(userId.length + 1, slug.length);
-  const [postInfo, setPostInfo] = useState({});
-  // const [user, setUser] = useState();
-  // const [category, setCategory] = useState();
+  const {
+    postState: { post },
+    getDetailedPost,
+  } = useContext(postContext);
+  const id = { slug };
 
-  const date = postInfo?.createdAt?.seconds
-    ? new Date(postInfo?.createdAt?.seconds * 1000)
-    : new Date();
-  // const formatDate = new Date(date).toLocaleDateString("vi-VI");
-
-  // if (!slugCopy || !postInfo.title) return <PageNotFound></PageNotFound>;
-  const getPost = async (postId) => {
-    try {
-      const data = await getDetailedPost(postId);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getPost(id);
+  useState(() => getDetailedPost(id), {});
+  console.log(post);
+  // const getPost = async (postId) => {
+  //   const id = postId;
+  //   const idPostInfo = { id };
+  //   try {
+  //     const content = await getDetailedPost(idPostInfo);
+  //     return content.posts[0];
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  //   const data = getPost(slug);
+  //   console.log(data);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
@@ -127,10 +125,7 @@ const DetailPage = () => {
         <Layout>
           <div className="container">
             <div className="post-header">
-              <PostImage
-                url="https://images.unsplash.com/photo-1637768285073-6af669cd65bd?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                className="post-feature"
-              ></PostImage>
+              <PostImage url="" className="post-feature"></PostImage>
               <div className="post-info">
                 <PostCategory className="mb-6">Lifestyle</PostCategory>
                 <h1 className="post-heading">

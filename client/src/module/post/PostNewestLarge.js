@@ -22,27 +22,10 @@ const PostNewestLargeStyles = styled.div`
   }
 `;
 
-const POST_PER_PAGE = 1;
-
-const PostNewestLarge = ({ userList = [] }) => {
-  /*
-  const randomNum = Math.floor(Math.random(0, 1) * 2);
-  const user = userList[randomNum];
-  const [posts, setPosts] = useState([]);
-  const [filter] = useState("");
-  const [, setLastDoc] = useState();
-  const [, setTotal] = useState(0);
-  const [category, setCategory] = useState("");
-
-  const date = posts[0]?.createdAt?.seconds
-    ? new Date(posts[0]?.createdAt?.seconds * 1000)
-    : new Date();
-  const formatDate = new Date(date).toLocaleDateString("vi-VI");
-  */
-
+const PostNewestLarge = () => {
   const {
     postState: { lastpost, postsLoading },
-    getNewestLargePost
+    getNewestLargePost,
   } = useContext(postContext);
 
   useState(() => getNewestLargePost(), []);

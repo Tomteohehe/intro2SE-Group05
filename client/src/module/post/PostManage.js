@@ -30,9 +30,12 @@ const PostManage = () => {
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
-  console.log(posts);
 
-  const [filters, setFilters] = useState({ title: "", category: "" });
+  const [filters, setFilters] = useState({
+    title: "",
+    category: "",
+    author: "",
+  });
   const filteredPosts = posts.filter((post) => {
     // Filter by category
     const isCategoryMatch =
@@ -46,8 +49,6 @@ const PostManage = () => {
     // Return true only if both date and category match
     return isCategoryMatch && isTitleMatch;
   });
-
-  console.log(filteredPosts);
 
   const handleCategoryChange = (e) => {
     setFilters({ ...filters, category: e.target.value });
@@ -67,7 +68,7 @@ const PostManage = () => {
         ></DashboardHeading>
       </div>
       <div className="flex justify-end gap-5 mb-10">
-        <div className="w-full max-w-[200px] dropdown">
+        <div className="w-full max-w-[200px] dropdown flex items-center justify-center">
           <label className="p-3 text-black bg-gray-200 rounded-md">
             <select
               className="bg-inherit"
@@ -87,7 +88,7 @@ const PostManage = () => {
         <div className="w-full max-w-[300px] search-post">
           <input
             type="text"
-            className="w-full p-4 border border-gray-300 border-solid rounded-lg"
+            className="w-full p-4 border border-gray-500 border-solid rounded-lg shadow-sm"
             placeholder="Search post..."
             onChange={handleTitleChange}
           />
@@ -108,11 +109,7 @@ const PostManage = () => {
         </tbody>
       </Table>
       <div className="mt-10 text-center">
-        <Button
-          kind="ghost"
-          className="mx-auto w-[200px]"
-          // onClick={handleLoadMorePost}
-        >
+        <Button kind="ghost" className="mx-auto w-[200px]">
           See more +
         </Button>
       </div>
