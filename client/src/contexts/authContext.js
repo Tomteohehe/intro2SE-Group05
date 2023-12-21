@@ -11,6 +11,7 @@ const AuthContextProvider = ({ children }) => {
     authLoading: true,
     isAuthenticated: false,
     user: null,
+    alluser: []
   });
 
   // authenticate user
@@ -117,6 +118,23 @@ const AuthContextProvider = ({ children }) => {
     });
   };
 
+  const allUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/auth/alluser");
+      if (response.data.success) {
+        dispatch({
+          type: "ALL_USER",
+          payload: { alluser: response.data.users }
+        });
+      }
+    } 
+    catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  }
+
   //context data
   const authContextData = {
     loginUser,
@@ -124,6 +142,7 @@ const AuthContextProvider = ({ children }) => {
     registerUser,
     logoutUser,
     updateUser,
+    allUser
   };
 
   // return provider

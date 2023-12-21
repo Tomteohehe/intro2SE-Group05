@@ -136,7 +136,7 @@ router.put('/:id', verifyToken, async(req, res) => {
 
 router.get("/alluser", async (req, res) => {
   const allUser = await User.find();
-  res.json(allUser);
+  res.json({success: true, users: allUser});
 });
 
 module.exports = router;
