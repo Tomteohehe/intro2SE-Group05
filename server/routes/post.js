@@ -150,12 +150,10 @@ router.put("/:id", verifyToken, async (req, res) => {
 
     // User not authorised to update post or post not found
     if (!updatedPost) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: "Post not found or user not authorized",
-        });
+      return res.status(401).json({
+        success: false,
+        message: "Post not found or user not authorized",
+      });
     }
 
     return res.json({
@@ -183,12 +181,10 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
     // user not authorised or post not found
     if (!deletedPost) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: "Post not found or user not authorized",
-        });
+      return res.status(401).json({
+        success: false,
+        message: "Post not found or user not authorized",
+      });
     }
 
     return res.json({
@@ -207,7 +203,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
 router.get("/allpost", async (req, res) => {
   const allPost = await Post.find();
-  res.json({success: true, posts: allPost});
+  res.json({ success: true, posts: allPost });
 });
 
 module.exports = router;

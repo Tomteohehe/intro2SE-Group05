@@ -1,28 +1,19 @@
-import { Dropdown } from "components/dropdown";
-import { Field } from "components/field";
-import { Label } from "components/label";
+import Heading from "components/layout/Heading";
 import Layout from "components/layout/Layout";
 import { postContext } from "contexts/postContext";
+import PostNewestSmall from "module/post/PostNewestSmall";
 import React, { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { categories } from "utils/constants";
 
-const BlogPageStyles = styled.div``;
-
-const blogPosts = [
-  { id: 1, title: "Abc", date: "2023-01-15", category: "Technology" },
-  { id: 2, title: "Huynh Vinh Do", date: "2023-02-20", category: "Travel" },
-  { id: 3, title: "I love u", date: "2023-03-10", category: "Science" },
-  { id: 4, title: "Coffee khum", date: "2023-03-17", category: "Lifestyle" },
-  { id: 5, title: "Mr Weirdoo", date: "2023-09-20", category: "Fitness" },
-  {
-    id: 6,
-    title: "Pham Huynh Tan Dat",
-    date: "2023-11-11",
-    category: "Travel",
-  },
-  // ... other posts
-];
+const BlogPageStyles = styled.div`
+  .small_container {
+    width: 65vw;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+`;
 
 const BlogPage = () => {
   const {
@@ -31,10 +22,10 @@ const BlogPage = () => {
   } = useContext(postContext);
 
   useState(() => getAllPostsEver(), []);
-  console.log(allposts);
 
   const [filters, setFilters] = useState({ date: "", category: "" });
-  const [selectCategory, setSelectCategory] = useState("");
+
+  const searchTerm = useSelector((state) => state);
 
   const filteredPosts = allposts.filter((post) => {
     // Filter by date
@@ -45,8 +36,14 @@ const BlogPage = () => {
     const isCategoryMatch =
       !filters.category || post.category === filters.category;
 
+    // Filter by title
+    const isTitleMatch = post.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    console.log("isTitleMatch", isTitleMatch);
+
     // Return true only if both date and category match
-    return isDateMatch && isCategoryMatch;
+    return isDateMatch && isCategoryMatch && isTitleMatch;
   });
 
   const handleDateChange = (event) => {
@@ -57,43 +54,54 @@ const BlogPage = () => {
     setFilters({ ...filters, category: event.target.value });
   };
 
-  const handleClickOption = (item) => {
-    setSelectCategory(item);
-  };
-
   return (
     <BlogPageStyles>
       <Layout>
-        <div className="container">
-          <label>
-            Filter by Date:
-            <input
-              type="date"
-              value={filters.date}
-              onChange={handleDateChange}
-            />
-          </label>
-          <label>
-            Filter by Category:
-            <select value={filters.category} onChange={handleCategoryChange}>
-              {categories.map((item) =>
-                item.name === "All Categories" ? (
-                  <option value="">{item.name}</option>
-                ) : (
-                  <option value={item.name}>{item.name}</option>
-                )
-              )}
-              {/* Add other categories as needed */}
-            </select>
-          </label>
+        <div className="small_container">
+          <div className="flex justify-between mb-10 filter_bar">
+            <label className="flex items-center gap-3">
+              <p>Search by Date:</p>
+              <input
+                type="date"
+                value={filters.date}
+                onChange={handleDateChange}
+              />
+            </label>
 
-          <ul>
-            {filteredPosts.map((post) => (
-              <li key={post.id}>
-                {post.title} - {post.date} - {post.category}
-              </li>
-            ))}
-          </ul>
+            <label className="p-3 text-black bg-gray-200 rounded-md">
+              <select
+                className="bg-inherit"
+                value={filters.category}
+                onChange={handleCategoryChange}
+              >
+                {categories.map((item) =>
+                  item.name === "All Categories" ? (
+                    <option value="">{item.name}</option>
+                  ) : (
+                    <option value={item.name}>{item.name}</option>
+                  )
+                )}
+                {/* Add other categories as needed */}
+              </select>
+            </label>
+          </div>
+
+          <div className="posts">
+            <div className="flex items-center justify-between">
+              <Heading>Posts</Heading>
+              {/* <span
+                      onClick={() => Navigate("/blog")}
+                      className="view-all"
+                    >
+                      View all
+                    </span> */}
+            </div>
+            <div className="grid-layout">
+              {filteredPosts?.map((post) => (
+                <PostNewestSmall post={post}></PostNewestSmall>
+              ))}
+            </div>
+          </div>
         </div>
       </Layout>
     </BlogPageStyles>

@@ -5,9 +5,6 @@ import styled from "styled-components";
 import BackgroundImage from "../../assets/banner.jpg";
 import { theme } from "utils/constants";
 import Heading from "components/layout/Heading";
-import { Navigate } from "react-router-dom";
-import PostFeature from "module/post/PostFeature";
-import PostNewestItem from "module/post/PostNewestItem";
 import PostNewestSmall from "module/post/PostNewestSmall";
 
 const UserInfoStyles = styled.div`
