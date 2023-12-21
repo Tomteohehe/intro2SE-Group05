@@ -147,16 +147,31 @@ const UserInfo = () => {
                   LOSANGELES, CALIFORNIA
                 </span>
               </div>
-              <div className="posts">
-                <div className="small_container">
-                  <div className="flex items-center justify-between">
-                    <Heading>Posts</Heading>
-                  </div>
-                  <div className="grid-layout">
-                    <PostNewestSmall></PostNewestSmall>
-                    <PostNewestSmall></PostNewestSmall>
-                    <PostNewestSmall></PostNewestSmall>
-                  </div>
+              <div className="mt-5">
+                <span className="text-sm desc">
+                  An artist of considerable range, Jenna the name taken by
+                  Melbourne-raised, Brooklyn-based Nick Murphy writes, performs
+                  and records all of his own music, giving it a warm, intimate
+                  feel with a solid groove structure. An artist of considerable
+                  range.
+                </span>
+              </div>
+            </div>
+            <div className="posts">
+              <div className="small_container">
+                <div className="flex items-center justify-between">
+                  <Heading>Posts</Heading>
+                  {/* <span
+                      onClick={() => Navigate("/blog")}
+                      className="view-all"
+                    >
+                      View all
+                    </span> */}
+                </div>
+                <div className="grid-layout">
+                  <PostNewestSmall></PostNewestSmall>
+                  <PostNewestSmall></PostNewestSmall>
+                  <PostNewestSmall></PostNewestSmall>
                 </div>
               </div>
             </div>

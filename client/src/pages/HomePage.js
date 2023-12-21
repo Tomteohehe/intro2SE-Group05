@@ -4,6 +4,7 @@ import Layout from "../components/layout/Layout";
 import HomeBanner from "../module/home/HomeBanner";
 import HomeFeature from "../module/home/HomeFeature";
 import HomeNewest from "module/home/HomeNewest";
+
 // import HomeNewest from "module/home/HomeNewest";
 
 const HomePageStyles = styled.div`

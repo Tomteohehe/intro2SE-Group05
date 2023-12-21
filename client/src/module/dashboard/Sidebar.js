@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -130,51 +130,49 @@ const sidebarLinks = [
         />
       </svg>
     ),
-    // onClick: () => {
-    //   Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#1DC071",
-    //     cancelButtonColor: "#ef233c",
-    //     confirmButtonText: "Yes, log out!",
-    //   }).then(async (result) => {
-    //     if (result.isConfirmed) {
-    //       signOut(auth);
-    //       Swal.fire("Logged out!", "You have been logged out.", "success");
-    //     }
-    //   });
-    // },
+    onClick: () => {},
   },
 ];
 
 const Sidebar = () => {
-  const {
-		logoutUser
-	} = useContext(authContext)
-	const logout = () => logoutUser()
+  const { logoutUser } = useContext(authContext);
+  const logout = () => logoutUser();
 
   return (
     <SidebarStyles className="shadow-lg">
       {sidebarLinks.map((link) => {
-        /*if (link.onClick) {
+        if (link.onClick) {
           return (
-            <div onClick={link.onClick} className="menu-item" key={link.title}>
+            <div
+              onClick={() => {
+                Swal.fire({
+                  title: "Are you sure?",
+                  text: "You won't be able to revert this!",
+                  icon: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#1DC071",
+                  cancelButtonColor: "#ef233c",
+                  confirmButtonText: "Yes, log out!",
+                }).then(async (result) => {
+                  if (result.isConfirmed) {
+                    logout();
+                    Swal.fire(
+                      "Logged out!",
+                      "You have been logged out.",
+                      "success"
+                    );
+                  }
+                });
+              }}
+              className="menu-item"
+              key={link.title}
+            >
               <span className="menu-icon">{link.icon}</span>
               <span className="menu-text">{link.title}</span>
             </div>
           );
-        }*/
-        if(link.title === "Log out") {
-          return (
-            <NavLink onClick={logout} to={link.url} className="menu-item" key={link.title}>
-              <span className="menu-icon">{link.icon}</span>
-              <span className="menu-text">{link.title}</span>
-            </NavLink>
-          )
         }
-        else return (
+        return (
           <NavLink to={link.url} className="menu-item" key={link.title}>
             <span className="menu-icon">{link.icon}</span>
             <span className="menu-text">{link.title}</span>

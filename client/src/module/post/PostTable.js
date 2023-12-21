@@ -19,17 +19,16 @@ const PostTable = () => {
   // }, [post.userId]);
 
   const detailPost = async (PostId) => {
-    const id = PostId
+    const id = PostId;
     const idPostInfo = { id };
     try {
-      const content = await getDetailedPost(idPostInfo)
-      console.log(content)
-    }
-    catch (error) {
+      const content = await getDetailedPost(idPostInfo);
+      console.log(content);
+    } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
+
   const handleDeletePost = async (postId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -61,7 +60,7 @@ const PostTable = () => {
     postState: { posts, postsLoading },
     getAllPosts,
     deletePost,
-    getDetailedPost
+    getDetailedPost,
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
@@ -71,7 +70,7 @@ const PostTable = () => {
     <>
       {posts.map((post) => (
         <tr>
-          <td title="No risk No story">{`0000${index}`}</td>
+          <td>{`0000${index}`}</td>
           <td>
             <div className="flex items-center gap-x-3">
               <img
@@ -96,9 +95,7 @@ const PostTable = () => {
               <ActionView
               // onClick={() => navigate(`/${post.userId}-${post.slug}`)}
               ></ActionView>
-              <ActionEdit
-                onClick={() => detailPost(post._id)}
-              ></ActionEdit>
+              <ActionEdit onClick={() => detailPost(post._id)}></ActionEdit>
               <ActionDelete
                 onClick={() => handleDeletePost(post._id)}
               ></ActionDelete>

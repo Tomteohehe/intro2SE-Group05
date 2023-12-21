@@ -1,11 +1,12 @@
 import { Button } from "components/button";
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useDispatch } from "react-redux";
 import logo from "./logo.png";
 import { setSearchTerm } from "actions/actions";
+import { authContext } from "contexts/authContext";
 
 const menuLinks = [
   {
@@ -233,6 +234,7 @@ const HeaderStyles = styled.header`
 `;
 const Header = () => {
   const [show, setShow] = useState(false);
+  const { loginUser } = useContext(authContext);
 
   const dispatch = useDispatch();
 
@@ -307,7 +309,7 @@ const Header = () => {
               </svg>
             </span>
           </div>
-          {
+          {!loginUser ? (
             <Button
               type="button"
               height="56px"
@@ -316,7 +318,18 @@ const Header = () => {
             >
               Login
             </Button>
-          }
+          ) : (
+            <div>
+              <Button
+                type="button"
+                height="56px"
+                className="header-button"
+                to="/dashboard"
+              >
+                Dashboard
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </HeaderStyles>

@@ -7,9 +7,8 @@ import Input from "../components/input/Input";
 import { Label } from "../components/label";
 import AuthenticationPage from "./AuthenticationPage";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import InputPasswordToggle from "../components/input/InputPasswordToggle"
+import InputPasswordToggle from "../components/input/InputPasswordToggle";
 import { authContext } from "../contexts/authContext";
 
 const schema = yup.object({
@@ -24,7 +23,8 @@ const schema = yup.object({
 });
 
 const SignInPage = () => {
-	const { loginUser } = useContext(authContext)
+  const { loginUser } = useContext(authContext);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -48,19 +48,18 @@ const SignInPage = () => {
   }, []);
 
   const handleSignIn = async (values) => {
-    const { email, password } = values
+    const { email, password } = values;
     try {
-      const loginData = await loginUser({email, password})
-      if (loginData['success']){
-        toast.success(`Welcome back, ${loginData['username']}!`);
-        console.log(loginData.message)
+      const loginData = await loginUser({ email, password });
+      if (loginData["success"]) {
+        toast.success(`Welcome back, ${loginData["username"]}!`);
+        navigate("/");
+        console.log(loginData.message);
+      } else {
+        toast.error(loginData["message"]);
       }
-      else {
-        toast.error(loginData['message'])
-      }
-    }
-    catch (error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
 
     // try {

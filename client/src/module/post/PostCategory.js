@@ -39,9 +39,7 @@ const PostCategory = ({
   className = "",
   categoryId = "",
 }) => {
-  console.log(categoryId);
   const [category, setCategory] = useState("");
-  console.log(category);
   return (
     <PostCategoryStyles type={type} className={`post-category ${className}`}>
       {children || category?.name}

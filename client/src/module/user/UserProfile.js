@@ -95,7 +95,7 @@ const UserProfile = () => {
           <Field>
             <Label>Image</Label>
             <img
-              className="w-[50%] h-[90%] mb-3"
+              className="w-[50%] h-[90%] mb-3 rounded-3xl"
               src={url ? url : user.avatar}
               alt="UserAvatar"
             ></img>
