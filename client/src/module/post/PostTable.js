@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { postContext } from "../../contexts/postContext";
 
-const PostTable = ({ posts }) => {
+const PostTable = ({ filterposts }) => {
   const detailPost = async (PostId) => {
     const id = PostId;
     const idPostInfo = { id };
@@ -48,7 +48,7 @@ const PostTable = ({ posts }) => {
 
   return (
     <>
-      {posts.map((post) => (
+      {filterposts.map((post) => (
         <tr>
           <td>{`0000${index}`}</td>
           <td>

@@ -104,7 +104,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          <PostTable post={filteredPosts}></PostTable>
+          <PostTable filterposts={filteredPosts}></PostTable>
         </tbody>
       </Table>
       <div className="mt-10 text-center">
