@@ -45,14 +45,13 @@ const PostTable = ({ filterposts }) => {
   };
   const { deletePost, getDetailedPost } = useContext(postContext);
 
-  const index = 1;
   const navigate = useNavigate();
 
   return (
     <>
-      {filterposts.map((post) => (
+      {filterposts.map((post, index) => (
         <tr>
-          <td>{`0000${index}`}</td>
+          <td>{`0${index + 1}`}</td>
           <td>
             <div className="flex items-center gap-x-3">
               <img
