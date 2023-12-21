@@ -9,6 +9,7 @@ const PostContextProvider = ({ children }) => {
   const [postState, dispatch] = useReducer(postReducer, {
     post: null,
     posts: [],
+    allposts: [],
     lastpost: [],
     smalllastposts: [],
     postsLoading: true
@@ -21,6 +22,23 @@ const PostContextProvider = ({ children }) => {
       if (response.data.success) {
         dispatch({
           type: "POSTS_LOADED_SUCCESS",
+          payload: response.data.posts
+        });
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
+
+  // get all posts
+  const getAllPostsEver = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/post/allpost");
+      if (response.data.success) {
+        dispatch({
+          type: "ALL",
           payload: response.data.posts
         });
       }
@@ -117,6 +135,7 @@ const PostContextProvider = ({ children }) => {
   const postContextData = {
     postState,
     getAllPosts,
+    getAllPostsEver,
     addPost,
     deletePost,
     getDetailedPost,

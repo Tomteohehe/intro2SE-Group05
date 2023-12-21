@@ -25,18 +25,18 @@ const blogPosts = [
 ];
 
 const BlogPage = () => {
-  // const {
-  //   postState: { posts, postsLoading },
-  //   getAllPosts,
-  // } = useContext(postContext);
+  const {
+    postState: { allposts, postsLoading },
+    getAllPostsEver,
+  } = useContext(postContext);
 
-  // useState(() => getAllPosts(), []);
-  // console.log(posts);
+  useState(() => getAllPostsEver(), []);
+  console.log(allposts);
 
   const [filters, setFilters] = useState({ date: "", category: "" });
   const [selectCategory, setSelectCategory] = useState("");
 
-  const filteredPosts = blogPosts.filter((post) => {
+  const filteredPosts = allposts.filter((post) => {
     // Filter by date
     const isDateMatch =
       !filters.date || new Date(post.date) >= new Date(filters.date);

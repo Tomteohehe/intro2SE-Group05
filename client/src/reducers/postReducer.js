@@ -7,6 +7,12 @@ export const postReducer = (state, action) => {
                 posts: payload,
                 postsLoading: false
             }
+         case 'ALL':
+            return {
+                ...state,
+                allposts: payload,
+                postsLoading: false
+            }
         /*
         case 'ADD_POST':
             return {

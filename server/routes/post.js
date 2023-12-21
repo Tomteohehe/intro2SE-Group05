@@ -207,7 +207,7 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
 router.get("/allpost", async (req, res) => {
   const allPost = await Post.find();
-  res.json(allPost);
+  res.json({success: true, posts: allPost});
 });
 
 module.exports = router;
