@@ -17,7 +17,7 @@ const BlogPageStyles = styled.div`
 
 const BlogPage = () => {
   const {
-    postState: { allposts, postsLoading },
+    postState: { allposts },
     getAllPostsEver,
   } = useContext(postContext);
 
@@ -67,7 +67,6 @@ const BlogPage = () => {
                 onChange={handleDateChange}
               />
             </label>
-
             <label className="p-3 text-black bg-gray-200 rounded-md">
               <select
                 className="bg-inherit"
@@ -81,7 +80,6 @@ const BlogPage = () => {
                     <option value={item.name}>{item.name}</option>
                   )
                 )}
-                {/* Add other categories as needed */}
               </select>
             </label>
           </div>

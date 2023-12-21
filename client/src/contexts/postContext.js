@@ -12,7 +12,7 @@ const PostContextProvider = ({ children }) => {
     allposts: [],
     lastpost: [],
     smalllastposts: [],
-    postsLoading: true
+    postsLoading: true,
   });
 
   // get all posts
@@ -22,7 +22,7 @@ const PostContextProvider = ({ children }) => {
       if (response.data.success) {
         dispatch({
           type: "POSTS_LOADED_SUCCESS",
-          payload: response.data.posts
+          payload: response.data.posts,
         });
       }
     } catch (error) {
@@ -35,11 +35,13 @@ const PostContextProvider = ({ children }) => {
   // get all posts
   const getAllPostsEver = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/post/allpost");
+      const response = await axios.get(
+        "http://localhost:5000/api/post/allpost"
+      );
       if (response.data.success) {
         dispatch({
           type: "ALL",
-          payload: response.data.posts
+          payload: response.data.posts,
         });
       }
     } catch (error) {
@@ -52,11 +54,14 @@ const PostContextProvider = ({ children }) => {
   // get detailed post
   const getDetailedPost = async (PostId) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/post/detailpost", PostId);
+      const response = await axios.post(
+        "http://localhost:5000/api/post/detailpost",
+        PostId
+      );
       if (response.data.success) {
         dispatch({
           type: "POSTS_LOADED_SUCCESS",
-          payload: response.data.posts
+          payload: response.data.posts,
         });
         return response.data;
       }
@@ -70,11 +75,13 @@ const PostContextProvider = ({ children }) => {
   // get newest large post
   const getNewestLargePost = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/post/newestpostlarge");
+      const response = await axios.get(
+        "http://localhost:5000/api/post/newestpostlarge"
+      );
       if (response.data.success) {
         dispatch({
           type: "LARGEST_POST",
-          payload: response.data.posts
+          payload: response.data.posts,
         });
       }
     } catch (error) {
@@ -87,11 +94,13 @@ const PostContextProvider = ({ children }) => {
   // get newest post
   const getNewestPost = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/post/newestpost");
+      const response = await axios.get(
+        "http://localhost:5000/api/post/newestpost"
+      );
       if (response.data.success) {
         dispatch({
           type: "NEWEST_POST",
-          payload: response.data.posts
+          payload: response.data.posts,
         });
       }
     } catch (error) {
@@ -140,7 +149,7 @@ const PostContextProvider = ({ children }) => {
     deletePost,
     getDetailedPost,
     getNewestLargePost,
-    getNewestPost
+    getNewestPost,
   };
 
   return (

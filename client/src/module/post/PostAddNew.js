@@ -328,7 +328,7 @@ const PostAddNew = () => {
               <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
               <Dropdown.List>
                 {categories.length > 0 &&
-                  categories.map((item) => (
+                  categories.slice(1).map((item) => (
                     <Dropdown.Option
                       key={item.id}
                       onClick={() => handleClickOption(item)}

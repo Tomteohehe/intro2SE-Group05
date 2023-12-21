@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "components/button";
-import { Dropdown } from "components/dropdown";
 import { Table } from "components/table";
 import DashboardHeading from "module/dashboard/DashboardHeading";
 import styled from "styled-components";
 import PostTable from "./PostTable";
+import { categories } from "utils/constants";
+import { postContext } from "contexts/postContext";
 
 const PostManageStyles = styled.div`
   @media screen and (max-width: 800px) {
@@ -23,30 +24,38 @@ const PostManageStyles = styled.div`
 `;
 
 const PostManage = () => {
-  // const handleLoadMorePost = async () => {
-  //   const nextRef = query(
-  //     collection(db, "users", userInfo?.uid, "posts"),
-  //     startAfter(lastDoc || 0),
-  //     limit(POST_PER_PAGE)
-  //   );
+  const {
+    postState: { posts },
+    getAllPosts,
+  } = useContext(postContext);
 
-  //   onSnapshot(nextRef, (snapshot) => {
-  //     let results = [];
-  //     snapshot.forEach((doc) => {
-  //       results.push({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       });
-  //     });
-  //     setPosts([...posts, ...results]);
-  //   });
-  //   const documentSnapshots = await getDocs(nextRef);
-  //   const lastVisible =
-  //     documentSnapshots.docs[documentSnapshots.docs.length - 1];
-  //   setLastDoc(lastVisible);
-  // };
+  useState(() => getAllPosts(), []);
+  console.log(posts);
 
-  // console.log(posts);
+  const [filters, setFilters] = useState({ title: "", category: "" });
+  const filteredPosts = posts.filter((post) => {
+    // Filter by category
+    const isCategoryMatch =
+      !filters.category || post.category === filters.category;
+
+    // Filter by title
+    const isTitleMatch =
+      !filters.title ||
+      post.title.toLowerCase().includes(filters.title.toLowerCase());
+
+    // Return true only if both date and category match
+    return isCategoryMatch && isTitleMatch;
+  });
+
+  console.log(filteredPosts);
+
+  const handleCategoryChange = (e) => {
+    setFilters({ ...filters, category: e.target.value });
+  };
+
+  const handleTitleChange = (e) => {
+    setFilters({ ...filters, title: e.target.value });
+  };
 
   return (
     <PostManageStyles>
@@ -59,15 +68,28 @@ const PostManage = () => {
       </div>
       <div className="flex justify-end gap-5 mb-10">
         <div className="w-full max-w-[200px] dropdown">
-          <Dropdown>
-            <Dropdown.Select placeholder="Category"></Dropdown.Select>
-          </Dropdown>
+          <label className="p-3 text-black bg-gray-200 rounded-md">
+            <select
+              className="bg-inherit"
+              value={filters.category}
+              onChange={handleCategoryChange}
+            >
+              {categories.map((item) =>
+                item.name === "All Categories" ? (
+                  <option value="">{item.name}</option>
+                ) : (
+                  <option value={item.name}>{item.name}</option>
+                )
+              )}
+            </select>
+          </label>
         </div>
         <div className="w-full max-w-[300px] search-post">
           <input
             type="text"
             className="w-full p-4 border border-gray-300 border-solid rounded-lg"
             placeholder="Search post..."
+            onChange={handleTitleChange}
           />
         </div>
       </div>
@@ -82,7 +104,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-            <PostTable></PostTable>
+          <PostTable post={filteredPosts}></PostTable>
         </tbody>
       </Table>
       <div className="mt-10 text-center">

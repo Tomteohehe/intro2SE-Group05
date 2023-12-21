@@ -1,23 +1,9 @@
 import { ActionDelete, ActionEdit, ActionView } from "components/action";
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Row } from "react-bootstrap";
 import { postContext } from "../../contexts/postContext";
 
-const PostTable = () => {
-  // useEffect(() => {
-  //   async function fetchUser() {
-  //     if (post.userId) {
-  //       const docRef = doc(db, "users", post.userId);
-  //       const docSnap = await getDoc(docRef);
-  //       if (docSnap?.data) setUser(docSnap?.data());
-  //     }
-  //   }
-
-  //   fetchUser();
-  // }, [post.userId]);
-
+const PostTable = ({ posts }) => {
   const detailPost = async (PostId) => {
     const id = PostId;
     const idPostInfo = { id };
@@ -56,14 +42,8 @@ const PostTable = () => {
       }
     });
   };
-  const {
-    postState: { posts, postsLoading },
-    getAllPosts,
-    deletePost,
-    getDetailedPost,
-  } = useContext(postContext);
+  const { deletePost, getDetailedPost } = useContext(postContext);
 
-  useState(() => getAllPosts(), []);
   const index = 1;
 
   return (
