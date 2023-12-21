@@ -1,39 +1,50 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-var d = new Date()
+var d = new Date();
 
 const PostSchema = new Schema({
-    title: {
-        type: String,
-        required: true
-    },
+  title: {
+    type: String,
+    required: true,
+  },
 
-    category: {
-        type: String,
-        enum: ['Lifestyle', 'Fitness', 'Knowledge', 'Culture', 'Religion'],
-        default: 'Fitness'
-    },
+  category: {
+    type: String,
+    enum: [
+      "Lifestyle",
+      "Fitness",
+      "Knowledge",
+      "Culture",
+      "Religion",
+      "Health",
+      "Food and Cooking",
+      "Personal Finance",
+      "Travel",
+      "Science",
+    ],
+    default: "Fitness",
+  },
 
-    image: {
-        type: String
-    },
+  image: {
+    type: String,
+  },
 
-    content: {
-        type: String,
-        require: true
-    },
+  content: {
+    type: String,
+    require: true,
+  },
 
-    date: {
-        type: String,
-        default: d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()
-    },
+  date: {
+    type: String,
+    default: d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear(),
+  },
 
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-    } 
-})
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users",
+  },
+});
 
-module.exports = mongoose.model('posts', PostSchema)
+module.exports = mongoose.model("posts", PostSchema);

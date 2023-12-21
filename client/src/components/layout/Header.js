@@ -234,7 +234,9 @@ const HeaderStyles = styled.header`
 `;
 const Header = () => {
   const [show, setShow] = useState(false);
-  const { loginUser } = useContext(authContext);
+  const {
+    authState: { authLoading, isAuthenticated },
+  } = useContext(authContext);
 
   const dispatch = useDispatch();
 
@@ -309,7 +311,7 @@ const Header = () => {
               </svg>
             </span>
           </div>
-          {!loginUser ? (
+          {!isAuthenticated ? (
             <Button
               type="button"
               height="56px"

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import { authContext } from "contexts/authContext";
@@ -137,6 +137,7 @@ const sidebarLinks = [
 const Sidebar = () => {
   const { logoutUser } = useContext(authContext);
   const logout = () => logoutUser();
+  const navigate = useNavigate();
 
   return (
     <SidebarStyles className="shadow-lg">
@@ -156,6 +157,7 @@ const Sidebar = () => {
                 }).then(async (result) => {
                   if (result.isConfirmed) {
                     logout();
+                    navigate("/");
                     Swal.fire(
                       "Logged out!",
                       "You have been logged out.",
