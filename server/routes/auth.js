@@ -114,10 +114,6 @@ router.put('/:id', verifyToken, async(req, res) => {
         if(existUsername) {
             if(existUsername._id != id) return res.status(400).json({success: false, message: 'Username is already in use'})
         }
-        const existEmail = await User.findOne({'email': email})
-        if(existEmail) {
-            if(existEmail._id != id) return res.status(400).json({success: false, message: 'Email is already in use'})
-        }
         
         const updateCondition = {_id: req.params.id}
         updatedUser = await User.findOneAndUpdate(updateCondition, implementUser, {new: true})
