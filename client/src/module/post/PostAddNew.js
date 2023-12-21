@@ -13,6 +13,7 @@ import "react-quill/dist/quill.snow.css";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
+import { categories } from "utils/constants";
 
 const PostAddNew = () => {
   const navigate = useNavigate();
@@ -35,48 +36,48 @@ const PostAddNew = () => {
   });
   const watchStatus = watch("status");
   const watchHot = watch("hot");
-  const categories = [
-    {
-      id: 1,
-      name: "Lifestyle",
-    },
-    {
-      id: 2,
-      name: "Fitness",
-    },
-    {
-      id: 3,
-      name: "Knowledge",
-    },
-    {
-      id: 4,
-      name: "Culture",
-    },
-    {
-      id: 5,
-      name: "Religion",
-    },
-    {
-      id: 6,
-      name: "Health",
-    },
-    {
-      id: 7,
-      name: "Food and Cooking",
-    },
-    {
-      id: 8,
-      name: "Personal Finance",
-    },
-    {
-      id: 9,
-      name: "Travel",
-    },
-    {
-      id: 10,
-      name: "Science",
-    },
-  ];
+  // const categories = [
+  //   {
+  //     id: 1,
+  //     name: "Lifestyle",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Fitness",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Knowledge",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Culture",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Religion",
+  //   },
+  //   {
+  //     id: 6,
+  //     name: "Health",
+  //   },
+  //   {
+  //     id: 7,
+  //     name: "Food and Cooking",
+  //   },
+  //   {
+  //     id: 8,
+  //     name: "Personal Finance",
+  //   },
+  //   {
+  //     id: 9,
+  //     name: "Travel",
+  //   },
+  //   {
+  //     id: 10,
+  //     name: "Science",
+  //   },
+  // ];
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
