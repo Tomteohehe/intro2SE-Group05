@@ -6,12 +6,32 @@ import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { categories } from "utils/constants";
+import ReactPaginate from "react-paginate";
+
+const itemsPerPage = 6; // Number of items to display per page
 
 const BlogPageStyles = styled.div`
   .small_container {
     width: 65vw;
     margin: 0 auto;
     margin-top: 2rem;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    ul {
+      display: flex;
+      gap: 1rem;
+    }
+    .active {
+      background-color: black;
+      color: #fff;
+      border-radius: 4px;
+      padding: 5px 10px;
+    }
   }
 `;
 
@@ -54,6 +74,15 @@ const BlogPage = () => {
     setFilters({ ...filters, category: event.target.value });
   };
 
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = filteredPosts.slice(offset, offset + itemsPerPage);
+
   return (
     <BlogPageStyles>
       <Layout>
@@ -87,17 +116,25 @@ const BlogPage = () => {
           <div className="posts">
             <div className="flex items-center justify-between">
               <Heading>Posts</Heading>
-              {/* <span
-                      onClick={() => Navigate("/blog")}
-                      className="view-all"
-                    >
-                      View all
-                    </span> */}
             </div>
             <div className="grid-layout">
-              {filteredPosts?.map((post) => (
+              {currentPageData?.map((post) => (
                 <PostNewestSmall post={post}></PostNewestSmall>
               ))}
+            </div>
+            <div className="pagination">
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={Math.ceil(filteredPosts.length / itemsPerPage)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+              />
             </div>
           </div>
         </div>
