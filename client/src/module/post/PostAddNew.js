@@ -64,8 +64,8 @@ const PostAddNew = () => {
   const [error, updateError] = useState();
 
   const addPostHandler = async (values) => {
-    //console.log(content)
-    const { title, slug, status, categoryName, hot } = values;
+    console.log(content);
+    const { title, slug, categoryName, hot } = values;
     const category = categoryName;
     const image = url;
     const simplePostInfo = { title, category, image, content };

@@ -81,13 +81,13 @@ const SignInPage = () => {
         autoComplete="off"
       >
         <Field>
-          <Label htmlFor="email" className="label">
-            Email address
+          <Label htmlFor="username" className="label">
+            Username
           </Label>
           <Input
-            type="email"
-            name="email"
-            placeholder="Enter your email address"
+            type="text"
+            name="username"
+            placeholder="Enter your username"
             control={control}
           />
         </Field>
