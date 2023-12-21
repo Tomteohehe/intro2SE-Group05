@@ -148,6 +148,7 @@ const PostAddNew = () => {
       return;
     }
     updateUrl(result?.info?.secure_url);
+    console.log(result);
     setValue("image", url);
     // Hide the default image after upload
     setDefaultImageVisible(false);
@@ -292,7 +293,11 @@ const PostAddNew = () => {
             </CloudinaryUploader>
             {url && (
               <>
-                <img src={url} alt="Uploaded resource" />
+                <img
+                  className="rounded-3xl w-[34rem] h-[20rem] object-cover"
+                  src={url}
+                  alt="Uploaded resource"
+                />
               </>
             )}
           </Field>
