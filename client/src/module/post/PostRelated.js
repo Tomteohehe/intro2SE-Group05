@@ -2,10 +2,7 @@ import Heading from "components/layout/Heading";
 import React, { useEffect, useState } from "react";
 import PostItem from "./PostItem";
 
-const PostRelated = ({ userId = "", slug = "" }) => {
-  // const [posts, setPosts] = useState([]);
-  console.log(slug);
-  // if (!slug || posts.length <= 0) return null;
+const PostRelated = () => {
   return (
     <div className="post-related">
       <Heading>Related Posts</Heading>

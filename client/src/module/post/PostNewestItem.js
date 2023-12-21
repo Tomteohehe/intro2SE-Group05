@@ -45,39 +45,38 @@ const PostNewestItemStyles = styled.div`
   }
 `;
 
-const POST_PER_PAGE = 1;
+function getRandomElementsFromArray(arr, numElements) {
+  const shuffledArray = arr.sort(() => Math.random() - 0.5);
+  return shuffledArray.slice(0, numElements);
+}
 
-const PostNewestItem = ({ user }) => {
-  /*
-  const [posts, setPosts] = useState([]);
-  const [, setLastDoc] = useState();
-  const [, setTotal] = useState(0);
-  const filter = "";
-
-  console.log(posts);
-  */
-
+const PostNewestItem = () => {
   const {
     postState: { smalllastposts, postsLoading },
-    getNewestPost
+    getNewestPost,
   } = useContext(postContext);
 
   useState(() => getNewestPost(), []);
+  const numRandomPosts = 3;
+  const randomPosts = getRandomElementsFromArray(
+    smalllastposts,
+    numRandomPosts
+  );
+  console.log(smalllastposts);
   return (
     <>
-      {smalllastposts.map((post) => (
+      {randomPosts.map((post) => (
         <PostNewestItemStyles>
           <PostImage
-            url={`${post.image ||
+            url={`${
+              post.image ||
               `https://images.unsplash.com/photo-1700141933748-4635f57d694e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`
             }`}
             alt=""
           ></PostImage>
           <div className="post-content">
             <PostCategory type="secondary">{post.category}</PostCategory>
-            <PostTitle size="normal">
-              {post.title}
-            </PostTitle>
+            <PostTitle size="normal">{post.title}</PostTitle>
             <PostMeta
               color="gray"
               authorName={post.user.username}

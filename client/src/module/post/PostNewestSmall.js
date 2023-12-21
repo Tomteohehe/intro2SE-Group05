@@ -21,7 +21,16 @@ const PostNewestSmallStyles = styled.div`
   }
 `;
 
+const truncateTitle = (title, maxLength) => {
+  if (title.length <= maxLength) {
+    return title;
+  } else {
+    return title.slice(0, maxLength) + "...";
+  }
+};
+
 const PostNewestSmall = ({ post }) => {
+  const truncatedTitle = truncateTitle(post.title, 60);
   return (
     <PostNewestSmallStyles>
       <PostImage
@@ -33,7 +42,7 @@ const PostNewestSmall = ({ post }) => {
       ></PostImage>
       <PostCategory>{post?.category}</PostCategory>
       <PostTitle size="medium" className="post-title">
-        {post?.title}
+        {truncatedTitle}
       </PostTitle>
       <PostMeta color="gray" authorName="MrWeirdo" date={post?.date}></PostMeta>
     </PostNewestSmallStyles>

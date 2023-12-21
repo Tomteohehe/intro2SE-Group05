@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Swiper } from "swiper/react";
 import Heading from "../../components/layout/Heading";
 import PostFeature from "module/post/PostFeature";
+import { postContext } from "contexts/postContext";
 
 const HomeFeatureStyles = styled.div`
   .view-all {
@@ -26,6 +27,12 @@ const HomeFeatureStyles = styled.div`
 `;
 
 const HomeFeature = () => {
+  const {
+    postState: { allposts },
+    getAllPostsEver,
+  } = useContext(postContext);
+
+  useState(() => getAllPostsEver(), []);
   const navigate = useNavigate();
   return (
     <HomeFeatureStyles className="home-block">
@@ -37,7 +44,7 @@ const HomeFeature = () => {
           </span>
         </div>
         <div className="grid-layout">
-          <PostFeature></PostFeature>
+          <PostFeature posts={allposts}></PostFeature>
         </div>
       </div>
     </HomeFeatureStyles>
