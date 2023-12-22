@@ -107,6 +107,28 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// @route POST api/getuser
+// desc Login user
+// @access Public
+
+router.post("/getuser", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const data = await User.find({ _id: id })
+    if(data){
+      res.json({success: true, users: data});
+    }
+  } 
+  catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
 // @route PUT api/auth/update
 // @desc Update user
 // @access Private
