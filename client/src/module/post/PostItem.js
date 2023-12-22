@@ -40,23 +40,14 @@ const PostItemStyles = styled.div`
   }
 `;
 
-const PostItem = ({ data }) => {
-  const [category, setCategory] = useState("");
+const PostItem = ({ post }) => {
   const navigate = useNavigate();
-
-  const date = data?.createdAt?.seconds
-    ? new Date(data?.createdAt?.seconds * 1000)
-    : new Date();
-  const formatDate = new Date(date).toLocaleDateString("vi-VI");
   return (
     <PostItemStyles>
-      <PostImage
-        url="https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt=""
-      ></PostImage>
-      <PostCategory type="light">Culture</PostCategory>
-      <PostTitle>Universe in a single Atom</PostTitle>
-      <PostMeta authorName="Andrew Tate" date="16 Mar"></PostMeta>
+      <PostImage url={post?.image} alt="PostImage"></PostImage>
+      <PostCategory type="light">{post?.category}</PostCategory>
+      <PostTitle>{post?.title}</PostTitle>
+      <PostMeta authorName="Andrew Tate" date={post?.date}></PostMeta>
     </PostItemStyles>
   );
 };

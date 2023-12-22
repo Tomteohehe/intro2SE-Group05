@@ -76,13 +76,13 @@ const UserInfoStyles = styled.div`
 `;
 
 const UserInfo = () => {
-  const searchTerm = useSelector((state) => state);
+  // const searchTerm = useSelector((state) => state);
 
-  const searchTitle = (data, searchTerm) => {
-    return data.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
+  // const searchTitle = (data, searchTerm) => {
+  //   return data.filter((item) =>
+  //     item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // };
 
   // const filteredData = searchTitle(data, searchTerm);
 
@@ -165,11 +165,11 @@ const UserInfo = () => {
                       View all
                     </span> */}
                 </div>
-                <div className="grid-layout">
+                {/* <div className="grid-layout">
                   <PostNewestSmall></PostNewestSmall>
                   <PostNewestSmall></PostNewestSmall>
                   <PostNewestSmall></PostNewestSmall>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

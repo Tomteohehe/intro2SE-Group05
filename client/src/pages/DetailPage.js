@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostRelated from "module/post/PostRelated";
 import { postContext } from "contexts/postContext";
+import HTMLReactParser from "html-react-parser";
 
 // import PostRelated from "module/post/PostRelated";
 const PostDetailsPageStyles = styled.div`
@@ -100,23 +101,9 @@ const DetailPage = () => {
     getDetailedPost,
   } = useContext(postContext);
   const id = slug;
-  const detailid = { id }
+  const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
   console.log(detailpost);
-  // const getPost = async (postId) => {
-  //   const id = postId;
-  //   const idPostInfo = { id };
-  //   try {
-  //     const content = await getDetailedPost(idPostInfo);
-  //     return content.posts[0];
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  //   const data = getPost(slug);
-  //   console.log(data);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <>
@@ -125,57 +112,22 @@ const DetailPage = () => {
           <Layout>
             <div className="container">
               <div className="post-header">
-                <PostImage url={post.image} className="post-feature"></PostImage>
+                <PostImage
+                  url={post.image}
+                  className="post-feature"
+                ></PostImage>
                 <div className="post-info">
                   <PostCategory className="mb-6">{post.category}</PostCategory>
-                  <h1 className="post-heading">
-                    {post.title}
-                  </h1>
-                  <PostMeta date={post.date} authorName={post.user.username}></PostMeta>
+                  <h1 className="post-heading">{post.title}</h1>
+                  <PostMeta
+                    date={post.date}
+                    authorName={post.user.username}
+                  ></PostMeta>
                 </div>
               </div>
               <div className="post-content">
                 <div className="entry-content">
-                  {/* {parse(postInfo?.content || "")} */}
-                  <p className="text-lg">Chapter 1</p>
-                  <i>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit
-                    sit quas, architecto error, sed fuga ea a nisi saepe esse
-                    doloremque soluta facere suscipit, quae repellat molestias
-                    iste consectetur aliquid laudantium nulla earum dolor?
-                    Incidunt, cumque vitae eius ullam, cum quibusdam quis iusto
-                    debitis eos, expedita ex? Nisi repellendus similique nam
-                    ratione vero, possimus, vel commodi natus pariatur, sint iusto
-                    non! Vel maiores provident recusandae vitae id corrupti
-                    consequuntur reprehenderit deleniti quibusdam cum doloribus
-                    assumenda odio temporibus exercitationem doloremque, soluta
-                    quos magnam voluptas sint tenetur cupiditate. Blanditiis
-                    veniam laboriosam, maiores porro, sit reiciendis deleniti
-                    obcaecati cupiditate, ea perspiciatis ad omnis?
-                  </i>
-                  <div className="mb-5"></div>
-                  <p className="text-lg">Chapter 2</p>
-                  <b>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Labore adipisci nulla perferendis quasi quam enim rem
-                    voluptate perspiciatis eos corporis nihil dolorem atque id
-                    esse magni totam sint, aperiam suscipit quos itaque. Nemo sunt
-                    accusantium sint. Magnam, commodi maxime aliquam ipsam ea
-                    doloremque, beatae quia assumenda quidem quisquam eligendi
-                    optio nesciunt dolorem sit iusto totam, voluptas id nam enim
-                    tempore ipsa quo! Dolore ea optio nisi suscipit excepturi
-                    nobis iure rerum recusandae architecto aut sunt velit iusto
-                    incidunt mollitia officia qui, libero necessitatibus ducimus.
-                    Reprehenderit adipisci tempora ullam culpa non, at dicta
-                    pariatur molestiae et omnis ipsum ducimus iste modi fugiat.
-                    Eaque nulla vel similique, velit nemo ullam nisi illum ipsam
-                    ea eveniet, recusandae delectus et architecto assumenda.
-                    Deleniti repellat aliquid cum. Placeat sunt aliquam
-                    reprehenderit excepturi at ut culpa, iusto eaque optio eum
-                    cupiditate facilis ea, nam quam est laboriosam odio
-                    repudiandae illo. Consequatur, assumenda modi! Adipisci,
-                    possimus eum!
-                  </b>
+                  {HTMLReactParser(post?.content || "")}
                 </div>
                 <div className="author">
                   <div className="author-image">
@@ -190,7 +142,7 @@ const DetailPage = () => {
                   </div>
                 </div>
               </div>
-              <PostRelated></PostRelated>
+              {/* <PostRelated></PostRelated> */}
             </div>
           </Layout>
         </PostDetailsPageStyles>
