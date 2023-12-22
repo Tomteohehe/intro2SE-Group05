@@ -7,7 +7,6 @@ import logo from "./logo.png";
 import { authContext } from "contexts/authContext";
 
 const DashboardHeaderStyles = styled.div`
-  background-color: white;
   padding: 20px;
   border-bottom: 1px solid #eee;
   display: flex;
@@ -51,7 +50,7 @@ const DashboardHeader = () => {
   const {
     authState: { user },
   } = useContext(authContext);
-  
+
   return (
     <DashboardHeaderStyles>
       <NavLink to="/" className="logo">
@@ -59,14 +58,11 @@ const DashboardHeader = () => {
         <span className="hidden lg:inline-block">GoaTalks</span>
       </NavLink>
       <div className="header-right">
-        <Button to="/manage/add-post" className="header-button" height="52px">
+        <Button to="/manage/add-post" className="bg-white" height="52px">
           Write new post
         </Button>
         <NavLink to="/manage/update-user" className="header-avatar">
-          <img
-            src= {user.avatar}
-            alt=""
-          />
+          <img src={user.avatar} alt="" />
         </NavLink>
       </div>
     </DashboardHeaderStyles>

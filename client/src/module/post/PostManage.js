@@ -23,6 +23,11 @@ const PostManageStyles = styled.div`
   }
 `;
 
+function parseDate(dateString) {
+  const [day, month, year] = dateString.split("/");
+  return new Date(`${year}-${month}-${day}`);
+}
+
 const PostManage = () => {
   const {
     postState: { posts },
@@ -35,6 +40,7 @@ const PostManage = () => {
     title: "",
     category: "",
     author: "",
+    date: "",
   });
   const filteredPosts = posts.filter((post) => {
     // Filter by category
@@ -58,6 +64,20 @@ const PostManage = () => {
     setFilters({ ...filters, title: e.target.value });
   };
 
+  const handleDateChange = (e) => {
+    setFilters({ ...filters, date: e.target.value });
+  };
+
+  const sortedPosts = filteredPosts.sort((a, b) => {
+    if (filters.date === "Latest") {
+      console.log("Latest");
+      return parseDate(b.date) - parseDate(a.date);
+    } else if (filters.date === "Oldest") {
+      return parseDate(a.date) - parseDate(b.date);
+    }
+    return 0; // No change if 'selectedOrder' is neither 'latest' nor 'oldest'
+  });
+
   return (
     <PostManageStyles>
       <div className="heading">
@@ -68,8 +88,21 @@ const PostManage = () => {
         ></DashboardHeading>
       </div>
       <div className="flex justify-end gap-5 mb-10">
-        <div className="w-full max-w-[200px] dropdown flex items-center justify-center">
-          <label className="p-3 text-black bg-gray-200 rounded-md">
+        <div className="flex items-center date-filter justify-normal">
+          <label className="p-4 text-black bg-gray-200 rounded-md ">
+            <select
+              className="bg-inherit"
+              value={filters.date}
+              onChange={handleDateChange}
+            >
+              <option value="">Filter by Date</option>
+              <option value="Latest">Latest</option>
+              <option value="Oldest">Oldest</option>
+            </select>
+          </label>
+        </div>
+        <div className="flex items-center justify-center category-filter">
+          <label className="p-4 text-black bg-gray-200 rounded-md">
             <select
               className="bg-inherit"
               value={filters.category}
@@ -105,7 +138,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          <PostTable filterposts={filteredPosts}></PostTable>
+          <PostTable filterposts={sortedPosts}></PostTable>
         </tbody>
       </Table>
       <div className="mt-10 text-center">
