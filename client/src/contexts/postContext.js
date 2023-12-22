@@ -12,6 +12,7 @@ const PostContextProvider = ({ children }) => {
     allposts: [],
     lastpost: [],
     smalllastposts: [],
+    detailpost: [],
     postsLoading: true,
   });
 
@@ -60,7 +61,7 @@ const PostContextProvider = ({ children }) => {
       );
       if (response.data.success) {
         dispatch({
-          type: "POSTS_LOADED_SUCCESS",
+          type: "DETAIL_POST",
           payload: response.data.posts,
         });
         return response.data;

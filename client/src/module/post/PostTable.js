@@ -49,7 +49,7 @@ const PostTable = ({ filterposts }) => {
 
   return (
     <>
-      {filterposts.map((post) => (
+      {filterposts.map((post, index) => (
         <tr>
           <td>{`0${index + 1}`}</td>
           <td>

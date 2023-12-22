@@ -21,6 +21,12 @@ export const postReducer = (state, action) => {
                 postsLoading: false
 			}
         */
+        case 'DETAIL_POST':
+            return {
+				...state,
+				detailpost: payload,
+                postsLoading: false
+			}
         case 'LARGEST_POST':
             return {
 				...state,
