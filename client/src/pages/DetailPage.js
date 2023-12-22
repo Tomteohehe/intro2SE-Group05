@@ -7,7 +7,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostRelated from "module/post/PostRelated";
 import { postContext } from "contexts/postContext";
+import { authContext } from "contexts/authContext";
 import HTMLReactParser from "html-react-parser";
+import { ActionDelete, ActionEdit, ActionView } from "components/action";
 
 // import PostRelated from "module/post/PostRelated";
 const PostDetailsPageStyles = styled.div`
@@ -103,13 +105,38 @@ const DetailPage = () => {
   const id = slug;
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
-  console.log(detailpost);
+  // console.log(detailpost);
+
+  const { 
+    authState: { userbyId },
+    getUserbyId
+  } = useContext(authContext)
+
+  /*
+  const user = detailpost.map((post) => post.user._id)
+  const userid = user[0]
+  const haha = { userid }
+  // console.log(userId)
+  useState(() => getUserbyId(haha), [])
+  console.log(userbyId)
+  //const data = useState(() => getUserbyId(detailpost[0].user['_id']), [])
+  //console.log(data)*/
+
+  const handleGetUser = async (UserId) => {
+    const id = UserId;
+    const idUserInfo= { id };
+    const user = await getUserbyId(idUserInfo)
+    console.log(user)
+  } 
 
   return (
     <>
       {detailpost.map((post) => (
         <PostDetailsPageStyles>
           <Layout>
+            <div className="flex items-center text-gray-500 gap-x-3">
+              <ActionView onClick={() => handleGetUser(post.user._id)}></ActionView>
+            </div>
             <div className="container">
               <div className="post-header">
                 <PostImage

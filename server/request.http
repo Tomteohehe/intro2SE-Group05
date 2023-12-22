@@ -26,6 +26,16 @@ Content-Type: application/json
 GET http://localhost:5000/api/auth/alluser
 
 ###
+POST http://localhost:5000/api/auth/getuser
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDMwNTQ3NDN9.o2clB8uzKkWKnWOxpvp8vYtfKQ5Vaq0CFuYv0jsDxME
+
+{
+    "id": "65728602fe9961d3ceba7338"
+}
+
+
+###
 GET http://localhost:5000/api/post/allpost
 
 ###

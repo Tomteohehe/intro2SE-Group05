@@ -73,6 +73,7 @@ const AuthContextProvider = ({ children }) => {
           payload: { userbyId: response.data.users }
         });
       }
+      return response.data;
     } 
     catch (error) {
       if (error.response.data) {

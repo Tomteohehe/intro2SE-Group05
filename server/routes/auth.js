@@ -116,9 +116,7 @@ router.post("/getuser", async (req, res) => {
 
   try {
     const data = await User.find({ _id: id })
-    if(data){
-      res.json({success: true, users: data});
-    }
+    return res.json({success: true, users: data});
   } 
   catch (error) {
     console.log(error);
