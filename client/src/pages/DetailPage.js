@@ -5,7 +5,6 @@ import PostMeta from "module/post/PostMeta";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import parse from "html-react-parser";
 import PostRelated from "module/post/PostRelated";
 import { postContext } from "contexts/postContext";
 

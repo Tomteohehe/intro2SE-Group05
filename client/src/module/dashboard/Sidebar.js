@@ -8,7 +8,8 @@ const SidebarStyles = styled.div`
   width: 300px;
   background: #ffffff;
   border-radius: 12px;
-  transition: all 0.3s linear;
+  transition: top 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   .menu-item {
     display: flex;
     align-items: center;
@@ -16,7 +17,7 @@ const SidebarStyles = styled.div`
     padding: 14px 20px;
     font-weight: 600;
     color: ${(props) => props.theme.gray80};
-    margin-bottom: 20px;
+    margin-bottom: 33.5px;
     cursor: pointer;
     &.active,
     &:hover {
