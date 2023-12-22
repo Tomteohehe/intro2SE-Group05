@@ -11,6 +11,7 @@ const AuthContextProvider = ({ children }) => {
     authLoading: true,
     isAuthenticated: false,
     user: null,
+    userbyId: [],
     alluser: []
   });
 
@@ -56,6 +57,24 @@ const AuthContextProvider = ({ children }) => {
       await loadUser();
       return response.data;
     } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  //user by id
+  const getUserbyId = async (id) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/getuser", id);
+      if (response.data.success) {
+        dispatch({
+          type: "USER_BY_ID",
+          payload: { userbyId: response.data.users }
+        });
+      }
+    } 
+    catch (error) {
       if (error.response.data) {
         return error.response.data;
       } else return { success: false, message: error.message };
@@ -142,7 +161,8 @@ const AuthContextProvider = ({ children }) => {
     registerUser,
     logoutUser,
     updateUser,
-    allUser
+    allUser,
+    getUserbyId
   };
 
   // return provider
