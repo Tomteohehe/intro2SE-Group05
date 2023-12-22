@@ -1,5 +1,5 @@
 import { ActionDelete, ActionEdit, ActionView } from "components/action";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";

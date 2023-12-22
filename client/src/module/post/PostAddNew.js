@@ -8,12 +8,15 @@ import { Field } from "components/field";
 import { Dropdown } from "components/dropdown";
 import { Button } from "components/button";
 import DashboardHeading from "module/dashboard/DashboardHeading";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
 import { categories } from "utils/constants";
+import ImageResize from "quill-image-resize-module-react";
+
+Quill.register("modules/imageResize", ImageResize);
 
 const PostAddNew = () => {
   const navigate = useNavigate();
@@ -34,9 +37,7 @@ const PostAddNew = () => {
       image: "",
     },
   });
-  const watchStatus = watch("status");
   const watchHot = watch("hot");
-  // const categories = [
   //   {
   //     id: 1,
   //     name: "Lifestyle",
@@ -101,54 +102,7 @@ const PostAddNew = () => {
     } catch (error) {
       console.log(error);
     }
-    // setLoading(true);
-    // try {
-    //   const cloneValues = { ...values };
-    //   cloneValues.slug = slugify(values.slug || values.title, { lower: true });
-    //   cloneValues.status = Number(values.status);
-    //   const colRef = collection(db, "users", userInfo.uid, "posts");
-    //   await addDoc(colRef, {
-    //     ...cloneValues,
-    //     content,
-    //     image,
-    //     userId: userInfo.uid,
-    //     createdAt: serverTimestamp(),
-    //   });
-    //   toast.success("Create new post successfully!");
-    //   reset({
-    //     content: "",
-    //     title: "",
-    //     slug: "",
-    //     status: 2,
-    //     categoryId: "",
-    //     hot: false,
-    //     image: "",
-    //   });
-    //   handleResetUpload();
-    //   setSelectCategory({});
-    // } catch (error) {
-    //   setLoading(false);
-    // } finally {
-    //   setLoading(false);
-    // }
   };
-
-  // useEffect(() => {
-  //   async function getData() {
-  //     const colRef = collection(db, "categories");
-  //     const q = query(colRef, where("status", "==", 1));
-  //     const querySnapshot = await getDocs(q);
-  //     let result = [];
-  //     querySnapshot.forEach((doc) => {
-  //       result.push({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       });
-  //     });
-  //     setCategories(result);
-  //   }
-  //   getData();
-  // }, []);
 
   useEffect(() => {
     document.title = "GoaTalks - Add new post";
@@ -174,34 +128,6 @@ const PostAddNew = () => {
     // Hide the default image after upload
     setDefaultImageVisible(false);
   }
-  // const modules = useMemo(
-  //   () => ({
-  //     toolbar: [
-  //       ["bold", "italic", "underline", "strike"],
-  //       ["blockquote", "code-block"],
-  //       [{ header: 1 }, { header: 2 }], // custom button values
-  //       [{ list: "ordered" }, { list: "bullet" }],
-  //       [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  //       ["link", "image"],
-  //     ],
-  //     // imageUploader: {
-  //     //   upload: async (file) => {
-  //     //     const bodyFormData = new FormData();
-  //     //     bodyFormData.append("image", file);
-  //     //     const response = await axios({
-  //     //       method: "post",
-  //     //       url: imgbbAPI,
-  //     //       data: bodyFormData,
-  //     //       headers: {
-  //     //         "Content-Type": "multipart/form-data",
-  //     //       },
-  //     //     });
-  //     //     return response.data.data.url;
-  //     //   },
-  //     // },
-  //   }),
-  //   []
-  // );
 
   const modules = {
     toolbar: [
@@ -251,28 +177,6 @@ const PostAddNew = () => {
         <div className="form-layout">
           <Field>
             <Label>Image</Label>
-            {/* <ImageUpload
-              // onChange={handleSelectImage}
-              // handleRemoveImage={handleRemoveImage}
-              className="h-[250px] shadow-lg w-full"
-              // progress={progress}
-              // image={image}
-            ></ImageUpload> */}
-            {/*
-            <Helmet>
-              <script
-                src="https://upload-widget.cloudinary.com/global/all.js"
-                type="text/javascript"
-              />
-            </Helmet>
-            */}
-            {/*}
-            <Image cloudName="aoh4fpwm" publicId="image1">
-              <Transformation width="300" height="200" crop="fill" />
-            </Image>
-
-            {/* Render the CloudinaryUploader component */}
-            {/*<CloudinaryUploader /> */}
             <CloudinaryUploader onUpload={handleOnUpload}>
               {({ open }) => {
                 function handleOnClick(e) {
@@ -283,10 +187,6 @@ const PostAddNew = () => {
                   <>
                     {!isDefaultImageVisible && (
                       <div>
-                        {/* Render the uploaded image */}
-                        {/* Add logic to render the uploaded image based on your implementation */}
-                        {/* For example, you might use an <img> tag with the uploaded image source */}
-                        {/* Add a button beneath the uploaded image for rechoosing */}
                         <button
                           className="p-3 text-sm text-white bg-green-500 rounded-md"
                           onClick={handleOnClick}
@@ -352,7 +252,6 @@ const PostAddNew = () => {
               <div className="w-full entry-content">
                 <ReactQuill
                   modules={modules}
-                  theme="snow"
                   name="content"
                   value={content}
                   onChange={setContent}

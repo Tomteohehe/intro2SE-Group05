@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -6,6 +6,9 @@ import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
 import { postContext } from "contexts/postContext";
 const PostNewestLargeStyles = styled.div`
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 1rem;
   .post {
     &-image {
       display: block;
@@ -24,7 +27,7 @@ const PostNewestLargeStyles = styled.div`
 
 const PostNewestLarge = () => {
   const {
-    postState: { lastpost, postsLoading },
+    postState: { lastpost },
     getNewestLargePost,
   } = useContext(postContext);
 
@@ -42,7 +45,7 @@ const PostNewestLarge = () => {
             alt=""
           ></PostImage>
           <PostCategory>{post.category}</PostCategory>
-          <PostTitle size="large" className="post-title">
+          <PostTitle size="large" className="post-title" to={`${post._id}`}>
             {post.title}
           </PostTitle>
           <PostMeta

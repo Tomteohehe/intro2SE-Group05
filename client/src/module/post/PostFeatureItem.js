@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const PostFeatureItemStyles = styled.div`
   width: 100%;
@@ -59,6 +60,7 @@ const truncateTitle = (title, maxLength) => {
 
 const PostFeatureItem = ({ post }) => {
   const truncatedTitle = truncateTitle(post?.title, 60);
+  const navigate = useNavigate();
 
   return (
     <PostFeatureItemStyles>
@@ -73,7 +75,9 @@ const PostFeatureItem = ({ post }) => {
             date={post?.date}
           ></PostMeta>
         </div>
-        <PostTitle size="large">{truncatedTitle}</PostTitle>
+        <PostTitle size="large" to={`/${post._id}`}>
+          {truncatedTitle}
+        </PostTitle>
       </div>
     </PostFeatureItemStyles>
   );

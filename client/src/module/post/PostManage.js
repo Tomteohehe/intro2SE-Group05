@@ -6,6 +6,7 @@ import styled from "styled-components";
 import PostTable from "./PostTable";
 import { categories } from "utils/constants";
 import { postContext } from "contexts/postContext";
+import ReactPaginate from "react-paginate";
 
 const PostManageStyles = styled.div`
   @media screen and (max-width: 800px) {
@@ -21,7 +22,26 @@ const PostManageStyles = styled.div`
       margin-bottom: 3.5em;
     }
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    ul {
+      display: flex;
+      gap: 1rem;
+    }
+    .active {
+      background-color: black;
+      color: #fff;
+      border-radius: 4px;
+      padding: 5px 10px;
+    }
+  }
 `;
+
+const itemsPerPage = 3;
 
 function parseDate(dateString) {
   const [day, month, year] = dateString.split("/");
@@ -77,6 +97,14 @@ const PostManage = () => {
     }
     return 0; // No change if 'selectedOrder' is neither 'latest' nor 'oldest'
   });
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = sortedPosts.slice(offset, offset + itemsPerPage);
 
   return (
     <PostManageStyles>
@@ -138,14 +166,28 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          <PostTable filterposts={sortedPosts}></PostTable>
+          <PostTable filterposts={currentPageData}></PostTable>
         </tbody>
       </Table>
-      <div className="mt-10 text-center">
+      <div className="pagination">
+        <ReactPaginate
+          previousLabel={"<"}
+          nextLabel={">"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={Math.ceil(filteredPosts.length / itemsPerPage)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          activeClassName={"active"}
+        />
+      </div>
+      {/* <div className="mt-10 text-center">
         <Button kind="ghost" className="mx-auto w-[200px]">
           See more +
         </Button>
-      </div>
+      </div> */}
     </PostManageStyles>
   );
 };

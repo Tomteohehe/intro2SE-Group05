@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -52,7 +52,7 @@ function getRandomElementsFromArray(arr, numElements) {
 
 const PostNewestItem = () => {
   const {
-    postState: { smalllastposts, postsLoading },
+    postState: { smalllastposts },
     getNewestPost,
   } = useContext(postContext);
 
@@ -76,7 +76,9 @@ const PostNewestItem = () => {
           ></PostImage>
           <div className="post-content">
             <PostCategory type="secondary">{post.category}</PostCategory>
-            <PostTitle size="normal">{post.title}</PostTitle>
+            <PostTitle size="normal" to={`${post._id}`}>
+              {post.title}
+            </PostTitle>
             <PostMeta
               color="gray"
               authorName={post.user.username}
