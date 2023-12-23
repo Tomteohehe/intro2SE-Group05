@@ -8,6 +8,8 @@ import { categories } from "utils/constants";
 import Heading from "components/layout/Heading";
 import PostNewestSmall from "module/post/PostNewestSmall";
 import ReactPaginate from "react-paginate";
+import PostTable from "module/post/PostTable";
+import { Table } from "components/table";
 
 const AdminPageStyles = styled.div`
   .small_container {
@@ -49,8 +51,6 @@ const AdminPage = () => {
 
   useState(() => allUser(), []);
 
-  console.log(alluser);
-
   const {
     postState: { allposts },
     getAllPostsEver,
@@ -71,7 +71,6 @@ const AdminPage = () => {
     const isTitleMatch = post.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    console.log("isTitleMatch", isTitleMatch);
 
     // Return true only if both date and category match
     return isCategoryMatch && isTitleMatch;
@@ -94,7 +93,6 @@ const AdminPage = () => {
   // Sort the posts array by date in descending order (latest to oldest)
   const sortedPosts = filteredPosts.sort((a, b) => {
     if (filters.date === "Latest") {
-      console.log("Latest");
       return parseDate(b.date) - parseDate(a.date);
     } else if (filters.date === "Oldest") {
       return parseDate(a.date) - parseDate(b.date);
@@ -141,11 +139,24 @@ const AdminPage = () => {
             <div className="flex items-center justify-between">
               <Heading>Posts</Heading>
             </div>
-            <div className="grid-layout">
-              {currentPageData?.map((post) => (
-                <PostNewestSmall post={post}></PostNewestSmall>
-              ))}
-            </div>
+            {/* <PostNewestSmall post={post}></PostNewestSmall> */}
+            <Table>
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Post</th>
+                  <th>Category</th>
+                  <th>Author</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <PostTable
+                  users={alluser}
+                  filterposts={currentPageData}
+                ></PostTable>
+              </tbody>
+            </Table>
             <div className="pagination">
               <ReactPaginate
                 previousLabel={"<"}

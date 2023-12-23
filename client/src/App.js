@@ -11,6 +11,7 @@ import DetailPage from "pages/DetailPage";
 import UserInfo from "module/user/UserInfo";
 import BlogPage from "pages/BlogPage";
 import AdminPage from "pages/AdminPage";
+import AdminUserManage from "pages/AdminUserManage";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
         <Route path="/sign-up" element={<Auth authRoute="sign-up" />} />
         <Route path="/post/:slug" element={<DetailPage></DetailPage>}></Route>
         <Route path="/admin" element={<AdminPage></AdminPage>}></Route>
+        <Route
+          path="/admin/user-manage"
+          element={<AdminUserManage></AdminUserManage>}
+        ></Route>
         <Route path="/blog" element={<BlogPage></BlogPage>}></Route>
         <Route path="/user-info" element={<UserInfo></UserInfo>}></Route>
         <Route element={<ProtectedRoute Component={DashboardLayout} />}>

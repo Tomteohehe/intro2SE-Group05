@@ -3,8 +3,10 @@ import React, { useContext } from "react";
 import Swal from "sweetalert2";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
+import PostTableItem from "./PostTableItem";
+import { authContext } from "contexts/authContext";
 
-const PostTable = ({ filterposts }) => {
+const PostTable = ({ filterposts, users }) => {
   const detailPost = async (PostId) => {
     const id = PostId;
     const idPostInfo = { id };
@@ -46,6 +48,14 @@ const PostTable = ({ filterposts }) => {
   const { deletePost, getDetailedPost } = useContext(postContext);
 
   const navigate = useNavigate();
+  console.log(users);
+
+  const getUser = (id) => {
+    const user = users.filter((u) => {
+      return u._id === id;
+    });
+    return user[0]?.username;
+  };
 
   return (
     <>
@@ -53,27 +63,19 @@ const PostTable = ({ filterposts }) => {
         <tr>
           <td>{`0${index + 1}`}</td>
           <td>
-            <div className="flex items-center gap-x-3">
-              <img
-                src={post.image ? post.image : require("../../assets/logo.png")}
-                alt=""
-                className="w-[66px] h-[55px] rounded object-cover"
-              />
-              <div className="flex-1">
-                <h3 className="font-semibold">{post.title}</h3>
-                <time className="text-sm text-gray-500">{post.date}</time>
-              </div>
-            </div>
+            <PostTableItem post={post}></PostTableItem>
           </td>
           <td>
             <span className="text-gray-500">{post.category}</span>
           </td>
           <td>
-            <span className="text-gray-500">{post.user.username}</span>
+            <span className="text-gray-500">{getUser(post.user)}</span>
           </td>
           <td>
             <div className="flex items-center text-gray-500 gap-x-3">
-              <ActionView onClick={() => navigate(`/${post._id}`)}></ActionView>
+              <ActionView
+                onClick={() => navigate(`/post/${post._id}`)}
+              ></ActionView>
               <ActionEdit onClick={() => detailPost(post._id)}></ActionEdit>
               <ActionDelete
                 onClick={() => handleDeletePost(post._id)}
