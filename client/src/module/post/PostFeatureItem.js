@@ -75,7 +75,7 @@ const PostFeatureItem = ({ post }) => {
             date={post?.date}
           ></PostMeta>
         </div>
-        <PostTitle size="large" to={`/${post._id}`}>
+        <PostTitle size="large" to={`/post/${post._id}`}>
           {truncatedTitle}
         </PostTitle>
       </div>

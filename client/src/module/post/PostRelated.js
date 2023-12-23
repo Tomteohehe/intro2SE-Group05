@@ -1,5 +1,5 @@
 import Heading from "components/layout/Heading";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostItem from "./PostItem";
 
 const PostRelated = ({ posts }) => {
@@ -7,10 +7,6 @@ const PostRelated = ({ posts }) => {
     <div className="post-related">
       <Heading>Related Posts</Heading>
       <div className="grid-layout grid-layout--primary">
-        {/* <PostItem key="1"></PostItem>
-        <PostItem key="1"></PostItem>
-        <PostItem key="1"></PostItem>
-        <PostItem key="1"></PostItem> */}
         {posts.map((post) => (
           <PostItem post={post}></PostItem>
         ))}

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import slugify from "slugify";
+import React from "react";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -40,13 +38,21 @@ const PostItemStyles = styled.div`
   }
 `;
 
+const truncateTitle = (title, maxLength) => {
+  if (title.length <= maxLength) {
+    return title;
+  } else {
+    return title.slice(0, maxLength) + "...";
+  }
+};
+
 const PostItem = ({ post }) => {
-  const navigate = useNavigate();
+  const truncatedTitle = truncateTitle(post.title, 60);
   return (
     <PostItemStyles>
       <PostImage url={post?.image} alt="PostImage"></PostImage>
-      <PostCategory type="light">{post?.category}</PostCategory>
-      <PostTitle>{post?.title}</PostTitle>
+      <PostCategory type="secondary">{post?.category}</PostCategory>
+      <PostTitle to={`/post/${post._id}`}>{truncatedTitle}</PostTitle>
       <PostMeta authorName="Andrew Tate" date={post?.date}></PostMeta>
     </PostItemStyles>
   );

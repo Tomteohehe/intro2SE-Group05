@@ -90,29 +90,16 @@ const menuLinks = [
     ),
   },
 ];
-
-// const logInLinks = [
-//   {
-//     url: "/sign-in",
-//     title: "Log in",
-//     icon: (
-//       <svg
-//         xmlns="http://www.w3.org/2000/svg"
-//         class="h-6 w-6"
-//         fill="none"
-//         viewBox="0 0 24 24"
-//         stroke="currentColor"
-//         stroke-width="2"
-//       >
-//         <path
-//           stroke-linecap="round"
-//           stroke-linejoin="round"
-//           d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-//         />
-//       </svg>
-//     ),
-//   },
-// ];
+const adminLinks = [
+  {
+    url: "/blog",
+    title: "Blog",
+  },
+  {
+    url: "/user-manage",
+    title: "User",
+  },
+];
 
 const HeaderStyles = styled.header`
   padding: 20px 0;
@@ -232,7 +219,7 @@ const HeaderStyles = styled.header`
     }
   } */
 `;
-const Header = () => {
+const Header = ({ isAdmin = false }) => {
   const [show, setShow] = useState(false);
   const {
     authState: { authLoading, isAuthenticated },
@@ -245,94 +232,178 @@ const Header = () => {
     dispatch(setSearchTerm(newValue));
   };
 
+  console.log(isAdmin);
+
   return (
     <HeaderStyles show={show}>
       <div className="container">
-        <div className="header-main">
-          <button className="sidebarBtn" onClick={() => setShow(true)}>
-            <i class="bx bx-menu"></i>
-          </button>
-          <NavLink to="/">
-            <img
-              src={logo}
-              style={{
-                resizeMode: "cover",
-                height: 57,
-                width: 66,
-              }}
-              alt=""
-              className="logo"
-            />
-          </NavLink>
-          <ul className="menu">
-            {menuLinks.slice(0, 3).map((item) => (
-              <li className="menu-item" key={item.title}>
-                <NavLink to={item.url} className="menu-link">
-                  {item.title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          <div className="search">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search posts..."
-              onChange={handleFilterChange}
-            />
-            <span className="search-icon">
-              <svg
-                width="18"
-                height="17"
-                viewBox="0 0 18 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <ellipse
-                  cx="7.66669"
-                  cy="7.05161"
-                  rx="6.66669"
-                  ry="6.05161"
-                  stroke="#999999"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M17.0001 15.5237L15.2223 13.9099L14.3334 13.103L12.5557 11.4893"
-                  stroke="#999999"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M11.6665 12.2964C12.9671 12.1544 13.3706 11.8067 13.4443 10.6826"
-                  stroke="#999999"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </span>
-          </div>
-          {!isAuthenticated ? (
-            <Button
-              type="button"
-              height="56px"
-              className="header-button"
-              to="/sign-in"
-            >
-              Login
-            </Button>
-          ) : (
-            <div>
+        {!isAdmin ? (
+          <div className="header-main">
+            <NavLink to="/">
+              <img
+                src={logo}
+                style={{
+                  resizeMode: "cover",
+                  height: 57,
+                  width: 66,
+                }}
+                alt=""
+                className="logo"
+              />
+            </NavLink>
+            <ul className="menu">
+              {menuLinks.slice(0, 3).map((item) => (
+                <li className="menu-item" key={item.title}>
+                  <NavLink to={item.url} className="menu-link">
+                    {item.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+            <div className="search">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search posts..."
+                onChange={handleFilterChange}
+              />
+              <span className="search-icon">
+                <svg
+                  width="18"
+                  height="17"
+                  viewBox="0 0 18 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <ellipse
+                    cx="7.66669"
+                    cy="7.05161"
+                    rx="6.66669"
+                    ry="6.05161"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M17.0001 15.5237L15.2223 13.9099L14.3334 13.103L12.5557 11.4893"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M11.6665 12.2964C12.9671 12.1544 13.3706 11.8067 13.4443 10.6826"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </div>
+            {!isAuthenticated ? (
               <Button
                 type="button"
                 height="56px"
                 className="header-button"
-                to="/dashboard"
+                to="/sign-in"
               >
-                Dashboard
+                Login
               </Button>
+            ) : (
+              <div>
+                <Button
+                  type="button"
+                  height="56px"
+                  className="header-button"
+                  to="/dashboard"
+                >
+                  Dashboard
+                </Button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="header-main">
+            <NavLink to="/dashboard">
+              <img
+                src={logo}
+                style={{
+                  resizeMode: "cover",
+                  height: 57,
+                  width: 66,
+                }}
+                alt=""
+                className="logo"
+              />
+            </NavLink>
+            <ul className="menu">
+              {adminLinks.map((item) => (
+                <li className="menu-item" key={item.title}>
+                  <NavLink to={item.url} className="menu-link">
+                    {item.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+            <div className="search">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search posts..."
+                onChange={handleFilterChange}
+              />
+              <span className="search-icon">
+                <svg
+                  width="18"
+                  height="17"
+                  viewBox="0 0 18 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <ellipse
+                    cx="7.66669"
+                    cy="7.05161"
+                    rx="6.66669"
+                    ry="6.05161"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                  />
+                  <path
+                    d="M17.0001 15.5237L15.2223 13.9099L14.3334 13.103L12.5557 11.4893"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M11.6665 12.2964C12.9671 12.1544 13.3706 11.8067 13.4443 10.6826"
+                    stroke="#999999"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
             </div>
-          )}
-        </div>
+            {!isAuthenticated ? (
+              <Button
+                type="button"
+                height="56px"
+                className="header-button"
+                to="/sign-in"
+              >
+                Login
+              </Button>
+            ) : (
+              <div>
+                <Button
+                  type="button"
+                  height="56px"
+                  className="header-button"
+                  to="/dashboard"
+                >
+                  Dashboard
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </HeaderStyles>
   );

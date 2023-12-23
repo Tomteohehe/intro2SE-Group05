@@ -62,7 +62,6 @@ const PostNewestItem = () => {
     smalllastposts,
     numRandomPosts
   );
-  console.log(smalllastposts);
   return (
     <>
       {randomPosts.map((post) => (
@@ -76,7 +75,7 @@ const PostNewestItem = () => {
           ></PostImage>
           <div className="post-content">
             <PostCategory type="secondary">{post.category}</PostCategory>
-            <PostTitle size="normal" to={`${post._id}`}>
+            <PostTitle to={`/post/${post._id}`} size="normal">
               {post.title}
             </PostTitle>
             <PostMeta

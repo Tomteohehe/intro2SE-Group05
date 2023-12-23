@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostRelated from "module/post/PostRelated";
 import { postContext } from "contexts/postContext";
+import { authContext } from "contexts/authContext";
 import HTMLReactParser from "html-react-parser";
 
-// import PostRelated from "module/post/PostRelated";
 const PostDetailsPageStyles = styled.div`
   padding-bottom: 100px;
   .post {
@@ -97,13 +97,33 @@ const DetailPage = () => {
   const { slug } = useParams();
 
   const {
-    postState: { detailpost },
+    postState: { detailpost, allposts },
     getDetailedPost,
+    getAllPostsEver,
   } = useContext(postContext);
   const id = slug;
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
   console.log(detailpost);
+
+  const {
+    authState: { userbyId },
+    getUserbyId,
+  } = useContext(authContext);
+
+  const userId = detailpost[0]?.user._id;
+  const finalId = { userId };
+  useState(() => getUserbyId(finalId), []);
+
+  console.log(userbyId);
+  useState(() => getAllPostsEver(), []);
+
+  let relatedPosts = allposts.filter((post) => {
+    return post?.category === detailpost[0]?.category;
+  });
+
+  relatedPosts =
+    relatedPosts.length > 4 ? relatedPosts.slice(0, 4) : relatedPosts;
 
   return (
     <>
@@ -131,18 +151,15 @@ const DetailPage = () => {
                 </div>
                 <div className="author">
                   <div className="author-image">
-                    <img
-                      src="https://images.unsplash.com/photo-1637768285073-6af669cd65bd?q=80&w=1944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt=""
-                    />
+                    <img src={userbyId[0]?.avatar} alt="authorAvt" />
                   </div>
                   <div className="author-content">
-                    <h3 className="author-name">Ho Vinh Dinh</h3>
-                    <p className="author-desc">huynhvinhdo1603@gmail.com</p>
+                    <h3 className="author-name">{userbyId[0]?.username}</h3>
+                    <p className="author-desc">{userbyId[0]?.email}</p>
                   </div>
                 </div>
               </div>
-              {/* <PostRelated></PostRelated> */}
+              <PostRelated posts={relatedPosts}></PostRelated>
             </div>
           </Layout>
         </PostDetailsPageStyles>

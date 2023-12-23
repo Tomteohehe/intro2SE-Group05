@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
@@ -41,7 +41,7 @@ const PostNewestSmall = ({ post }) => {
         alt=""
       ></PostImage>
       <PostCategory>{post?.category}</PostCategory>
-      <PostTitle size="medium" className="post-title">
+      <PostTitle size="medium" className="post-title" to={`/post/${post._id}`}>
         {truncatedTitle}
       </PostTitle>
       <PostMeta color="gray" authorName="MrWeirdo" date={post?.date}></PostMeta>

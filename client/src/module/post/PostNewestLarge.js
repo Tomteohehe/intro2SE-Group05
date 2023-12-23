@@ -45,7 +45,11 @@ const PostNewestLarge = () => {
             alt=""
           ></PostImage>
           <PostCategory>{post.category}</PostCategory>
-          <PostTitle size="large" className="post-title" to={`${post._id}`}>
+          <PostTitle
+            size="large"
+            className="post-title"
+            to={`/post/${post._id}`}
+          >
             {post.title}
           </PostTitle>
           <PostMeta
