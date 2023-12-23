@@ -174,9 +174,9 @@ router.put("/:id", verifyToken, async (req, res) => {
 // @desc Delete post
 // @access Private
 
-router.delete("/:id", verifyToken, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    const deleteCondition = { _id: req.params.id, user: req.userId };
+    const deleteCondition = { _id: req.params.id };
     const deletedPost = await Post.findOneAndDelete(deleteCondition);
 
     // user not authorised or post not found
@@ -202,7 +202,9 @@ router.delete("/:id", verifyToken, async (req, res) => {
 });
 
 router.get("/allpost", async (req, res) => {
-  const allPost = await Post.find();
+  const allPost = await Post.find().populate("user", [
+    "username",
+  ]);;
   res.json({ success: true, posts: allPost });
 });
 

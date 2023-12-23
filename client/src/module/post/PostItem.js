@@ -53,7 +53,7 @@ const PostItem = ({ post }) => {
       <PostImage url={post?.image} alt="PostImage"></PostImage>
       <PostCategory type="secondary">{post?.category}</PostCategory>
       <PostTitle to={`/post/${post._id}`}>{truncatedTitle}</PostTitle>
-      <PostMeta authorName="Andrew Tate" date={post?.date}></PostMeta>
+      <PostMeta authorName={post.user.username} date={post?.date}></PostMeta>
     </PostItemStyles>
   );
 };

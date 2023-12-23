@@ -155,6 +155,21 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
+  // delete user
+  const deleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/auth/${userId}`
+      );
+      if (response.data.success) {
+        dispatch({ type: "DELETE_USER", payload: userId });
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //context data
   const authContextData = {
     loginUser,
@@ -163,7 +178,8 @@ const AuthContextProvider = ({ children }) => {
     logoutUser,
     updateUser,
     allUser,
-    getUserbyId
+    getUserbyId,
+    deleteUser,
   };
 
   // return provider

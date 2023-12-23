@@ -30,6 +30,7 @@ const PostTable = ({ filterposts, users }) => {
       if (result.isConfirmed) {
         try {
           const deleted = await deletePost(postId);
+          console.log(deleted)
           if (deleted["success"]) {
             Swal.fire("Deleted!", "Your post has been deleted.", "success");
             setTimeout(function () {

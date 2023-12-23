@@ -87,9 +87,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN
 
 
 ###
-DELETE http://localhost:5000/api/post/657d8f6884d0d464b9263309
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDI3NDIwOTV9.VexxJQpOknYKlXU-Xz1AMa-jGnwhm8DyiFlVWySr_oM
+DELETE http://localhost:5000/api/post/658394fd405fa901793bcce3
 
+###
+DELETE http://localhost:5000/api/auth/656c83a60d0ebca3c5d78af9
 
 ###
 PUT http://localhost:5000/api/auth/65728602fe9961d3ceba7338

@@ -190,4 +190,35 @@ router.get("/alluser", async (req, res) => {
   res.json({ success: true, users: allUser });
 });
 
+// @route DELETE api/auth
+// @desc Delete post
+// @access Private
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const deleteCondition = { _id: req.params.id };
+    const deletedUser = await User.findOneAndDelete(deleteCondition);
+
+    // user not authorised
+    if (!deletedUser) {
+      return res.status(401).json({
+        success: false,
+        message: "Post not found or user not authorized",
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: "User deleted succesfully",
+      user: deletedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
 module.exports = router;

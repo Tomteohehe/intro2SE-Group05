@@ -1,10 +1,43 @@
-import React from "react";
+import React, {useContext} from "react";
 import UserTableItem from "./UserTableItem";
 import { ActionDelete, ActionEdit, ActionView } from "components/action";
 import { useNavigate } from "react-router-dom";
+import { authContext } from "contexts/authContext";
+import Swal from "sweetalert2";
 
 const UserTable = ({ users }) => {
   const navigate = useNavigate();
+  const handleDeleteUser = async (userId) => {
+    Swal.fire({
+      title: "Are you want to delete this user?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1DC071",
+      cancelButtonColor: "#ef233c",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const deleted = await deleteUser(userId);
+          if (deleted["success"]) {
+            Swal.fire("Deleted!", "User has been deleted.", "success");
+            setTimeout(function () {
+              window.location.reload();
+            }, 2000);
+          } else {
+            Swal.fire("Error occured");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+  };
+  const {
+    deleteUser
+  } = useContext(authContext)
+
   return (
     <>
       {users.map((user, index) => (
@@ -26,7 +59,7 @@ const UserTable = ({ users }) => {
               ></ActionView>
               <ActionEdit></ActionEdit>
               <ActionDelete
-              // onClick={() => handleDeletePost(post._id)}
+                onClick={() => handleDeleteUser(user._id)}
               ></ActionDelete>
             </div>
           </td>
