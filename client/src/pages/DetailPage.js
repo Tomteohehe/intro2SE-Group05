@@ -2,7 +2,7 @@ import Layout from "components/layout/Layout";
 import PostCategory from "module/post/PostCategory";
 import PostImage from "module/post/PostImage";
 import PostMeta from "module/post/PostMeta";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostRelated from "module/post/PostRelated";

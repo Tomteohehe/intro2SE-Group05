@@ -27,7 +27,7 @@ function App() {
           element={<AdminUserManage></AdminUserManage>}
         ></Route>
         <Route path="/blog" element={<BlogPage></BlogPage>}></Route>
-        <Route path="/user-info" element={<UserInfo></UserInfo>}></Route>
+        <Route path="/user/:slug" element={<UserInfo></UserInfo>}></Route>
         <Route element={<ProtectedRoute Component={DashboardLayout} />}>
           <Route
             path="/dashboard"

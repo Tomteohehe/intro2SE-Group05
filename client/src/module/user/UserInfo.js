@@ -1,11 +1,13 @@
 import Layout from "components/layout/Layout";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import BackgroundImage from "../../assets/banner.jpg";
 import { theme } from "utils/constants";
 import Heading from "components/layout/Heading";
 import PostNewestSmall from "module/post/PostNewestSmall";
+import { useParams } from "react-router-dom";
+import { authContext } from "contexts/authContext";
 
 const UserInfoStyles = styled.div`
   padding-bottom: 100px;
@@ -76,27 +78,26 @@ const UserInfoStyles = styled.div`
 `;
 
 const UserInfo = () => {
-  // const searchTerm = useSelector((state) => state);
+  const { slug } = useParams();
+  const {
+    authState: { alluser },
+    allUser,
+  } = useContext(authContext);
+  useState(() => allUser(), []);
 
-  // const searchTitle = (data, searchTerm) => {
-  //   return data.filter((item) =>
-  //     item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  //   );
-  // };
+  const getUser = (id) => {
+    const user = alluser.filter((u) => {
+      return u._id === id;
+    });
+    return user[0];
+  };
 
-  // const filteredData = searchTitle(data, searchTerm);
+  const user = getUser(slug);
+  console.log(user);
 
   return (
     <UserInfoStyles>
       <Layout>
-        {/* <div>
-          <ul>
-            {filteredData.map((item, index) => (
-              <li key={index}>{item.title}</li>
-            ))}
-          </ul>
-        </div> */}
-
         <div className="relative bg_container">
           <img
             src={BackgroundImage}
@@ -121,7 +122,7 @@ const UserInfo = () => {
                 </div>
               </div>
               <div className="user_avt">
-                <img src={BackgroundImage} alt="Avatar" />
+                <img src={user?.avatar} alt="Avatar" />
               </div>
               <div className="">
                 <button className="fl_button">Follow</button>
@@ -129,7 +130,7 @@ const UserInfo = () => {
             </div>
 
             <div className="mb-20 user_info">
-              <p className="text-lg font-bold fullname">Andrew Tate</p>
+              <p className="text-lg font-bold fullname">{user?.username}</p>
               <div className="flex justify-center gap-3 mt-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -146,11 +147,7 @@ const UserInfo = () => {
               </div>
               <div className="mt-5">
                 <span className="text-sm desc">
-                  An artist of considerable range, Jenna the name taken by
-                  Melbourne-raised, Brooklyn-based Nick Murphy writes, performs
-                  and records all of his own music, giving it a warm, intimate
-                  feel with a solid groove structure. An artist of considerable
-                  range.
+                  {user?.description || "This user has not left any traces"}
                 </span>
               </div>
             </div>
@@ -158,12 +155,6 @@ const UserInfo = () => {
               <div className="small_container">
                 <div className="flex items-center justify-between">
                   <Heading>Posts</Heading>
-                  {/* <span
-                      onClick={() => Navigate("/blog")}
-                      className="view-all"
-                    >
-                      View all
-                    </span> */}
                 </div>
                 {/* <div className="grid-layout">
                   <PostNewestSmall></PostNewestSmall>
