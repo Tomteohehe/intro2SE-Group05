@@ -92,11 +92,11 @@ const menuLinks = [
 ];
 const adminLinks = [
   {
-    url: "/blog",
+    url: "/admin",
     title: "Blog",
   },
   {
-    url: "/user-manage",
+    url: "/admin/user-manage",
     title: "User",
   },
 ];

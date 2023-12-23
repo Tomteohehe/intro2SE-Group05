@@ -6,7 +6,6 @@ import { postContext } from "contexts/postContext";
 import { useSelector } from "react-redux";
 import { categories } from "utils/constants";
 import Heading from "components/layout/Heading";
-import PostNewestSmall from "module/post/PostNewestSmall";
 import ReactPaginate from "react-paginate";
 import PostTable from "module/post/PostTable";
 import { Table } from "components/table";
@@ -36,7 +35,7 @@ const AdminPageStyles = styled.div`
   }
 `;
 
-const itemsPerPage = 6;
+const itemsPerPage = 4;
 
 function parseDate(dateString) {
   const [day, month, year] = dateString.split("/");
@@ -139,7 +138,6 @@ const AdminPage = () => {
             <div className="flex items-center justify-between">
               <Heading>Posts</Heading>
             </div>
-            {/* <PostNewestSmall post={post}></PostNewestSmall> */}
             <Table>
               <thead>
                 <tr>
@@ -172,12 +170,6 @@ const AdminPage = () => {
               />
             </div>
           </div>
-          {alluser.map((user) => (
-            <>
-              {user.username}
-              {user.email}
-            </>
-          ))}
         </div>
       </Layout>
     </AdminPageStyles>

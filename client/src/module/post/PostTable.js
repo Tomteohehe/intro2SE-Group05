@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import PostTableItem from "./PostTableItem";
-import { authContext } from "contexts/authContext";
 
 const PostTable = ({ filterposts, users }) => {
   const detailPost = async (PostId) => {
