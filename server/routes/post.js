@@ -66,7 +66,7 @@ router.post("/", verifyToken, async (req, res) => {
 // @desc Get detail post
 // @access Private
 
-router.post("/detailpost", verifyToken, async (req, res) => {
+router.post("/detailpost", async (req, res) => {
   const { id } = req.body;
   try {
     const detailedPost = await Post.find({ _id: id }).populate("user", [
