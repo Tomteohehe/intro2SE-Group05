@@ -112,10 +112,10 @@ router.post("/login", async (req, res) => {
 // @access Public
 
 router.post("/getuser", async (req, res) => {
-  const { id } = req.body;
+  const { user_id } = req.body;
 
   try {
-    const data = await User.find({ _id: id })
+    const data = await User.find({ _id: user_id })
     return res.json({success: true, users: data});
   } 
   catch (error) {
