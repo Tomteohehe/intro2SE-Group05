@@ -5,7 +5,6 @@ import styled from "styled-components";
 import BackgroundImage from "../../assets/banner.jpg";
 import { theme } from "utils/constants";
 import Heading from "components/layout/Heading";
-import PostNewestSmall from "module/post/PostNewestSmall";
 import { useParams } from "react-router-dom";
 import { authContext } from "contexts/authContext";
 

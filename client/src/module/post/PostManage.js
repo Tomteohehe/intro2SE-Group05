@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { Button } from "components/button";
 import { Table } from "components/table";
 import DashboardHeading from "module/dashboard/DashboardHeading";
 import styled from "styled-components";
@@ -7,6 +6,7 @@ import PostTable from "./PostTable";
 import { categories } from "utils/constants";
 import { postContext } from "contexts/postContext";
 import ReactPaginate from "react-paginate";
+import { authContext } from "contexts/authContext";
 
 const PostManageStyles = styled.div`
   @media screen and (max-width: 800px) {
@@ -55,6 +55,14 @@ const PostManage = () => {
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
+  console.log(posts);
+
+  const {
+    authState: { alluser },
+    allUser,
+  } = useContext(authContext);
+  useState(() => allUser(), []);
+  console.log(alluser);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -62,7 +70,8 @@ const PostManage = () => {
     author: "",
     date: "",
   });
-  const filteredPosts = posts.filter((post) => {
+
+  const filteredPosts = posts?.filter((post) => {
     // Filter by category
     const isCategoryMatch =
       !filters.category || post.category === filters.category;
@@ -88,9 +97,8 @@ const PostManage = () => {
     setFilters({ ...filters, date: e.target.value });
   };
 
-  const sortedPosts = filteredPosts.sort((a, b) => {
+  const sortedPosts = filteredPosts?.sort((a, b) => {
     if (filters.date === "Latest") {
-      console.log("Latest");
       return parseDate(b.date) - parseDate(a.date);
     } else if (filters.date === "Oldest") {
       return parseDate(a.date) - parseDate(b.date);
@@ -104,7 +112,7 @@ const PostManage = () => {
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentPageData = sortedPosts.slice(offset, offset + itemsPerPage);
+  const currentPageData = sortedPosts?.slice(offset, offset + itemsPerPage);
 
   return (
     <PostManageStyles>
@@ -166,7 +174,16 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          <PostTable filterposts={currentPageData}></PostTable>
+          {currentPageData ? (
+            <PostTable
+              filterposts={currentPageData}
+              users={alluser}
+            ></PostTable>
+          ) : (
+            <p className="p-5 ">
+              You haven't shared anything dude! Let we know your thoughts.
+            </p>
+          )}
         </tbody>
       </Table>
       <div className="pagination">
@@ -175,7 +192,7 @@ const PostManage = () => {
           nextLabel={">"}
           breakLabel={"..."}
           breakClassName={"break-me"}
-          pageCount={Math.ceil(filteredPosts.length / itemsPerPage)}
+          pageCount={Math.ceil(filteredPosts?.length / itemsPerPage)}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
           onPageChange={handlePageClick}
@@ -183,11 +200,6 @@ const PostManage = () => {
           activeClassName={"active"}
         />
       </div>
-      {/* <div className="mt-10 text-center">
-        <Button kind="ghost" className="mx-auto w-[200px]">
-          See more +
-        </Button>
-      </div> */}
     </PostManageStyles>
   );
 };

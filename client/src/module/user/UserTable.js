@@ -1,9 +1,17 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import UserTableItem from "./UserTableItem";
 import { ActionDelete, ActionEdit, ActionView } from "components/action";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "contexts/authContext";
 import Swal from "sweetalert2";
+
+const truncateTitle = (title, maxLength) => {
+  if (title.length <= maxLength) {
+    return title;
+  } else {
+    return title.slice(0, maxLength) + "...";
+  }
+};
 
 const UserTable = ({ users }) => {
   const navigate = useNavigate();
@@ -34,10 +42,7 @@ const UserTable = ({ users }) => {
       }
     });
   };
-  const {
-    deleteUser
-  } = useContext(authContext)
-
+  const { deleteUser } = useContext(authContext);
   return (
     <>
       {users.map((user, index) => (
@@ -47,17 +52,18 @@ const UserTable = ({ users }) => {
             <UserTableItem user={user}></UserTableItem>
           </td>
           <td>
-            <span className="text-gray-500">{user.email}</span>
+            <span className="text-gray-500">{user?.email}</span>
           </td>
           <td>
-            <span className="text-gray-500">{user.description}</span>
+            <span className="text-gray-500">
+              {user?.description ? truncateTitle(user?.description, 60) : ""}
+            </span>
           </td>
           <td>
             <div className="flex items-center text-gray-500 gap-x-3">
               <ActionView
-                onClick={() => navigate(`/user/${user._id}`)}
+                onClick={() => navigate(`/user/${user?._id}`)}
               ></ActionView>
-              <ActionEdit></ActionEdit>
               <ActionDelete
                 onClick={() => handleDeleteUser(user._id)}
               ></ActionDelete>

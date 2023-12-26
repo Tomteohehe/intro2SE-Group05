@@ -87,7 +87,7 @@ const PostAddNew = () => {
 
   const addPostHandler = async (values) => {
     console.log(content);
-    const { title, slug, categoryName, hot } = values;
+    const { title, categoryName } = values;
     const category = categoryName;
     const image = url;
     const simplePostInfo = { title, category, image, content };

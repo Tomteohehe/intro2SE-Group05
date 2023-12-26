@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const AuthorItemStyles = styled.div`
@@ -40,6 +41,7 @@ const AuthorItemStyles = styled.div`
 `;
 
 const AuthorItem = ({ user }) => {
+  const navigate = useNavigate();
   console.log(user);
   return (
     <AuthorItemStyles>
@@ -47,7 +49,10 @@ const AuthorItem = ({ user }) => {
         <div className="author-image">
           <img src={user?.avatar} alt="authorAvt" />
         </div>
-        <div className="author-content">
+        <div
+          className="author-content"
+          onClick={() => navigate(`/user/${user?._id}`)}
+        >
           <h3 className="author-name">{user?.username}</h3>
           <p className="author-desc">{user?.email}</p>
         </div>

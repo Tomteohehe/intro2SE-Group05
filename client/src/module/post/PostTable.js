@@ -5,7 +5,7 @@ import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import PostTableItem from "./PostTableItem";
 
-const PostTable = ({ filterposts, users }) => {
+const PostTable = ({ filterposts, users, isAdmin = false }) => {
   const detailPost = async (PostId) => {
     const id = PostId;
     const idPostInfo = { id };
@@ -30,7 +30,7 @@ const PostTable = ({ filterposts, users }) => {
       if (result.isConfirmed) {
         try {
           const deleted = await deletePost(postId);
-          console.log(deleted)
+          console.log(deleted);
           if (deleted["success"]) {
             Swal.fire("Deleted!", "Your post has been deleted.", "success");
             setTimeout(function () {
@@ -59,26 +59,32 @@ const PostTable = ({ filterposts, users }) => {
 
   return (
     <>
-      {filterposts.map((post, index) => (
+      {filterposts?.map((post, index) => (
         <tr>
           <td>{`0${index + 1}`}</td>
           <td>
             <PostTableItem post={post}></PostTableItem>
           </td>
           <td>
-            <span className="text-gray-500">{post.category}</span>
+            <span className="text-gray-500">{post?.category}</span>
           </td>
           <td>
-            <span className="text-gray-500">{getUser(post.user)}</span>
+            <span className="text-gray-500">
+              {getUser(post?.user._id) || post?.user.username}
+            </span>
           </td>
           <td>
             <div className="flex items-center text-gray-500 gap-x-3">
               <ActionView
-                onClick={() => navigate(`/post/${post._id}`)}
+                onClick={() => navigate(`/post/${post?._id}`)}
               ></ActionView>
-              <ActionEdit onClick={() => detailPost(post._id)}></ActionEdit>
+              {!isAdmin ? (
+                <ActionEdit onClick={() => detailPost(post?._id)}></ActionEdit>
+              ) : (
+                ""
+              )}
               <ActionDelete
-                onClick={() => handleDeletePost(post._id)}
+                onClick={() => handleDeletePost(post?._id)}
               ></ActionDelete>
             </div>
           </td>

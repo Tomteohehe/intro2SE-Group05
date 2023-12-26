@@ -19,7 +19,7 @@ const PostTableItem = ({ post }) => {
       />
       <div className="flex-1">
         <h3 className="font-semibold">{truncatedTitle}</h3>
-        <time className="text-sm text-gray-500">{post.date}</time>
+        <time className="text-sm text-gray-500">{post?.date}</time>
       </div>
     </div>
   );

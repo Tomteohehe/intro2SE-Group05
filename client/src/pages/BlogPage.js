@@ -143,7 +143,7 @@ const BlogPage = () => {
                 nextLabel={">"}
                 breakLabel={"..."}
                 breakClassName={"break-me"}
-                pageCount={Math.ceil(filteredPosts.length / itemsPerPage)}
+                pageCount={Math.ceil(filteredPosts?.length / itemsPerPage)}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
