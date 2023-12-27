@@ -12,7 +12,7 @@ const PostContextProvider = ({ children }) => {
     allposts: [],
     lastpost: [],
     smalllastposts: [],
-    details: [],
+    detailpost: [],
     postsLoading: true,
   });
 

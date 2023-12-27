@@ -232,8 +232,6 @@ const Header = ({ isAdmin = false }) => {
     dispatch(setSearchTerm(newValue));
   };
 
-  console.log(isAdmin);
-
   return (
     <HeaderStyles show={show}>
       <div className="container">

@@ -4,8 +4,7 @@ import Layout from "../components/layout/Layout";
 import HomeBanner from "../module/home/HomeBanner";
 import HomeFeature from "../module/home/HomeFeature";
 import HomeNewest from "module/home/HomeNewest";
-
-// import HomeNewest from "module/home/HomeNewest";
+import { useSelector } from "react-redux";
 
 const HomePageStyles = styled.div`
   .spinner {
@@ -22,6 +21,8 @@ const HomePage = () => {
       setIsLoading(false);
     }, 1000);
   }, []);
+
+  const searchTerm = useSelector((state) => state);
 
   return (
     <HomePageStyles>
