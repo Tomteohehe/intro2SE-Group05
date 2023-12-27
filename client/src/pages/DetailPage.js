@@ -40,7 +40,6 @@ const PostDetailsPageStyles = styled.div`
       margin: 80px auto;
     }
   }
-
   @media screen and (max-width: 1023.98px) {
     padding-bottom: 40px;
     .post {
@@ -67,15 +66,13 @@ const DetailPage = () => {
     getDetailedPost,
     getAllPostsEver,
   } = useContext(postContext);
-
-  const id = { slug };
+  const id = slug;
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
   console.log(detailpost);
 
-  const {
-    authState: { alluser },
-    allUser,
+  const {authState: { alluser },
+  allUser,
   } = useContext(authContext);
 
   useState(() => allUser(), []);
@@ -89,17 +86,13 @@ const DetailPage = () => {
   };
 
   const author = getUser(detailpost[0]?.user._id);
+  console.log(author);
 
   let relatedPosts = allposts.filter((post) => {
-    return (
-      post?.category === detailpost[0]?.category &&
-      post?._id !== detailpost[0]._id
-    );
+    return post?.category === detailpost[0]?.category;
   });
-
   relatedPosts =
     relatedPosts.length > 4 ? relatedPosts.slice(0, 4) : relatedPosts;
-
   return (
     <>
       {detailpost.map((post) => (
@@ -123,8 +116,7 @@ const DetailPage = () => {
               <div className="post-content">
                 <div className="entry-content">
                   {HTMLReactParser(post?.content || "")}
-                </div>
-                <AuthorItem user={author}></AuthorItem>
+                </div><AuthorItem user={author}></AuthorItem>
               </div>
               <PostRelated posts={relatedPosts}></PostRelated>
             </div>
@@ -134,5 +126,4 @@ const DetailPage = () => {
     </>
   );
 };
-
 export default DetailPage;
