@@ -68,7 +68,7 @@ const PostManage = () => {
     title: "",
     category: "",
     author: "",
-    date: "",
+    date: "Latest",
   });
 
   const filteredPosts = posts?.filter((post) => {
@@ -103,7 +103,7 @@ const PostManage = () => {
     } else if (filters.date === "Oldest") {
       return parseDate(a.date) - parseDate(b.date);
     }
-    return 0; // No change if 'selectedOrder' is neither 'latest' nor 'oldest'
+    return 0;
   });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -113,6 +113,7 @@ const PostManage = () => {
 
   const offset = currentPage * itemsPerPage;
   const currentPageData = sortedPosts?.slice(offset, offset + itemsPerPage);
+  console.log(currentPageData);
 
   return (
     <PostManageStyles>
@@ -174,7 +175,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          {currentPageData ? (
+          {currentPageData.length > 0 ? (
             <PostTable
               filterposts={currentPageData}
               users={alluser}

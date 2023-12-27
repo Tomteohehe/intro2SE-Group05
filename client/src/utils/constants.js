@@ -46,11 +46,11 @@ export const categories = [
   },
   {
     id: 7,
-    name: "Food and Cooking",
+    name: "Food",
   },
   {
     id: 8,
-    name: "Personal Finance",
+    name: "Finance",
   },
   {
     id: 9,

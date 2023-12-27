@@ -73,8 +73,8 @@ const sidebarLinks = [
     ),
   },
   {
-    title: "Category",
-    url: "/manage/category",
+    title: "Update Post",
+    url: "/manage/update-post",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

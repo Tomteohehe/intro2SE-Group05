@@ -12,6 +12,7 @@ import UserInfo from "module/user/UserInfo";
 import BlogPage from "pages/BlogPage";
 import AdminPage from "pages/AdminPage";
 import AdminUserManage from "pages/AdminUserManage";
+import PostUpdate from "module/post/PostUpdate";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route
             path="/manage/posts"
             element={<PostManage></PostManage>}
+          ></Route>
+          <Route
+            path="/manage/update-post"
+            element={<PostUpdate></PostUpdate>}
           ></Route>
           <Route
             path="/manage/add-post"

@@ -2,7 +2,7 @@ import Heading from "components/layout/Heading";
 import Layout from "components/layout/Layout";
 import { postContext } from "contexts/postContext";
 import PostNewestSmall from "module/post/PostNewestSmall";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { categories } from "utils/constants";
@@ -41,6 +41,9 @@ const BlogPageStyles = styled.div`
 `;
 
 const BlogPage = () => {
+  useEffect(() => {
+    document.title = "GoaTalks - Blog Page";
+  }, []);
   const {
     postState: { allposts },
     getAllPostsEver,
@@ -111,7 +114,7 @@ const BlogPage = () => {
                 <option value="Oldest">Oldest</option>
               </select>
             </label>
-            <label className="p-3 text-black bg-gray-200 rounded-md">
+            <label className="p-3 text-black bg-gray-200 rounded-md ">
               <select
                 className="bg-inherit"
                 value={filters.category}
