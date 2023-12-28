@@ -15,21 +15,31 @@ import { useNavigate } from "react-router-dom";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
 import { categories } from "utils/constants";
 import ImageResize from "quill-image-resize-module-react";
-import styled from "styled-components";
+import { useParams } from "react-router-dom";
+import HTMLReactParser from "html-react-parser";
 
 Quill.register("modules/imageResize", ImageResize);
 
-const PostUpdateStyles = styled.div``;
-
 const PostUpdate = () => {
+  const navigate = useNavigate();
+
   const [isDefaultImageVisible, setDefaultImageVisible] = useState(true);
 
-  const { addPost } = useContext(postContext);
+  const { slug } = useParams();
+  const {
+    postState: { detailpost },
+    getDetailedPost,
+    updatePost,
+  } = useContext(postContext);
+  const id = slug;
+  const detailid = { id };
+  useState(() => getDetailedPost(detailid), []);
+  // console.log(detailpost);
+
   const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
-      slug: "",
       status: 2,
       categoryId: "",
       categoryName: "",
@@ -37,32 +47,44 @@ const PostUpdate = () => {
       image: "",
     },
   });
-
   const watchHot = watch("hot");
+
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
-  const [content, setContent] = useState("");
+  const [contentt, setContent] = useState("");
   const [url, updateUrl] = useState();
   const [error, updateError] = useState();
 
-  useEffect(() => {
-    document.title = "GoaTalks - Update post";
-  }, []);
-
-  const modules = {
-    toolbar: [
-      [{ font: [] }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ color: [] }, { background: [] }],
-      [{ script: "sub" }, { script: "super" }],
-      ["blockquote", "code-block"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
-      ["link", "image", "video"],
-      ["clean"],
-    ],
+  const updatePostHandler = async (values) => {
+    const currentPost = await getDetailedPost(detailid)
+    let { title, categoryName } = values;
+    title = title == '' ? currentPost.posts[0].title : title;
+    let category = categoryName == '' ? currentPost.posts[0].category : categoryName;
+    let image;
+    // console.log(values)
+    image = url == undefined ? currentPost.posts[0].image : url;
+    let content = contentt == '' ? currentPost.posts[0].content : contentt;
+    console.log(content)
+    const updatePostInfo = { title, category, image, content };
+    try {
+      const updatePostData = await updatePost(updatePostInfo, id);
+      if (updatePostData["success"]) {
+        toast.success(`Post edited successfully`);
+        // navigate(`/post/${id}`);
+        // console.log(updatePostData)
+        setTimeout(1500);
+        window.location.reload()
+      } else {
+        toast.error(updatePostData["message"]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    document.title = "GoaTalks - Add new post";
+  }, []);
 
   const handleClickOption = (item) => {
     setValue("categoryId", item.id);
@@ -85,144 +107,127 @@ const PostUpdate = () => {
     setDefaultImageVisible(false);
   }
 
-  return (
-    <PostUpdateStyles>
-      <div className="heading">
-        <DashboardHeading
-          title="Post Update"
-          desc="Updating your post easily here"
-          responsive={true}
-        ></DashboardHeading>
-      </div>
-      <form
-        className="form"
-        // onSubmit={handleSubmit(addPostHandler)}
-        autoComplete="off"
-      >
-        <div className="form-layout">
-          <Field>
-            <Label>Title</Label>
-            <Input
-              control={control}
-              placeholder="Enter your title"
-              name="title"
-              required
-            ></Input>
-          </Field>
-          <Field>
-            <Label>Slug</Label>
-            <Input
-              control={control}
-              placeholder="Enter your slug"
-              name="slug"
-            ></Input>
-          </Field>
-        </div>
-        <div className="form-layout">
-          <Field>
-            <Label>Image</Label>
-            <CloudinaryUploader onUpload={handleOnUpload}>
-              {({ open }) => {
-                function handleOnClick(e) {
-                  e.preventDefault();
-                  open();
-                }
-                return (
-                  <>
-                    {!isDefaultImageVisible && (
-                      <div>
-                        <button
-                          className="p-3 text-sm text-white bg-green-500 rounded-md"
-                          onClick={handleOnClick}
-                        >
-                          Rechoose Image
-                        </button>
-                      </div>
-                    )}
+  const modules = {
+    toolbar: [
+      [{ font: [] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ color: [] }, { background: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      ["blockquote", "code-block"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+      ["link", "image", "video"],
+      ["clean"],
+    ],
+  };
 
-                    {isDefaultImageVisible && (
-                      <button
-                        className="flex items-start justify-center w-full h-full border-r-2 border-gray-700"
-                        onClick={handleOnClick}
-                      >
-                        <img
-                          className="w-[50%] h-[90%]"
-                          src={require("../../assets/img-upload.png")}
-                          alt="ImgUpload"
-                        />
-                      </button>
-                    )}
-                  </>
-                );
-              }}
-            </CloudinaryUploader>
-            {url && (
-              <>
-                <img
-                  className="rounded-3xl w-[34rem] h-[20rem] object-cover"
-                  src={url}
-                  alt="Uploaded resource"
-                />
-              </>
-            )}
-          </Field>
-          <Field>
-            <Label>Category</Label>
-            <Dropdown>
-              <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
-              <Dropdown.List>
-                {categories.length > 0 &&
-                  categories.slice(1).map((item) => (
-                    <Dropdown.Option
-                      key={item.id}
-                      onClick={() => handleClickOption(item)}
-                    >
-                      {item.name}
-                    </Dropdown.Option>
-                  ))}
-              </Dropdown.List>
-            </Dropdown>
-            {selectCategory?.name && (
-              <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
-                {selectCategory?.name}
-              </span>
-            )}
-          </Field>
-        </div>
-        <div className="solo-form-layout">
-          <div className="mb-10">
+  return (
+    <>
+      <DashboardHeading
+        title="Update Post"
+        desc="Update Your Post Easily Here"
+      ></DashboardHeading>
+        {detailpost.map((post) => (
+        <form
+          className="form"
+          onSubmit={handleSubmit(updatePostHandler)}
+          autoComplete="off"
+        >
+          <div className="form-layout">
             <Field>
-              <Label>Content</Label>
-              <div className="w-full entry-content">
-                <ReactQuill
-                  modules={modules}
-                  name="content"
-                  value={content}
-                  onChange={setContent}
-                />
-              </div>
+              <Label>Title</Label>
+              <Input
+                control={control}
+                placeholder={post.title}
+                name="title"
+              ></Input>
+            </Field>
+            <Field>
+              <Label>Category</Label>
+              <Dropdown>
+                <Dropdown.Select placeholder={post.category}></Dropdown.Select>
+                <Dropdown.List>
+                  {categories.length > 0 &&
+                    categories.slice(1).map((item) => (
+                      <Dropdown.Option
+                        key={item.id}
+                        onClick={() => handleClickOption(item)}
+                      >
+                        {item.name}
+                      </Dropdown.Option>
+                    ))}
+                </Dropdown.List>
+              </Dropdown>
+              {selectCategory?.name && (
+                <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
+                  {selectCategory?.name}
+                </span>
+              )}
             </Field>
           </div>
-        </div>
-        <div className="form-layout">
-          <Field>
-            <Label>Feature post</Label>
-            <Toggle
-              on={watchHot === true}
-              onClick={() => setValue("hot", !watchHot)}
-            ></Toggle>
-          </Field>
-        </div>
-        <Button
-          type="submit"
-          className="mx-auto w-[250px]"
-          isLoading={loading}
-          disabled={loading}
-        >
-          Add new post
-        </Button>
-      </form>
-    </PostUpdateStyles>
+          <div className="form-layout">
+            <Field>
+              <Label>Image</Label>
+              <img
+                className="w-[20rem] h-[15rem] object-cover mb-3 rounded-3xl"
+                src={url ? url : post.image}
+                alt="UserAvatar"
+              ></img>
+              <CloudinaryUploader onUpload={handleOnUpload}>
+                {({ open }) => {
+                  function handleOnClick(e) {
+                    e.preventDefault();
+                    open();
+                  }
+                  return (
+                    <button
+                      className="p-3 text-sm text-white bg-green-500 rounded-md"
+                      onClick={handleOnClick}
+                    >
+                      Change Thumbnail
+                    </button>
+                  );
+                }}
+              </CloudinaryUploader>
+            </Field>
+          </div>
+          <div className="solo-form-layout">
+            <div className="mb-10">
+              <Field>
+                <Label>Content</Label>
+                <div className="w-full entry-content">
+                  <ReactQuill
+                    modules={modules}
+                    name="content"
+                    value={contentt}
+                    onChange={setContent}
+                    placeholder={HTMLReactParser(post?.content || "")}
+                  />
+                </div>
+              </Field>
+            </div>
+          </div>
+          <div className="form-layout">
+            <Field>
+              <Label>Feature post</Label>
+              <Toggle
+                on={watchHot === true}
+                onClick={() => setValue("hot", !watchHot)}
+              ></Toggle>
+            </Field>
+          </div>
+          <Button
+            type="submit"
+            className="mx-auto w-[250px]"
+            isLoading={loading}
+            disabled={loading}
+          >
+            Edit Post
+          </Button>
+        </form>
+      ))}
+    </>
   );
 };
 
