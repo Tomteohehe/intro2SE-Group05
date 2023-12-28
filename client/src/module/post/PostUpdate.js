@@ -69,8 +69,8 @@ const PostUpdate = () => {
     try {
       const updatePostData = await updatePost(updatePostInfo, id);
       if (updatePostData["success"]) {
-        toast.success(`Post edited successfully`);
-        // navigate(`/post/${id}`);
+        toast.success('Post edited successfully');
+        // navigate(/post/${id});
         // console.log(updatePostData)
         setTimeout(1500);
         window.location.reload()
@@ -85,6 +85,13 @@ const PostUpdate = () => {
   useEffect(() => {
     document.title = "GoaTalks - Add new post";
   }, []);
+
+  useEffect(() => {
+    if (detailpost.length > 0) {
+      const post = detailpost[0];
+      setContent(post.content || "");
+    }
+  }, [detailpost]);
 
   const handleClickOption = (item) => {
     setValue("categoryId", item.id);
@@ -202,7 +209,6 @@ const PostUpdate = () => {
                     name="content"
                     value={contentt}
                     onChange={setContent}
-                    placeholder={HTMLReactParser(post?.content || "")}
                   />
                 </div>
               </Field>
