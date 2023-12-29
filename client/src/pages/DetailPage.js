@@ -69,7 +69,7 @@ const DetailPage = () => {
   const id = slug;
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
-  console.log(detailpost);
+  // console.log(detailpost);
 
   const {authState: { alluser },
   allUser,
@@ -86,7 +86,7 @@ const DetailPage = () => {
   };
 
   const author = getUser(detailpost[0]?.user._id);
-  console.log(author);
+  // console.log(author);
 
   let relatedPosts = allposts.filter((post) => {
     return post?.category === detailpost[0]?.category;

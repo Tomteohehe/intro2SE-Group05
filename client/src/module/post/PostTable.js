@@ -11,9 +11,9 @@ const PostTable = ({ filterposts, users, isAdmin = false }) => {
     const idPostInfo = { id };
     try {
       const content = await getDetailedPost(idPostInfo);
-      console.log(content.posts[0]);
+      // console.log(content.posts[0]);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -48,7 +48,7 @@ const PostTable = ({ filterposts, users, isAdmin = false }) => {
   const { deletePost, getDetailedPost } = useContext(postContext);
 
   const navigate = useNavigate();
-  console.log(users);
+  // console.log(users);
 
   const getUser = (id) => {
     const user = users.filter((u) => {
@@ -78,10 +78,10 @@ const PostTable = ({ filterposts, users, isAdmin = false }) => {
               <ActionView
                 onClick={() => navigate(`/post/${post?._id}`)}
               ></ActionView>
-              {!isAdmin ? (
-                <ActionEdit onClick={() => detailPost(post?._id)}></ActionEdit>
-              ) : (
-                ""
+              {!isAdmin && (
+                <ActionEdit
+                  onClick={() => navigate(`/manage/update-post/${post?._id}`)}
+                ></ActionEdit>
               )}
               <ActionDelete
                 onClick={() => handleDeletePost(post?._id)}

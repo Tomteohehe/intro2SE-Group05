@@ -129,6 +129,52 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // follow User
+  const followUser = async (id) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/follow',
+        id
+      );
+      /*
+			if (response.data.success) {
+				dispatch({
+					type: 'SET_AUTH',
+					payload: { isAuthenticated: true, user: response.data.user }
+				})
+			}
+      */
+      return response.data;
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
+  // follow User
+  const unfollowUser = async (id) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/unfollow',
+        id
+      );
+      /*
+			if (response.data.success) {
+				dispatch({
+					type: 'SET_AUTH',
+					payload: { isAuthenticated: true, user: response.data.user }
+				})
+			}
+      */
+      return response.data;
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
   // log out
   const logoutUser = () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
@@ -180,6 +226,8 @@ const AuthContextProvider = ({ children }) => {
     allUser,
     getUserbyId,
     deleteUser,
+    followUser,
+    unfollowUser
   };
 
   // return provider

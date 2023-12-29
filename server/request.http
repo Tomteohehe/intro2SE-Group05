@@ -17,8 +17,26 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json 
 
 {
-    "email": "hoangtranthong03@gmail.com",
+    "username": "sirochanhday",
     "password": "12345"
+}
+
+###
+POST http://localhost:5000/api/post/postofuser
+Content-Type: application/json 
+
+{
+    "id": "6583db85535182c1674fb11e"
+}
+
+###
+POST http://localhost:5000/api/auth/following
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDM3ODU1ODB9.SN0fyLRv2427YRI4U52WtlAsE_K0PacmEtRmMMIIQjA
+
+{
+    "followingId": "65728602fe9961d3ceba7338",
+    "followerId": "656c7e49a02ad59ef59d55ad"
 }
 
 
@@ -75,7 +93,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN
 
 
 ###
-PUT http://localhost:5000/api/post/656f3a65fdc6099a358a7485
+PUT http://localhost:5000/api/post/658d5f4865e9de8538a7ffb9
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTZjN2U0OWEwMmFkNTllZjU5ZDU1YWQiLCJpYXQiOjE3MDE3ODMzMzV9.Mst9G8_pW1Mlh0xkcZL04HGRnZ7z7Qle5OWOguxp4nc
 

@@ -55,14 +55,14 @@ const PostManage = () => {
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
-  console.log(posts);
+  // console.log(posts);
 
   const {
     authState: { alluser },
     allUser,
   } = useContext(authContext);
   useState(() => allUser(), []);
-  console.log(alluser);
+  // console.log(alluser);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -113,7 +113,7 @@ const PostManage = () => {
 
   const offset = currentPage * itemsPerPage;
   const currentPageData = sortedPosts?.slice(offset, offset + itemsPerPage);
-  console.log(currentPageData);
+  // console.log(currentPageData);
 
   return (
     <PostManageStyles>

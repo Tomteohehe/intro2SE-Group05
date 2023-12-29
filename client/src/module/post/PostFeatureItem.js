@@ -71,7 +71,7 @@ const PostFeatureItem = ({ post }) => {
           <PostCategory>{post?.category}</PostCategory>
           <PostMeta
             color="inherit"
-            authorName="MrWeirdo"
+            authorName={post.user.username}
             date={post?.date}
           ></PostMeta>
         </div>

@@ -9,6 +9,7 @@ const PostContextProvider = ({ children }) => {
   const [postState, dispatch] = useReducer(postReducer, {
     post: {},
     posts: [],
+    userposts: [],
     allposts: [],
     lastpost: [],
     smalllastposts: [],
@@ -23,6 +24,23 @@ const PostContextProvider = ({ children }) => {
       if (response.data.success) {
         dispatch({
           type: "POSTS_LOADED_SUCCESS",
+          payload: response.data.posts,
+        });
+      }
+    } catch (error) {
+      return error.response.data
+        ? error.response.data
+        : { success: false, message: "Server error" };
+    }
+  };
+
+  // get all postofuser
+  const getAllPostsOfUser = async (id) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/post/postofuser", id);
+      if (response.data.success) {
+        dispatch({
+          type: "POSTS_LOADED_SUCCESS_USER",
           payload: response.data.posts,
         });
       }
@@ -141,16 +159,40 @@ const PostContextProvider = ({ children }) => {
     }
   };
 
+  // update post
+  const updatePost = async (post, id) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/post/${id}`, post
+      );
+      /*
+			if (response.data.success) {
+				dispatch({
+					type: 'SET_AUTH',
+					payload: { isAuthenticated: true, user: response.data.user }
+				})
+			}
+      */
+      return response.data;
+    } catch (error) {
+      if (error.response.data) {
+        return error.response.data;
+      } else return { success: false, message: error.message };
+    }
+  };
+
   // post context data
   const postContextData = {
     postState,
     getAllPosts,
+    getAllPostsOfUser,
     getAllPostsEver,
     addPost,
     deletePost,
     getDetailedPost,
     getNewestLargePost,
     getNewestPost,
+    updatePost,
   };
 
   return (

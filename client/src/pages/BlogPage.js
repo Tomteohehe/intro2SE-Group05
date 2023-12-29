@@ -64,7 +64,7 @@ const BlogPage = () => {
     const isTitleMatch = post.title
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-    console.log("isTitleMatch", isTitleMatch);
+    // console.log("isTitleMatch", isTitleMatch);
 
     // Return true only if both date and category match
     return isCategoryMatch && isTitleMatch;
@@ -87,7 +87,7 @@ const BlogPage = () => {
   // Sort the posts array by date in descending order (latest to oldest)
   const sortedPosts = filteredPosts.sort((a, b) => {
     if (filters.date === "Latest") {
-      console.log("Latest");
+      // console.log("Latest");
       return parseDate(b.date) - parseDate(a.date);
     } else if (filters.date === "Oldest") {
       return parseDate(a.date) - parseDate(b.date);

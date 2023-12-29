@@ -39,7 +39,7 @@ function App() {
             element={<PostManage></PostManage>}
           ></Route>
           <Route
-            path="/manage/update-post"
+            path="/manage/update-post/:slug"
             element={<PostUpdate></PostUpdate>}
           ></Route>
           <Route

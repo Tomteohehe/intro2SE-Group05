@@ -7,6 +7,12 @@ export const postReducer = (state, action) => {
         posts: payload,
         postsLoading: false,
       };
+      case "POSTS_LOADED_SUCCESS_USER":
+      return {
+        ...state,
+        userposts: payload,
+        postsLoading: false,
+      };
     case "ALL":
       return {
         ...state,

@@ -61,7 +61,7 @@ const DashboardHeader = () => {
         <Button to="/manage/add-post" className="bg-white" height="52px">
           Write new post
         </Button>
-        <NavLink to="/manage/update-user" className="header-avatar">
+        <NavLink to={`/user/${user?._id}`} className="header-avatar">
           <img src={user.avatar} alt="" />
         </NavLink>
       </div>

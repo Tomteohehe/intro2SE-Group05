@@ -30,6 +30,14 @@ const user = new schema({
     type: Date,
     default: Date.now,
   },
+  following: {
+    type: Array,
+    default: []
+  },
+  follower: {
+    type: Array,
+    default: []
+  }
 });
 
 module.exports = mongoose.model("users", user);

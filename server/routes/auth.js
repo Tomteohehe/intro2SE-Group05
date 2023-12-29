@@ -221,4 +221,80 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// @route PUT api/auth/following
+// @desc Following
+// @access Private
+
+router.post("/follow", async (req, res) => {
+  const { followingId, followerId } = req.body
+  try {
+    const followedUser = await User.findOne({ _id: followerId})
+    const followingUser = await User.findOne({ _id: followingId})
+    if(!followedUser) return res
+    .status(401)
+    .json({ success: false, message: "Follower not found" });
+    if(!followingUser) return res
+    .status(401)
+    .json({ success: false, message: "Following not found" });
+
+    const nguoiduocfollow = await User.findOneAndUpdate({ _id: followingId }, { $push: { follower: followedUser._id} })
+    const nguoifollow = await User.findOneAndUpdate({ _id: followedUser }, { $push: { following: followingUser._id} })
+
+    // Cannot follow
+    if (!nguoifollow && !nguoiduocfollow) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Cannot follow" });
+    }
+    return res.json({
+      success: true,
+      message: "Follow user succesfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
+  // @route PUT api/auth/unfollow
+// @desc Unfollow
+// @access Private
+
+router.post("/unfollow", async (req, res) => {
+  const { followingId, followerId } = req.body
+  try {
+    const followedUser = await User.findOne({ _id: followerId})
+    const followingUser = await User.findOne({ _id: followingId})
+    if(!followedUser) return res
+    .status(401)
+    .json({ success: false, message: "Follower not found" });
+    if(!followingUser) return res
+    .status(401)
+    .json({ success: false, message: "Following not found" });
+
+    const nguoiduocfollow = await User.findOneAndUpdate({ _id: followingId }, { $pull: { follower: followedUser._id} })
+    const nguoifollow = await User.findOneAndUpdate({ _id: followedUser }, { $pull: { following: followingUser._id} })
+
+    // Cannot follow
+    if (!nguoifollow && !nguoiduocfollow) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Cannot follow" });
+    }
+    return res.json({
+      success: true,
+      message: "Unfollow user succesfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
 module.exports = router;

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/button";
 import { Field } from "../components/field";
 import Input from "../components/input/Input";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 import InputPasswordToggle from "../components/input/InputPasswordToggle";
 import { authContext } from "../contexts/authContext";
+import { Location } from "react-router-dom";
 
 const schema = yup.object({
   email: yup
@@ -25,6 +26,7 @@ const schema = yup.object({
 const SignInPage = () => {
   const { loginUser } = useContext(authContext);
   const navigate = useNavigate();
+  const location = useLocation()
 
   const {
     control,
@@ -53,7 +55,7 @@ const SignInPage = () => {
       const loginData = await loginUser({ username, password });
       if (loginData["success"]) {
         toast.success(`Welcome back, ${loginData["username"]}!`);
-        navigate("/");
+        navigate(location.state?.from || "/");
         console.log(loginData.message);
       } else {
         toast.error(loginData["message"]);

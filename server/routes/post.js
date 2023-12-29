@@ -23,6 +23,26 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
+// @route GET api/postofuser
+// @desc Get postofuser
+// @access Public
+
+router.post("/postofuser", async (req, res) => {
+  const { id } = req.body
+  try {
+    const posts = await Post.find({ user: id }).populate("user", [
+      "username",
+    ]);
+    res.json({ success: true, posts });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "internal server error",
+    });
+  }
+});
+
 // @route POST api/post
 // desc create post
 // @access private
@@ -129,11 +149,6 @@ router.get("/newestpost", async (req, res) => {
 
 router.put("/:id", verifyToken, async (req, res) => {
   const { title, category, image, content } = req.body;
-  if (!title) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Title is required" });
-  }
 
   try {
     let updatedPost = {

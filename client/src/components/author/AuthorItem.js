@@ -42,7 +42,7 @@ const AuthorItemStyles = styled.div`
 
 const AuthorItem = ({ user }) => {
   const navigate = useNavigate();
-  console.log(user);
+  // console.log(user);
   return (
     <AuthorItemStyles>
       <div className="author">
