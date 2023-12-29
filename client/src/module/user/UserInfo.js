@@ -5,8 +5,11 @@ import styled from "styled-components";
 import BackgroundImage from "../../assets/banner.jpg";
 import { theme } from "utils/constants";
 import Heading from "components/layout/Heading";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { authContext } from "contexts/authContext";
+import { postContext } from "contexts/postContext";
+import PostNewestSmall from "module/post/PostNewestSmall";
+import { useNavigate } from "react-router-dom";
 
 const UserInfoStyles = styled.div`
   padding-bottom: 100px;
@@ -79,8 +82,10 @@ const UserInfoStyles = styled.div`
 const UserInfo = () => {
   const { slug } = useParams();
   const {
-    authState: { alluser },
+    authState: { user, alluser },
     allUser,
+    followUser,
+    unfollowUser
   } = useContext(authContext);
   useState(() => allUser(), []);
 
@@ -91,8 +96,51 @@ const UserInfo = () => {
     return user[0];
   };
 
-  const user = getUser(slug);
-  console.log(user);
+  const curUser = getUser(slug);
+  // console.log(curUser);
+
+  const {
+    postState: { userposts },
+    getAllPostsOfUser,
+  } = useContext(postContext)
+
+  const id = slug;
+  const user_id = { id };
+
+  useState(() => getAllPostsOfUser(user_id))
+  // console.log(userposts)
+
+  let isFollowed = false
+  if(user?.following.includes(curUser._id)) isFollowed = true
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const handleOnClickFollow = async () => {
+    if (user) {
+      const followingId = curUser._id;
+      const followerId = user._id;
+      const id = { followingId, followerId };
+      const response = await followUser(id);
+      if (response.success) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    } else {
+      navigate('/sign-in', { state: { from: location.pathname } });
+    }
+  };
+
+  const handleOnClickUnfollow = async () => {
+    const followingId = curUser._id
+    const followerId = user._id
+    const id = { followingId, followerId }
+    const response = await unfollowUser(id)
+    if(response.success){
+      setTimeout(1500)
+      window.location.reload()
+    }
+  }
 
   return (
     <UserInfoStyles>
@@ -108,28 +156,32 @@ const UserInfo = () => {
             <div className="flex items-center justify-center gap-16 mb-10 profile_container">
               <div className="flex items-center gap-4 justify-evenly follow_info">
                 <div>
-                  <p className="font-bold text-center text-black">10M</p>
+                  <p className="font-bold text-center text-black">{curUser?.follower.length}</p>
                   <span className="text-sm text-gray-500">Followers</span>
                 </div>
                 <div>
-                  <p className="font-bold text-center text-black">0</p>
+                  <p className="font-bold text-center text-black">{curUser?.following.length}</p>
                   <span className="text-sm text-gray-500">Following</span>
                 </div>
                 <div>
-                  <p className="font-bold text-center text-black">69</p>
+                  <p className="font-bold text-center text-black">{userposts.length}</p>
                   <span className="text-sm text-gray-500">Posts</span>
                 </div>
               </div>
               <div className="user_avt">
-                <img src={user?.avatar} alt="Avatar" />
+                <img src={curUser?.avatar} alt="Avatar" />
               </div>
               <div className="">
-                <button className="fl_button">Follow</button>
+                {user?._id !== curUser?._id && (
+                  <button className="fl_button" onClick={isFollowed ? handleOnClickUnfollow : handleOnClickFollow}>
+                    {isFollowed ? 'Unfollow' : 'Follow'}
+                  </button>
+                )}
               </div>
             </div>
 
             <div className="mb-20 user_info">
-              <p className="text-lg font-bold fullname">{user?.username}</p>
+              <p className="text-lg font-bold fullname">{curUser?.username}</p>
               <div className="flex justify-center gap-3 mt-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -141,25 +193,23 @@ const UserInfo = () => {
                   <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
                 </svg>
                 <span className="text-xs font-semibold text-gray-400 location">
-                  {user?.email}
+                  {curUser?.email}
                 </span>
               </div>
               <div className="mt-5">
                 <span className="text-sm desc">
-                  {user?.description || "This user has not left any traces"}
+                  {curUser?.description || "This user has not left any traces"}
                 </span>
               </div>
             </div>
             <div className="posts">
-              <div className="small_container">
-                <div className="flex items-center justify-between">
-                  <Heading>Posts</Heading>
-                </div>
-                {/* <div className="grid-layout">
-                  <PostNewestSmall></PostNewestSmall>
-                  <PostNewestSmall></PostNewestSmall>
-                  <PostNewestSmall></PostNewestSmall>
-                </div> */}
+              <div className="flex items-center justify-between">
+                <Heading>Posts</Heading>
+              </div>
+              <div className="grid-layout">
+                {userposts.map((post) => (
+                  <PostNewestSmall post={post}></PostNewestSmall>
+                ))}
               </div>
             </div>
           </div>
