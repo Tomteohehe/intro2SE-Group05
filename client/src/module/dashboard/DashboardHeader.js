@@ -1,7 +1,7 @@
 import { Button } from "components/button";
 import React from "react";
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "./logo.png";
 import { authContext } from "contexts/authContext";
@@ -51,6 +51,8 @@ const DashboardHeader = () => {
     authState: { user },
   } = useContext(authContext);
 
+  const navigate = useNavigate()
+
   return (
     <DashboardHeaderStyles>
       <NavLink to="/" className="logo">
@@ -61,7 +63,7 @@ const DashboardHeader = () => {
         <Button to="/manage/add-post" className="bg-white" height="52px">
           Write new post
         </Button>
-        <NavLink to={`/user/${user?._id}`} className="header-avatar">
+        <NavLink onClick={() => {navigate(`/user/${user?._id}`); window.location.reload();}} className="header-avatar">
           <img src={user.avatar} alt="" />
         </NavLink>
       </div>
