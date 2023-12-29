@@ -44,7 +44,7 @@ function parseDate(dateString) {
 
 const AdminPage = () => {
   const {
-    authState: { alluser },
+    authState: { user, alluser },
     allUser,
   } = useContext(authContext);
 
@@ -101,6 +101,10 @@ const AdminPage = () => {
 
   const offset = currentPage * itemsPerPage;
   const currentPageData = sortedPosts.slice(offset, offset + itemsPerPage);
+
+  if (!user || !user.isAdmin) {
+    return <div>You don't have permission to access this page</div>;
+  }
 
   return (
     <AdminPageStyles>

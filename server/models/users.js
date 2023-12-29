@@ -37,6 +37,10 @@ const user = new schema({
   follower: {
     type: Array,
     default: []
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
   }
 });
 
