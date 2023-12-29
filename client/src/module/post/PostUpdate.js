@@ -69,8 +69,8 @@ const PostUpdate = () => {
     try {
       const updatePostData = await updatePost(updatePostInfo, id);
       if (updatePostData["success"]) {
-        toast.success(`Post edited successfully`);
-        // navigate(`/post/${id}`);
+        toast.success('Post edited successfully');
+        // navigate(/post/${id});
         // console.log(updatePostData)
         setTimeout(1500);
         window.location.reload()
