@@ -44,7 +44,11 @@ const PostNewestSmall = ({ post }) => {
       <PostTitle size="medium" className="post-title" to={`/post/${post._id}`}>
         {truncatedTitle}
       </PostTitle>
-      <PostMeta color="gray" authorName={post.user.username} date={post?.date}></PostMeta>
+      <PostMeta
+        color="gray"
+        authorName={post.user.username}
+        date={post?.date}
+      ></PostMeta>
     </PostNewestSmallStyles>
   );
 };
