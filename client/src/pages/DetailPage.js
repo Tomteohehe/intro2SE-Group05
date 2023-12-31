@@ -71,8 +71,9 @@ const DetailPage = () => {
   useState(() => getDetailedPost(detailid), []);
   // console.log(detailpost);
 
-  const {authState: { alluser },
-  allUser,
+  const {
+    authState: { alluser },
+    allUser,
   } = useContext(authContext);
 
   useState(() => allUser(), []);
@@ -89,7 +90,10 @@ const DetailPage = () => {
   // console.log(author);
 
   let relatedPosts = allposts.filter((post) => {
-    return post?.category === detailpost[0]?.category;
+    return (
+      post?.category === detailpost[0]?.category &&
+      post?._id !== detailpost[0]?._id
+    );
   });
   relatedPosts =
     relatedPosts.length > 4 ? relatedPosts.slice(0, 4) : relatedPosts;
@@ -116,7 +120,8 @@ const DetailPage = () => {
               <div className="post-content">
                 <div className="entry-content">
                   {HTMLReactParser(post?.content || "")}
-                </div><AuthorItem user={author}></AuthorItem>
+                </div>
+                <AuthorItem user={author}></AuthorItem>
               </div>
               <PostRelated posts={relatedPosts}></PostRelated>
             </div>

@@ -1,6 +1,5 @@
 import Layout from "components/layout/Layout";
 import React, { useContext, useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import BackgroundImage from "../../assets/banner.jpg";
 import { theme } from "utils/constants";
@@ -16,9 +15,6 @@ const itemsPerPage = 6;
 
 const UserInfoStyles = styled.div`
   padding-bottom: 100px;
-
-  .bg_container {
-  }
 
   .small_container {
     top: 90%;
@@ -117,7 +113,6 @@ const UserInfo = () => {
   };
 
   const curUser = getUser(slug);
-  // console.log(curUser);
 
   const {
     postState: { userposts },
@@ -128,7 +123,6 @@ const UserInfo = () => {
   const user_id = { id };
 
   useState(() => getAllPostsOfUser(user_id));
-  // console.log(userposts)
 
   let isFollowed = false;
   if (user?.following.includes(curUser._id)) isFollowed = true;
@@ -207,7 +201,7 @@ const UserInfo = () => {
                 <img src={curUser?.avatar} alt="Avatar" />
               </div>
               <div className="">
-                {user?._id !== curUser?._id && (
+                {user?._id !== curUser?._id ? (
                   <button
                     className="fl_button"
                     onClick={
@@ -215,6 +209,13 @@ const UserInfo = () => {
                     }
                   >
                     {isFollowed ? "Unfollow" : "Follow"}
+                  </button>
+                ) : (
+                  <button
+                    className="fl_button"
+                    onClick={() => navigate("/dashboard")}
+                  >
+                    Dashboard
                   </button>
                 )}
               </div>

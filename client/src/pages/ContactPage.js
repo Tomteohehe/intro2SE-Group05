@@ -70,7 +70,7 @@ const founderData = [
   {
     name: "Hoang Tran Thong",
     id: "21127695",
-    bio: "Sometimes the world can seem cold and cruel when we forget that everything has a soul and that we are all connected.",
+    bio: "Your peace and well-being is important to your happiness. Protect it to the best of your ability.",
     email: "htthong21@clc.fitus.edu.vn",
     position: "Tien Dao",
     avatar:
