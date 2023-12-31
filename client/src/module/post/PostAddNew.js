@@ -25,7 +25,7 @@ const PostAddNew = () => {
 
   const { addPost } = useContext(postContext);
 
-  const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
+  const { control, watch, setValue, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
@@ -259,15 +259,6 @@ const PostAddNew = () => {
               </div>
             </Field>
           </div>
-        </div>
-        <div className="form-layout">
-          <Field>
-            <Label>Feature post</Label>
-            <Toggle
-              on={watchHot === true}
-              onClick={() => setValue("hot", !watchHot)}
-            ></Toggle>
-          </Field>
         </div>
         <Button
           type="submit"

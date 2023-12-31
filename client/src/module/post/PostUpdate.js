@@ -16,7 +16,6 @@ import CloudinaryUploader from "components/image/CloudinaryUploader";
 import { categories } from "utils/constants";
 import ImageResize from "quill-image-resize-module-react";
 import { useParams } from "react-router-dom";
-import HTMLReactParser from "html-react-parser";
 
 Quill.register("modules/imageResize", ImageResize);
 
@@ -56,24 +55,25 @@ const PostUpdate = () => {
   const [error, updateError] = useState();
 
   const updatePostHandler = async (values) => {
-    const currentPost = await getDetailedPost(detailid)
+    const currentPost = await getDetailedPost(detailid);
     let { title, categoryName } = values;
-    title = title == '' ? currentPost.posts[0].title : title;
-    let category = categoryName == '' ? currentPost.posts[0].category : categoryName;
+    title = title == "" ? currentPost.posts[0].title : title;
+    let category =
+      categoryName == "" ? currentPost.posts[0].category : categoryName;
     let image;
     // console.log(values)
     image = url == undefined ? currentPost.posts[0].image : url;
-    let content = contentt == '' ? currentPost.posts[0].content : contentt;
-    console.log(content)
+    let content = contentt == "" ? currentPost.posts[0].content : contentt;
+    console.log(content);
     const updatePostInfo = { title, category, image, content };
     try {
       const updatePostData = await updatePost(updatePostInfo, id);
       if (updatePostData["success"]) {
-        toast.success('Post edited successfully');
+        toast.success("Post edited successfully");
         // navigate(/post/${id});
         // console.log(updatePostData)
         setTimeout(1500);
-        window.location.reload()
+        window.location.reload();
       } else {
         toast.error(updatePostData["message"]);
       }
@@ -135,7 +135,7 @@ const PostUpdate = () => {
         title="Update Post"
         desc="Update Your Post Easily Here"
       ></DashboardHeading>
-        {detailpost.map((post) => (
+      {detailpost.map((post) => (
         <form
           className="form"
           onSubmit={handleSubmit(updatePostHandler)}
@@ -214,22 +214,13 @@ const PostUpdate = () => {
               </Field>
             </div>
           </div>
-          <div className="form-layout">
-            <Field>
-              <Label>Feature post</Label>
-              <Toggle
-                on={watchHot === true}
-                onClick={() => setValue("hot", !watchHot)}
-              ></Toggle>
-            </Field>
-          </div>
           <Button
             type="submit"
             className="mx-auto w-[250px]"
             isLoading={loading}
             disabled={loading}
           >
-            Edit Post
+            Update Post
           </Button>
         </form>
       ))}

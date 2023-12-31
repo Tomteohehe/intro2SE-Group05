@@ -28,17 +28,6 @@ const UserProfile = () => {
   const [url, updateUrl] = useState();
   const [error, updateError] = useState();
   const updateuser = async (values) => {
-    /*
-    let last_username, last_password, last_email, last_description, last_number
-    last_username = values.username ? values.form_username : username
-    last_password = values.password ? values.password : password
-    last_email = values.email ? values.email : email
-    last_description = values.textarea ? values.textarea : ""
-    last_number = values.number ? values.number : ""
-    let last_values = {last_username, last_email, last_number, last_password, last_description}
-    */
-    // console.log(values);
-    // console.log(url);
     const image = url;
     let avatar;
     let { username, email, contact, password, textarea } = values;
