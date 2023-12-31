@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import logo from "./logo.png";
 import { setSearchTerm } from "actions/actions";
 import { authContext } from "contexts/authContext";
+import { useNavigate } from "react-router-dom";
+import { LOCAL_STORAGE_TOKEN_NAME } from "utils/constants";
 
 const menuLinks = [
   {
@@ -227,17 +229,22 @@ const Header = ({ isAdmin = false }) => {
 
   const dispatch = useDispatch();
 
+  const auth = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+  //console.log(typeof auth)
+
   const handleFilterChange = (e) => {
     const newValue = e.target.value;
     dispatch(setSearchTerm(newValue));
   };
+
+  const navigate = useNavigate()
 
   return (
     <HeaderStyles show={show}>
       <div className="container">
         {!isAdmin ? (
           <div className="header-main">
-            <NavLink to="/">
+            <NavLink onClick={() => {navigate("/"); window.location.reload()}}>
               <img
                 src={logo}
                 style={{
@@ -296,12 +303,12 @@ const Header = ({ isAdmin = false }) => {
                 </svg>
               </span>
             </div>
-            {!isAuthenticated ? (
+            {!auth ? (
               <Button
                 type="button"
                 height="56px"
                 className="header-button"
-                to="/sign-in"
+                onClick={() => {navigate("/sign-in"); window.location.reload()}}
               >
                 Login
               </Button>
@@ -311,7 +318,7 @@ const Header = ({ isAdmin = false }) => {
                   type="button"
                   height="56px"
                   className="header-button"
-                  to="/dashboard"
+                  onClick={() => {navigate("/dashboard"); window.location.reload()}}
                 >
                   Dashboard
                 </Button>
@@ -379,12 +386,12 @@ const Header = ({ isAdmin = false }) => {
                 </svg>
               </span>
             </div>
-            {!isAuthenticated ? (
+            {!auth ? (
               <Button
                 type="button"
                 height="56px"
                 className="header-button"
-                to="/sign-in"
+                onClick={() => {navigate("/sign-in"); window.location.reload()}}
               >
                 Login
               </Button>
@@ -394,7 +401,7 @@ const Header = ({ isAdmin = false }) => {
                   type="button"
                   height="56px"
                   className="header-button"
-                  to="/dashboard"
+                  onClick={() => {navigate("/dashboard"); window.location.reload()}}
                 >
                   Dashboard
                 </Button>

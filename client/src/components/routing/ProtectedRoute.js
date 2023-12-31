@@ -3,6 +3,7 @@ import { Route, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { authContext } from '../../contexts/authContext';
 import Spinner from 'react-bootstrap/Spinner';
+import { LOCAL_STORAGE_TOKEN_NAME } from 'utils/constants';
 
 const ProtectedRoute = ( {Component} ) => {
   const { authState: { authLoading, isAuthenticated } } = useContext(authContext);
@@ -14,7 +15,7 @@ const ProtectedRoute = ( {Component} ) => {
   }
 
   return (
-    isAuthenticated ? (
+    localStorage[LOCAL_STORAGE_TOKEN_NAME] ? (
         <>
           <Component />
         </>
