@@ -10,6 +10,9 @@ import { authContext } from "contexts/authContext";
 import { postContext } from "contexts/postContext";
 import PostNewestSmall from "module/post/PostNewestSmall";
 import { useNavigate } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+
+const itemsPerPage = 6;
 
 const UserInfoStyles = styled.div`
   padding-bottom: 100px;
@@ -77,6 +80,23 @@ const UserInfoStyles = styled.div`
   .fullname {
     font-size: 24px;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    ul {
+      display: flex;
+      gap: 1rem;
+    }
+    .active {
+      background-color: black;
+      color: #fff;
+      border-radius: 4px;
+      padding: 5px 10px;
+    }
+  }
 `;
 
 const UserInfo = () => {
@@ -85,7 +105,7 @@ const UserInfo = () => {
     authState: { user, alluser },
     allUser,
     followUser,
-    unfollowUser
+    unfollowUser,
   } = useContext(authContext);
   useState(() => allUser(), []);
 
@@ -102,19 +122,19 @@ const UserInfo = () => {
   const {
     postState: { userposts },
     getAllPostsOfUser,
-  } = useContext(postContext)
+  } = useContext(postContext);
 
   const id = slug;
   const user_id = { id };
 
-  useState(() => getAllPostsOfUser(user_id))
+  useState(() => getAllPostsOfUser(user_id));
   // console.log(userposts)
 
-  let isFollowed = false
-  if(user?.following.includes(curUser._id)) isFollowed = true
+  let isFollowed = false;
+  if (user?.following.includes(curUser._id)) isFollowed = true;
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const handleOnClickFollow = async () => {
     if (user) {
       const followingId = curUser._id;
@@ -127,20 +147,29 @@ const UserInfo = () => {
         }, 1500);
       }
     } else {
-      navigate('/sign-in', { state: { from: location.pathname } });
+      navigate("/sign-in", { state: { from: location.pathname } });
     }
   };
 
   const handleOnClickUnfollow = async () => {
-    const followingId = curUser._id
-    const followerId = user._id
-    const id = { followingId, followerId }
-    const response = await unfollowUser(id)
-    if(response.success){
-      setTimeout(1500)
-      window.location.reload()
+    const followingId = curUser._id;
+    const followerId = user._id;
+    const id = { followingId, followerId };
+    const response = await unfollowUser(id);
+    if (response.success) {
+      setTimeout(1500);
+      window.location.reload();
     }
-  }
+  };
+
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = (selectedPage) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = userposts.slice(offset, offset + itemsPerPage);
 
   return (
     <UserInfoStyles>
@@ -156,15 +185,21 @@ const UserInfo = () => {
             <div className="flex items-center justify-center gap-16 mb-10 profile_container">
               <div className="flex items-center gap-4 justify-evenly follow_info">
                 <div>
-                  <p className="font-bold text-center text-black">{curUser?.follower.length}</p>
+                  <p className="font-bold text-center text-black">
+                    {curUser?.follower.length}
+                  </p>
                   <span className="text-sm text-gray-500">Followers</span>
                 </div>
                 <div>
-                  <p className="font-bold text-center text-black">{curUser?.following.length}</p>
+                  <p className="font-bold text-center text-black">
+                    {curUser?.following.length}
+                  </p>
                   <span className="text-sm text-gray-500">Following</span>
                 </div>
                 <div>
-                  <p className="font-bold text-center text-black">{userposts.length}</p>
+                  <p className="font-bold text-center text-black">
+                    {userposts.length}
+                  </p>
                   <span className="text-sm text-gray-500">Posts</span>
                 </div>
               </div>
@@ -173,8 +208,13 @@ const UserInfo = () => {
               </div>
               <div className="">
                 {user?._id !== curUser?._id && (
-                  <button className="fl_button" onClick={isFollowed ? handleOnClickUnfollow : handleOnClickFollow}>
-                    {isFollowed ? 'Unfollow' : 'Follow'}
+                  <button
+                    className="fl_button"
+                    onClick={
+                      isFollowed ? handleOnClickUnfollow : handleOnClickFollow
+                    }
+                  >
+                    {isFollowed ? "Unfollow" : "Follow"}
                   </button>
                 )}
               </div>
@@ -207,9 +247,23 @@ const UserInfo = () => {
                 <Heading>Posts</Heading>
               </div>
               <div className="grid-layout">
-                {userposts.map((post) => (
+                {currentPageData.map((post) => (
                   <PostNewestSmall post={post}></PostNewestSmall>
                 ))}
+              </div>
+              <div className="pagination">
+                <ReactPaginate
+                  previousLabel={"<"}
+                  nextLabel={">"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={Math.ceil(userposts?.length / itemsPerPage)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination"}
+                  activeClassName={"active"}
+                />
               </div>
             </div>
           </div>
