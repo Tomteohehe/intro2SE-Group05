@@ -112,6 +112,7 @@ const HeaderStyles = styled.header`
   .header-main {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
   .header-auth {
     display: flex;
@@ -204,24 +205,8 @@ const HeaderStyles = styled.header`
     transform: translateY(-50%);
     right: 25px;
   }
-  /* @media screen and (max-width: 950px) {
-    .menu,
-    .logo {
-      display: none;
-    }
-    .sidebarBtn {
-      display: inline-block;
-      margin-right: 1em;
-      font-size: 2em;
-    }
-  }
-  @media screen and (max-width: 540px) {
-    .header-button {
-      display: none;
-    }
-  } */
 `;
-const Header = ({ isAdmin = false }) => {
+const Header = ({ isAdmin = false, isHomePage = false }) => {
   const [show, setShow] = useState(false);
   const {
     authState: { authLoading, isAuthenticated },
@@ -229,7 +214,7 @@ const Header = ({ isAdmin = false }) => {
 
   const dispatch = useDispatch();
 
-  const auth = localStorage[LOCAL_STORAGE_TOKEN_NAME]
+  const auth = localStorage[LOCAL_STORAGE_TOKEN_NAME];
   //console.log(typeof auth)
 
   const handleFilterChange = (e) => {
@@ -237,93 +222,112 @@ const Header = ({ isAdmin = false }) => {
     dispatch(setSearchTerm(newValue));
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <HeaderStyles show={show}>
       <div className="container">
         {!isAdmin ? (
           <div className="header-main">
-            <NavLink onClick={() => {navigate("/"); window.location.reload()}}>
-              <img
-                src={logo}
-                style={{
-                  resizeMode: "cover",
-                  height: 57,
-                  width: 66,
+            <div className="flex items-center group1">
+              <NavLink
+                onClick={() => {
+                  navigate("/");
+                  window.location.reload();
                 }}
-                alt=""
-                className="logo"
-              />
-            </NavLink>
-            <ul className="menu">
-              {menuLinks.slice(0, 3).map((item) => (
-                <li className="menu-item" key={item.title}>
-                  <NavLink to={item.url} className="menu-link">
-                    {item.title}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-            <div className="search">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Search posts..."
-                onChange={handleFilterChange}
-              />
-              <span className="search-icon">
-                <svg
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <ellipse
-                    cx="7.66669"
-                    cy="7.05161"
-                    rx="6.66669"
-                    ry="6.05161"
-                    stroke="#999999"
-                    strokeWidth="1.5"
-                  />
-                  <path
-                    d="M17.0001 15.5237L15.2223 13.9099L14.3334 13.103L12.5557 11.4893"
-                    stroke="#999999"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M11.6665 12.2964C12.9671 12.1544 13.3706 11.8067 13.4443 10.6826"
-                    stroke="#999999"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </div>
-            {!auth ? (
-              <Button
-                type="button"
-                height="56px"
-                className="header-button"
-                onClick={() => {navigate("/sign-in"); window.location.reload()}}
               >
-                Login
-              </Button>
-            ) : (
-              <div>
+                <img
+                  src={logo}
+                  style={{
+                    resizeMode: "cover",
+                    height: 57,
+                    width: 66,
+                  }}
+                  alt=""
+                  className="logo"
+                />
+              </NavLink>
+              <ul className="menu">
+                {menuLinks.slice(0, 3).map((item) => (
+                  <li className="menu-item" key={item.title}>
+                    <NavLink to={item.url} className="menu-link">
+                      {item.title}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="flex items-center group2">
+              {isHomePage ? (
+                ""
+              ) : (
+                <div className="search">
+                  <input
+                    type="text"
+                    className="search-input"
+                    placeholder="Search posts..."
+                    onChange={handleFilterChange}
+                  />
+                  <span className="search-icon">
+                    <svg
+                      width="18"
+                      height="17"
+                      viewBox="0 0 18 17"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <ellipse
+                        cx="7.66669"
+                        cy="7.05161"
+                        rx="6.66669"
+                        ry="6.05161"
+                        stroke="#999999"
+                        strokeWidth="1.5"
+                      />
+                      <path
+                        d="M17.0001 15.5237L15.2223 13.9099L14.3334 13.103L12.5557 11.4893"
+                        stroke="#999999"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M11.6665 12.2964C12.9671 12.1544 13.3706 11.8067 13.4443 10.6826"
+                        stroke="#999999"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              )}
+              {!auth ? (
                 <Button
                   type="button"
                   height="56px"
                   className="header-button"
-                  onClick={() => {navigate("/dashboard"); window.location.reload()}}
+                  onClick={() => {
+                    navigate("/sign-in");
+                    window.location.reload();
+                  }}
                 >
-                  Dashboard
+                  Login
                 </Button>
-              </div>
-            )}
+              ) : (
+                <div>
+                  <Button
+                    type="button"
+                    height="56px"
+                    className="header-button"
+                    onClick={() => {
+                      navigate("/dashboard");
+                      window.location.reload();
+                    }}
+                  >
+                    Dashboard
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         ) : (
           <div className="header-main">
@@ -391,7 +395,10 @@ const Header = ({ isAdmin = false }) => {
                 type="button"
                 height="56px"
                 className="header-button"
-                onClick={() => {navigate("/sign-in"); window.location.reload()}}
+                onClick={() => {
+                  navigate("/sign-in");
+                  window.location.reload();
+                }}
               >
                 Login
               </Button>
@@ -401,7 +408,10 @@ const Header = ({ isAdmin = false }) => {
                   type="button"
                   height="56px"
                   className="header-button"
-                  onClick={() => {navigate("/dashboard"); window.location.reload()}}
+                  onClick={() => {
+                    navigate("/dashboard");
+                    window.location.reload();
+                  }}
                 >
                   Dashboard
                 </Button>

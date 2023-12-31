@@ -99,7 +99,7 @@ const founderData = [
 const ContactPage = () => {
   return (
     <ContactPageStyles>
-      <Layout>
+      <Layout isHomePage={true}>
         <div className="container">
           <div className="mt-10 intro">
             <div className="text-4xl team">The GoaTalk's Team</div>

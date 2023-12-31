@@ -1,4 +1,3 @@
-import Toggle from "components/toggle/Toggle";
 import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -20,8 +19,6 @@ import { useParams } from "react-router-dom";
 Quill.register("modules/imageResize", ImageResize);
 
 const PostUpdate = () => {
-  const navigate = useNavigate();
-
   const [isDefaultImageVisible, setDefaultImageVisible] = useState(true);
 
   const { slug } = useParams();
@@ -33,9 +30,8 @@ const PostUpdate = () => {
   const id = slug;
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
-  // console.log(detailpost);
 
-  const { control, watch, setValue, handleSubmit, getValues, reset } = useForm({
+  const { control, watch, setValue, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
@@ -46,7 +42,6 @@ const PostUpdate = () => {
       image: "",
     },
   });
-  const watchHot = watch("hot");
 
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,8 +65,6 @@ const PostUpdate = () => {
       const updatePostData = await updatePost(updatePostInfo, id);
       if (updatePostData["success"]) {
         toast.success("Post edited successfully");
-        // navigate(/post/${id});
-        // console.log(updatePostData)
         setTimeout(1500);
         window.location.reload();
       } else {

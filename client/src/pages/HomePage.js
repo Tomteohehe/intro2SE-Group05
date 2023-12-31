@@ -23,7 +23,7 @@ const HomePage = () => {
 
   return (
     <HomePageStyles>
-      <Layout>
+      <Layout isHomePage={true}>
         <HomeBanner></HomeBanner>
         {isLoading ? (
           <div className="w-10 h-10 mx-auto border-4 rounded-full spinner animate-spin "></div>
