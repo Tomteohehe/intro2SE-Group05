@@ -48,6 +48,7 @@ const BlogPage = () => {
     postState: { allposts },
     getAllPostsEver,
   } = useContext(postContext);
+  console.log(allposts);
 
   useState(() => getAllPostsEver(), []);
 
@@ -61,13 +62,12 @@ const BlogPage = () => {
       !filters.category || post.category === filters.category;
 
     // Filter by title
-    const isTitleMatch = post.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    // console.log("isTitleMatch", isTitleMatch);
+    const isTitleAndAuthorMatch =
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.user.username.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Return true only if both date and category match
-    return isCategoryMatch && isTitleMatch;
+    return isCategoryMatch && isTitleAndAuthorMatch;
   });
 
   const handleDateChange = (e) => {
@@ -87,7 +87,6 @@ const BlogPage = () => {
   // Sort the posts array by date in descending order (latest to oldest)
   const sortedPosts = filteredPosts.sort((a, b) => {
     if (filters.date === "Latest") {
-      // console.log("Latest");
       return parseDate(b.date) - parseDate(a.date);
     } else if (filters.date === "Oldest") {
       return parseDate(a.date) - parseDate(b.date);
@@ -103,7 +102,7 @@ const BlogPage = () => {
       <Layout>
         <div className="small_container">
           <div className="flex justify-between mb-10 filter_bar">
-            <label className="p-3 text-black bg-gray-200 rounded-md ">
+            <label className="p-3 text-black bg-gray-200 rounded-md">
               <select
                 className="bg-inherit"
                 value={filters.date}
