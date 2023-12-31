@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "../components/layout/Layout";
-import PostItem from "module/post/PostItem";
 
 const ContactPageStyles = styled.div`
   .intro {

@@ -45,14 +45,11 @@ const AuthorItem = ({ user }) => {
   // console.log(user);
   return (
     <AuthorItemStyles>
-      <div className="author">
+      <div className="author" onClick={() => navigate(`/user/${user?._id}`)}>
         <div className="author-image">
           <img src={user?.avatar} alt="authorAvt" />
         </div>
-        <div
-          className="author-content"
-          onClick={() => navigate(`/user/${user?._id}`)}
-        >
+        <div className="author-content">
           <h3 className="author-name">{user?.username}</h3>
           <p className="author-desc">{user?.email}</p>
         </div>
