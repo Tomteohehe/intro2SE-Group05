@@ -5,6 +5,7 @@ import { authContext } from "contexts/authContext";
 import UserTable from "module/user/UserTable";
 import React, { useContext, useState } from "react";
 import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const itemsPerPage = 4;
@@ -42,6 +43,17 @@ const AdminUserManage = () => {
 
   useState(() => allUser(), []);
   console.log(alluser);
+  const searchTerm = useSelector((state) => state);
+
+  const filteredUsers = alluser.filter((user) => {
+    // Filter by title
+    const isAuthorMatch = user.username
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    // Return true only if both date and category match
+    return isAuthorMatch;
+  });
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -50,7 +62,7 @@ const AdminUserManage = () => {
   };
 
   const offset = currentPage * itemsPerPage;
-  const currentPageData = alluser.slice(offset, offset + itemsPerPage);
+  const currentPageData = filteredUsers.slice(offset, offset + itemsPerPage);
   return (
     <AdminUserManageStyles>
       <Layout isAdmin={true}>
@@ -79,7 +91,7 @@ const AdminUserManage = () => {
                 nextLabel={">"}
                 breakLabel={"..."}
                 breakClassName={"break-me"}
-                pageCount={Math.ceil(alluser.length / itemsPerPage)}
+                pageCount={Math.ceil(filteredUsers.length / itemsPerPage)}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}

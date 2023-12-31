@@ -175,7 +175,7 @@ const PostManage = () => {
           </tr>
         </thead>
         <tbody>
-          {currentPageData.length > 0 ? (
+          {posts.length > 0 ? (
             <PostTable
               filterposts={currentPageData}
               users={alluser}

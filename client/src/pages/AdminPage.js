@@ -67,12 +67,12 @@ const AdminPage = () => {
       !filters.category || post.category === filters.category;
 
     // Filter by title
-    const isTitleMatch = post.title
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    const isTitleAndAuthorMatch =
+      post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      post.user.username.toLowerCase().includes(searchTerm.toLowerCase());
 
     // Return true only if both date and category match
-    return isCategoryMatch && isTitleMatch;
+    return isCategoryMatch && isTitleAndAuthorMatch;
   });
 
   const handleDateChange = (e) => {
