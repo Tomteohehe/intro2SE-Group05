@@ -5,6 +5,7 @@ import SignUpPage from "../pages/SignUp";
 import { authContext } from "../contexts/authContext";
 import { Navigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
+import { LOCAL_STORAGE_TOKEN_NAME } from "utils/constants";
 
 const Auth = ({ authRoute }) => {
   const {
@@ -18,7 +19,7 @@ const Auth = ({ authRoute }) => {
         <Spinner animation="border" variant="info" />
       </div>
     );
-  } else if (isAuthenticated) return <Navigate to="/dashboard" />;
+  } else if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) return <Navigate to="/dashboard" />;
   else {
     body = (
       <>
