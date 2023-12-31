@@ -10,6 +10,7 @@ const PostFeatureItemStyles = styled.div`
   width: 100%;
   border-radius: 16px;
   position: relative;
+  cursor: pointer;
   height: 269px;
   .post {
     &-image {
@@ -63,8 +64,8 @@ const PostFeatureItem = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <PostFeatureItemStyles>
-      <PostImage url={post?.image} alt="unsplash" to="/"></PostImage>
+    <PostFeatureItemStyles onClick={() => navigate(`/post/${post._id}`)}>
+      <PostImage url={post?.image} alt="unsplash"></PostImage>
       <div className="post-overlay"></div>
       <div className="post-content">
         <div className="post-top">

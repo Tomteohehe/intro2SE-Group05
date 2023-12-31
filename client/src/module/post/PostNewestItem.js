@@ -5,6 +5,7 @@ import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
 import { postContext } from "contexts/postContext";
+import { useNavigate } from "react-router-dom";
 
 const PostNewestItemStyles = styled.div`
   display: flex;
@@ -62,10 +63,14 @@ const PostNewestItem = () => {
     smalllastposts,
     numRandomPosts
   );
+  const navigate = useNavigate();
   return (
     <>
       {randomPosts.map((post) => (
-        <PostNewestItemStyles>
+        <PostNewestItemStyles
+          onClick={() => navigate(`/post/${post._id}`)}
+          className="cursor-pointer"
+        >
           <PostImage
             url={`${
               post.image ||

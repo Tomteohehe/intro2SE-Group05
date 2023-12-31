@@ -4,6 +4,7 @@ import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
+import { useNavigate } from "react-router-dom";
 
 const PostItemStyles = styled.div`
   padding: 1em;
@@ -48,8 +49,15 @@ const truncateTitle = (title, maxLength) => {
 
 const PostItem = ({ post }) => {
   const truncatedTitle = truncateTitle(post.title, 60);
+  const navigate = useNavigate();
   return (
-    <PostItemStyles>
+    <PostItemStyles
+      className="cursor-pointer"
+      onClick={() => {
+        navigate(`/post/${post._id}`);
+        window.location.reload();
+      }}
+    >
       <PostImage url={post?.image} alt="PostImage"></PostImage>
       <PostCategory type="secondary">{post?.category}</PostCategory>
       <PostTitle to={`/post/${post._id}`}>{truncatedTitle}</PostTitle>

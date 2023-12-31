@@ -5,6 +5,7 @@ import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
 import { postContext } from "contexts/postContext";
+import { useNavigate } from "react-router-dom";
 const PostNewestLargeStyles = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 0.5rem;
@@ -32,11 +33,15 @@ const PostNewestLarge = () => {
   } = useContext(postContext);
 
   useState(() => getNewestLargePost(), []);
+  const navigate = useNavigate();
 
   return (
     <>
       {lastpost.map((post) => (
-        <PostNewestLargeStyles>
+        <PostNewestLargeStyles
+          onClick={() => navigate(`/post/${post._id}`)}
+          className="cursor-pointer"
+        >
           <PostImage
             url={`${
               post.image ||

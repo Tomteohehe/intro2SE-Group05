@@ -4,6 +4,7 @@ import PostCategory from "./PostCategory";
 import PostImage from "./PostImage";
 import PostMeta from "./PostMeta";
 import PostTitle from "./PostTitle";
+import { useNavigate } from "react-router-dom";
 const PostNewestSmallStyles = styled.div`
   .post {
     &-image {
@@ -31,8 +32,15 @@ const truncateTitle = (title, maxLength) => {
 
 const PostNewestSmall = ({ post }) => {
   const truncatedTitle = truncateTitle(post.title, 60);
+  const navigate = useNavigate();
   return (
-    <PostNewestSmallStyles>
+    <PostNewestSmallStyles
+      className="shadow-xl cursor-pointer rounded-2xl"
+      onClick={() => {
+        navigate(`/post/${post._id}`);
+        window.location.reload();
+      }}
+    >
       <PostImage
         url={`${
           post?.image ||
@@ -40,15 +48,21 @@ const PostNewestSmall = ({ post }) => {
         }`}
         alt=""
       ></PostImage>
-      <PostCategory>{post?.category}</PostCategory>
-      <PostTitle size="medium" className="post-title" to={`/post/${post._id}`}>
-        {truncatedTitle}
-      </PostTitle>
-      <PostMeta
-        color="gray"
-        authorName={post.user.username}
-        date={post?.date}
-      ></PostMeta>
+      <div className="p-3 bot">
+        <PostCategory>{post?.category}</PostCategory>
+        <PostTitle
+          size="medium"
+          className="post-title"
+          to={`/post/${post._id}`}
+        >
+          {truncatedTitle}
+        </PostTitle>
+        <PostMeta
+          color="gray"
+          authorName={post.user.username}
+          date={post?.date}
+        ></PostMeta>
+      </div>
     </PostNewestSmallStyles>
   );
 };

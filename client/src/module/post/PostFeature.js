@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostFeatureItem from "./PostFeatureItem";
 
 function getRandomElementsFromArray(arr, numElements) {
@@ -9,7 +9,6 @@ function getRandomElementsFromArray(arr, numElements) {
 const PostFeature = ({ posts }) => {
   const numRandomPosts = 3;
   const randomPosts = getRandomElementsFromArray(posts, numRandomPosts);
-  // console.log(randomPosts);
 
   return (
     <>

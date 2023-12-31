@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Swiper } from "swiper/react";
 import Heading from "../../components/layout/Heading";
 import PostFeature from "module/post/PostFeature";
 import { postContext } from "contexts/postContext";
