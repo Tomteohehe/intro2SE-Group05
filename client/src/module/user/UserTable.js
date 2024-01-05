@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import UserTableItem from "./UserTableItem";
-import { ActionDelete, ActionEdit, ActionView } from "components/action";
+import { ActionDelete, ActionView } from "components/action";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "contexts/authContext";
 import Swal from "sweetalert2";
@@ -56,7 +56,7 @@ const UserTable = ({ users }) => {
           </td>
           <td>
             <span className="text-gray-500">
-              {user?.description ? truncateTitle(user?.description, 60) : ""}
+              {user?.description ? truncateTitle(user?.description, 20) : ""}
             </span>
           </td>
           <td>

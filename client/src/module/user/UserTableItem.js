@@ -9,12 +9,14 @@ const UserTableItem = ({ user }) => {
 
   const formattedDate = `${day}/${month}/${year}`;
   return (
-    <div className="flex items-center gap-x-3">
-      <img
-        src={user?.avatar || require("../../assets/logo.png")}
-        alt=""
-        className="w-[66px] h-[55px] rounded object-cover"
-      />
+    <div className="flex items-center gap-x-3 ">
+      <div className="w-[55px] h-[55px]">
+        <img
+          src={user?.avatar || require("../../assets/logo.png")}
+          alt=""
+          className="object-cover w-full h-full rounded "
+        />
+      </div>
       <div className="flex-1">
         <h3 className="font-semibold">{user.username}</h3>
         <time className="text-sm text-gray-500">{formattedDate}</time>
