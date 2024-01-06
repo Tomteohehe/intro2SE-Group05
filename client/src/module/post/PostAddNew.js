@@ -1,4 +1,3 @@
-import Toggle from "components/toggle/Toggle";
 import React, { useEffect, useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -37,48 +36,7 @@ const PostAddNew = () => {
       image: "",
     },
   });
-  const watchHot = watch("hot");
-  //   {
-  //     id: 1,
-  //     name: "Lifestyle",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Fitness",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Knowledge",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Culture",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Religion",
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Health",
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "Food and Cooking",
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "Personal Finance",
-  //   },
-  //   {
-  //     id: 9,
-  //     name: "Travel",
-  //   },
-  //   {
-  //     id: 10,
-  //     name: "Science",
-  //   },
-  // ];
+
   const [selectCategory, setSelectCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [content, setContent] = useState("");
@@ -166,12 +124,26 @@ const PostAddNew = () => {
             ></Input>
           </Field>
           <Field>
-            <Label>Slug</Label>
-            <Input
-              control={control}
-              placeholder="Enter your slug"
-              name="slug"
-            ></Input>
+            <Label>Category</Label>
+            <Dropdown>
+              <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
+              <Dropdown.List>
+                {categories.length > 0 &&
+                  categories.slice(1).map((item) => (
+                    <Dropdown.Option
+                      key={item.id}
+                      onClick={() => handleClickOption(item)}
+                    >
+                      {item.name}
+                    </Dropdown.Option>
+                  ))}
+              </Dropdown.List>
+            </Dropdown>
+            {selectCategory?.name && (
+              <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
+                {selectCategory?.name}
+              </span>
+            )}
           </Field>
         </div>
         <div className="form-layout">
@@ -220,28 +192,6 @@ const PostAddNew = () => {
                   alt="Uploaded resource"
                 />
               </>
-            )}
-          </Field>
-          <Field>
-            <Label>Category</Label>
-            <Dropdown>
-              <Dropdown.Select placeholder="Select the category"></Dropdown.Select>
-              <Dropdown.List>
-                {categories.length > 0 &&
-                  categories.slice(1).map((item) => (
-                    <Dropdown.Option
-                      key={item.id}
-                      onClick={() => handleClickOption(item)}
-                    >
-                      {item.name}
-                    </Dropdown.Option>
-                  ))}
-              </Dropdown.List>
-            </Dropdown>
-            {selectCategory?.name && (
-              <span className="inline-block p-3 text-sm font-medium text-green-600 rounded-lg bg-green-50">
-                {selectCategory?.name}
-              </span>
             )}
           </Field>
         </div>
