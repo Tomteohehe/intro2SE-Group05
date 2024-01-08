@@ -101,7 +101,7 @@ const DetailPage = () => {
     <>
       {detailpost.map((post) => (
         <PostDetailsPageStyles>
-          <Layout>
+          <Layout isHomePage={true}>
             <div className="container">
               <div className="post-header">
                 <PostImage

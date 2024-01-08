@@ -167,7 +167,7 @@ const UserInfo = () => {
 
   return (
     <UserInfoStyles>
-      <Layout>
+      <Layout isHomePage={true}>
         <div className="relative bg_container">
           <img
             src={BackgroundImage}
