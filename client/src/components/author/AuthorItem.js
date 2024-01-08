@@ -42,7 +42,6 @@ const AuthorItemStyles = styled.div`
 
 const AuthorItem = ({ user }) => {
   const navigate = useNavigate();
-  // console.log(user);
   return (
     <AuthorItemStyles>
       <div className="author" onClick={() => navigate(`/user/${user?._id}`)}>

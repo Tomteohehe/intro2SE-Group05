@@ -67,16 +67,14 @@ const PostNewestItem = () => {
   return (
     <>
       {randomPosts.map((post) => (
-        <PostNewestItemStyles
-          onClick={() => navigate(`/post/${post._id}`)}
-          className="cursor-pointer"
-        >
+        <PostNewestItemStyles>
           <PostImage
             url={`${
               post.image ||
               `https://images.unsplash.com/photo-1700141933748-4635f57d694e?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`
             }`}
             alt=""
+            to={`/post/${post?._id}`}
           ></PostImage>
           <div className="post-content">
             <PostCategory type="secondary">{post.category}</PostCategory>
@@ -85,8 +83,10 @@ const PostNewestItem = () => {
             </PostTitle>
             <PostMeta
               color="gray"
-              authorName={post.user.username}
-              date={post.date}
+              authorName={post?.user.username}
+              userId={post?.user._id}
+              date={post?.date}
+              className="cursor-pointer"
             ></PostMeta>
           </div>
         </PostNewestItemStyles>
