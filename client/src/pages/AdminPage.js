@@ -156,6 +156,7 @@ const AdminPage = () => {
                 <PostTable
                   users={alluser}
                   filterposts={currentPageData}
+                  sortedPosts={sortedPosts}
                   isAdmin={true}
                 ></PostTable>
               </tbody>

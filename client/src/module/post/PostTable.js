@@ -5,7 +5,7 @@ import { postContext } from "../../contexts/postContext";
 import { useNavigate } from "react-router-dom";
 import PostTableItem from "./PostTableItem";
 
-const PostTable = ({ filterposts, users, isAdmin = false }) => {
+const PostTable = ({ filterposts, users, isAdmin = false, sortedPosts }) => {
   const detailPost = async (PostId) => {
     const id = PostId;
     const idPostInfo = { id };
@@ -59,37 +59,73 @@ const PostTable = ({ filterposts, users, isAdmin = false }) => {
 
   return (
     <>
-      {filterposts?.map((post, index) => (
-        <tr>
-          <td>{`0${index + 1}`}</td>
-          <td>
-            <PostTableItem post={post}></PostTableItem>
-          </td>
-          <td>
-            <span className="text-gray-500">{post?.category}</span>
-          </td>
-          <td>
-            <span className="text-gray-500">
-              {getUser(post?.user._id) || post?.user.username}
-            </span>
-          </td>
-          <td>
-            <div className="flex items-center text-gray-500 gap-x-3">
-              <ActionView
-                onClick={() => navigate(`/post/${post?._id}`)}
-              ></ActionView>
-              {!isAdmin && (
-                <ActionEdit
-                  onClick={() => navigate(`/manage/update-post/${post?._id}`)}
-                ></ActionEdit>
-              )}
-              <ActionDelete
-                onClick={() => handleDeletePost(post?._id)}
-              ></ActionDelete>
-            </div>
-          </td>
-        </tr>
-      ))}
+      {filterposts.length > 0
+        ? filterposts?.map((post, index) => (
+            <tr>
+              <td>{`0${index + 1}`}</td>
+              <td>
+                <PostTableItem post={post}></PostTableItem>
+              </td>
+              <td>
+                <span className="text-gray-500">{post?.category}</span>
+              </td>
+              <td>
+                <span className="text-gray-500">
+                  {getUser(post?.user._id) || post?.user.username}
+                </span>
+              </td>
+              <td>
+                <div className="flex items-center text-gray-500 gap-x-3">
+                  <ActionView
+                    onClick={() => navigate(`/post/${post?._id}`)}
+                  ></ActionView>
+                  {!isAdmin && (
+                    <ActionEdit
+                      onClick={() =>
+                        navigate(`/manage/update-post/${post?._id}`)
+                      }
+                    ></ActionEdit>
+                  )}
+                  <ActionDelete
+                    onClick={() => handleDeletePost(post?._id)}
+                  ></ActionDelete>
+                </div>
+              </td>
+            </tr>
+          ))
+        : sortedPosts?.map((post, index) => (
+            <tr>
+              <td>{`0${index + 1}`}</td>
+              <td>
+                <PostTableItem post={post}></PostTableItem>
+              </td>
+              <td>
+                <span className="text-gray-500">{post?.category}</span>
+              </td>
+              <td>
+                <span className="text-gray-500">
+                  {getUser(post?.user._id) || post?.user.username}
+                </span>
+              </td>
+              <td>
+                <div className="flex items-center text-gray-500 gap-x-3">
+                  <ActionView
+                    onClick={() => navigate(`/post/${post?._id}`)}
+                  ></ActionView>
+                  {!isAdmin && (
+                    <ActionEdit
+                      onClick={() =>
+                        navigate(`/manage/update-post/${post?._id}`)
+                      }
+                    ></ActionEdit>
+                  )}
+                  <ActionDelete
+                    onClick={() => handleDeletePost(post?._id)}
+                  ></ActionDelete>
+                </div>
+              </td>
+            </tr>
+          ))}
     </>
   );
 };
