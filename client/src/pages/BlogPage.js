@@ -94,8 +94,11 @@ const BlogPage = () => {
     return 0; // No change if 'selectedOrder' is neither 'latest' nor 'oldest'
   });
 
+  console.log(sortedPosts);
+
   const offset = currentPage * itemsPerPage;
   const currentPageData = sortedPosts.slice(offset, offset + itemsPerPage);
+  console.log(currentPageData);
 
   return (
     <BlogPageStyles>
@@ -136,9 +139,13 @@ const BlogPage = () => {
             </div>
             {sortedPosts.length > 0 ? (
               <div className="grid-layout">
-                {currentPageData?.map((post) => (
-                  <PostNewestSmall post={post}></PostNewestSmall>
-                ))}
+                {currentPageData.length > 0
+                  ? currentPageData?.map((post) => (
+                      <PostNewestSmall post={post}></PostNewestSmall>
+                    ))
+                  : sortedPosts?.map((post) => (
+                      <PostNewestSmall post={post}></PostNewestSmall>
+                    ))}
               </div>
             ) : (
               <div className="text-lg text-center">
