@@ -55,20 +55,18 @@ const PostManage = () => {
   } = useContext(postContext);
 
   useState(() => getAllPosts(), []);
-  // console.log(posts);
 
   const {
     authState: { alluser },
     allUser,
   } = useContext(authContext);
   useState(() => allUser(), []);
-  // console.log(alluser);
 
   const [filters, setFilters] = useState({
     title: "",
     category: "",
     author: "",
-    date: "Latest",
+    date: "",
   });
 
   const filteredPosts = posts?.filter((post) => {
@@ -85,6 +83,9 @@ const PostManage = () => {
     return isCategoryMatch && isTitleMatch;
   });
 
+  const handleDateChange = (e) => {
+    setFilters({ ...filters, date: e.target.value });
+  };
   const handleCategoryChange = (e) => {
     setFilters({ ...filters, category: e.target.value });
   };
@@ -93,11 +94,9 @@ const PostManage = () => {
     setFilters({ ...filters, title: e.target.value });
   };
 
-  const handleDateChange = (e) => {
-    setFilters({ ...filters, date: e.target.value });
-  };
+  console.log(filteredPosts);
 
-  const sortedPosts = filteredPosts?.sort((a, b) => {
+  const sortedPosts = filteredPosts.sort((a, b) => {
     if (filters.date === "Latest") {
       return parseDate(b.date) - parseDate(a.date);
     } else if (filters.date === "Oldest") {
@@ -113,7 +112,6 @@ const PostManage = () => {
 
   const offset = currentPage * itemsPerPage;
   const currentPageData = sortedPosts?.slice(offset, offset + itemsPerPage);
-  // console.log(currentPageData);
 
   return (
     <PostManageStyles>

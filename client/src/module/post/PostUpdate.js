@@ -31,7 +31,7 @@ const PostUpdate = () => {
   const detailid = { id };
   useState(() => getDetailedPost(detailid), []);
 
-  const { control, watch, setValue, handleSubmit } = useForm({
+  const { control, setValue, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
       title: "",
@@ -48,6 +48,7 @@ const PostUpdate = () => {
   const [contentt, setContent] = useState("");
   const [url, updateUrl] = useState();
   const [error, updateError] = useState();
+  const navigate = useNavigate();
 
   const updatePostHandler = async (values) => {
     const currentPost = await getDetailedPost(detailid);
@@ -66,7 +67,8 @@ const PostUpdate = () => {
       if (updatePostData["success"]) {
         toast.success("Post edited successfully");
         setTimeout(1500);
-        window.location.reload();
+        // window.location.reload();
+        navigate("/manage/posts");
       } else {
         toast.error(updatePostData["message"]);
       }
