@@ -13,7 +13,7 @@ const truncateTitle = (title, maxLength) => {
   }
 };
 
-const UserTable = ({ users }) => {
+const UserTable = ({ users, sortedUsers }) => {
   const navigate = useNavigate();
   const handleDeleteUser = async (userId) => {
     Swal.fire({
@@ -45,32 +45,63 @@ const UserTable = ({ users }) => {
   const { deleteUser } = useContext(authContext);
   return (
     <>
-      {users.map((user, index) => (
-        <tr>
-          <td>{`0${index + 1}`}</td>
-          <td>
-            <UserTableItem user={user}></UserTableItem>
-          </td>
-          <td>
-            <span className="text-gray-500">{user?.email}</span>
-          </td>
-          <td>
-            <span className="text-gray-500">
-              {user?.description ? truncateTitle(user?.description, 20) : ""}
-            </span>
-          </td>
-          <td>
-            <div className="flex items-center text-gray-500 gap-x-3">
-              <ActionView
-                onClick={() => navigate(`/user/${user?._id}`)}
-              ></ActionView>
-              <ActionDelete
-                onClick={() => handleDeleteUser(user._id)}
-              ></ActionDelete>
-            </div>
-          </td>
-        </tr>
-      ))}
+      {users.length > 0
+        ? users.map((user, index) => (
+            <tr>
+              <td>{`0${index + 1}`}</td>
+              <td>
+                <UserTableItem user={user}></UserTableItem>
+              </td>
+              <td>
+                <span className="text-gray-500">{user?.email}</span>
+              </td>
+              <td>
+                <span className="text-gray-500">
+                  {user?.description
+                    ? truncateTitle(user?.description, 20)
+                    : ""}
+                </span>
+              </td>
+              <td>
+                <div className="flex items-center text-gray-500 gap-x-3">
+                  <ActionView
+                    onClick={() => navigate(`/user/${user?._id}`)}
+                  ></ActionView>
+                  <ActionDelete
+                    onClick={() => handleDeleteUser(user._id)}
+                  ></ActionDelete>
+                </div>
+              </td>
+            </tr>
+          ))
+        : sortedUsers.map((user, index) => (
+            <tr>
+              <td>{`0${index + 1}`}</td>
+              <td>
+                <UserTableItem user={user}></UserTableItem>
+              </td>
+              <td>
+                <span className="text-gray-500">{user?.email}</span>
+              </td>
+              <td>
+                <span className="text-gray-500">
+                  {user?.description
+                    ? truncateTitle(user?.description, 20)
+                    : ""}
+                </span>
+              </td>
+              <td>
+                <div className="flex items-center text-gray-500 gap-x-3">
+                  <ActionView
+                    onClick={() => navigate(`/user/${user?._id}`)}
+                  ></ActionView>
+                  <ActionDelete
+                    onClick={() => handleDeleteUser(user._id)}
+                  ></ActionDelete>
+                </div>
+              </td>
+            </tr>
+          ))}
     </>
   );
 };

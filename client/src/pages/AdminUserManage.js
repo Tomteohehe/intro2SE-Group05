@@ -82,7 +82,10 @@ const AdminUserManage = () => {
                 </tr>
               </thead>
               <tbody>
-                <UserTable users={currentPageData}></UserTable>
+                <UserTable
+                  users={currentPageData}
+                  sortedUsers={filteredUsers}
+                ></UserTable>
               </tbody>
             </Table>
             <div className="pagination">
