@@ -87,7 +87,6 @@ const DetailPage = () => {
   };
 
   const author = getUser(detailpost[0]?.user._id);
-  // console.log(author);
 
   let relatedPosts = allposts.filter((post) => {
     return (

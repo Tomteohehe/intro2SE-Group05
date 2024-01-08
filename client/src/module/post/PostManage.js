@@ -176,6 +176,7 @@ const PostManage = () => {
           {posts.length > 0 ? (
             <PostTable
               filterposts={currentPageData}
+              sortedPosts={sortedPosts}
               users={alluser}
             ></PostTable>
           ) : (
