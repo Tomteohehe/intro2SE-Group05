@@ -134,11 +134,20 @@ const BlogPage = () => {
             <div className="flex items-center justify-between">
               <Heading>Posts</Heading>
             </div>
-            <div className="grid-layout">
-              {currentPageData?.map((post) => (
-                <PostNewestSmall post={post}></PostNewestSmall>
-              ))}
-            </div>
+            {sortedPosts.length > 0 ? (
+              <div className="grid-layout">
+                {currentPageData?.map((post) => (
+                  <PostNewestSmall post={post}></PostNewestSmall>
+                ))}
+              </div>
+            ) : (
+              <div className="text-lg text-center">
+                <p>
+                  Sorry! There is no title or author corresponding to your
+                  keyword.
+                </p>
+              </div>
+            )}
             <div className="pagination">
               <ReactPaginate
                 previousLabel={"<"}
