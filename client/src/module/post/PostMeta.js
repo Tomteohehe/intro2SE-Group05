@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const PostMetaStyles = styled.div`
@@ -37,6 +38,7 @@ const PostMeta = ({
   post = {},
 }) => {
   const [user, setUser] = useState();
+  const navigate = useNavigate();
 
   const date1 = post?.createdAt?.seconds
     ? new Date(post?.createdAt?.seconds * 1000)
@@ -46,7 +48,9 @@ const PostMeta = ({
     <PostMetaStyles className={className} color={color}>
       <span className="post-time">{date || formatDate}</span>
       <span className="post-dot"></span>
-      <span className="post-author">{authorName || user?.fullname}</span>
+      <span className="post-author" onClick={() => navigate(`/user/${userId}`)}>
+        {authorName || user?.fullname}
+      </span>
     </PostMetaStyles>
   );
 };

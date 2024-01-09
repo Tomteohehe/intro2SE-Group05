@@ -64,8 +64,12 @@ const PostFeatureItem = ({ post }) => {
   const navigate = useNavigate();
 
   return (
-    <PostFeatureItemStyles onClick={() => navigate(`/post/${post._id}`)}>
-      <PostImage url={post?.image} alt="unsplash"></PostImage>
+    <PostFeatureItemStyles>
+      <PostImage
+        url={post?.image}
+        alt="unsplash"
+        to={`/post/${post._id}`}
+      ></PostImage>
       <div className="post-overlay"></div>
       <div className="post-content">
         <div className="post-top">
@@ -73,6 +77,7 @@ const PostFeatureItem = ({ post }) => {
           <PostMeta
             color="inherit"
             authorName={post.user.username}
+            userId={post?.user._id}
             date={post?.date}
           ></PostMeta>
         </div>

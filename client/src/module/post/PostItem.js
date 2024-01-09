@@ -51,17 +51,19 @@ const PostItem = ({ post }) => {
   const truncatedTitle = truncateTitle(post.title, 60);
   const navigate = useNavigate();
   return (
-    <PostItemStyles
-      className="cursor-pointer"
-      onClick={() => {
-        navigate(`/post/${post._id}`);
-        window.location.reload();
-      }}
-    >
-      <PostImage url={post?.image} alt="PostImage"></PostImage>
+    <PostItemStyles className="cursor-pointer">
+      <PostImage
+        url={post?.image}
+        alt="PostImage"
+        to={`/post/${post._id}`}
+      ></PostImage>
       <PostCategory type="secondary">{post?.category}</PostCategory>
       <PostTitle to={`/post/${post._id}`}>{truncatedTitle}</PostTitle>
-      <PostMeta authorName={post.user.username} date={post?.date}></PostMeta>
+      <PostMeta
+        authorName={post?.user.username}
+        userId={post?.user._id}
+        date={post?.date}
+      ></PostMeta>
     </PostItemStyles>
   );
 };

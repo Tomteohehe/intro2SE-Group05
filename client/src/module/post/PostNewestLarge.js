@@ -38,18 +38,16 @@ const PostNewestLarge = () => {
   return (
     <>
       {lastpost.map((post) => (
-        <PostNewestLargeStyles
-          onClick={() => navigate(`/post/${post._id}`)}
-          className="cursor-pointer"
-        >
+        <PostNewestLargeStyles>
           <PostImage
             url={`${
               post.image ||
               `https://images.unsplash.com/photo-1678047471351-84a24c661587?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`
             }`}
             alt=""
+            to={`/post/${post?._id}`}
           ></PostImage>
-          <PostCategory>{post.category}</PostCategory>
+          <PostCategory>{post?.category}</PostCategory>
           <PostTitle
             size="large"
             className="post-title"
@@ -59,8 +57,10 @@ const PostNewestLarge = () => {
           </PostTitle>
           <PostMeta
             color="gray"
-            authorName={post.user.username}
-            date={post.date}
+            authorName={post?.user.username}
+            userId={post?.user._id}
+            date={post?.date}
+            className="cursor-pointer"
           ></PostMeta>
         </PostNewestLargeStyles>
       ))}
