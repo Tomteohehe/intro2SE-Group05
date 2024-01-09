@@ -52,7 +52,7 @@ const PostTable = ({ filterposts, users, isAdmin = false, sortedPosts }) => {
 
   const getUser = (id) => {
     const user = users.filter((u) => {
-      return u._id === id;
+      return u?._id === id;
     });
     return user[0]?.username;
   };
@@ -71,7 +71,7 @@ const PostTable = ({ filterposts, users, isAdmin = false, sortedPosts }) => {
               </td>
               <td>
                 <span className="text-gray-500">
-                  {getUser(post?.user._id) || post?.user.username}
+                  {getUser(post?.user?._id) || post?.user?.username}
                 </span>
               </td>
               <td>
@@ -104,7 +104,7 @@ const PostTable = ({ filterposts, users, isAdmin = false, sortedPosts }) => {
               </td>
               <td>
                 <span className="text-gray-500">
-                  {getUser(post?.user._id) || post?.user.username}
+                  {getUser(post?.user?._id) || post?.user?.username}
                 </span>
               </td>
               <td>
