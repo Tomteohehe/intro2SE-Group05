@@ -107,7 +107,7 @@ const UserInfo = () => {
 
   const getUser = (id) => {
     const user = alluser.filter((u) => {
-      return u._id === id;
+      return u?._id === id;
     });
     return user[0];
   };
@@ -125,14 +125,14 @@ const UserInfo = () => {
   useState(() => getAllPostsOfUser(user_id));
 
   let isFollowed = false;
-  if (user?.following.includes(curUser._id)) isFollowed = true;
+  if (user?.following.includes(curUser?._id)) isFollowed = true;
 
   const navigate = useNavigate();
   const location = useLocation();
   const handleOnClickFollow = async () => {
     if (user) {
-      const followingId = curUser._id;
-      const followerId = user._id;
+      const followingId = curUser?._id;
+      const followerId = user?._id;
       const id = { followingId, followerId };
       const response = await followUser(id);
       if (response.success) {
@@ -146,8 +146,8 @@ const UserInfo = () => {
   };
 
   const handleOnClickUnfollow = async () => {
-    const followingId = curUser._id;
-    const followerId = user._id;
+    const followingId = curUser?._id;
+    const followerId = user?._id;
     const id = { followingId, followerId };
     const response = await unfollowUser(id);
     if (response.success) {
