@@ -57,8 +57,8 @@ const PostNewestLarge = () => {
           </PostTitle>
           <PostMeta
             color="gray"
-            authorName={post?.user.username}
-            userId={post?.user._id}
+            authorName={post?.user?.username}
+            userId={post?.user?._id}
             date={post?.date}
             className="cursor-pointer"
           ></PostMeta>

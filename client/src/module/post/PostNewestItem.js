@@ -78,7 +78,7 @@ const PostNewestItem = () => {
           ></PostImage>
           <div className="post-content">
             <PostCategory type="secondary">{post.category}</PostCategory>
-            <PostTitle to={`/post/${post._id}`} size="normal">
+            <PostTitle to={`/post/${post?._id}`} size="normal">
               {post.title}
             </PostTitle>
             <PostMeta
