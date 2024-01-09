@@ -68,7 +68,7 @@ const PostFeatureItem = ({ post }) => {
       <PostImage
         url={post?.image}
         alt="unsplash"
-        to={`/post/${post._id}`}
+        to={`/post/${post?._id}`}
       ></PostImage>
       <div className="post-overlay"></div>
       <div className="post-content">
@@ -76,12 +76,12 @@ const PostFeatureItem = ({ post }) => {
           <PostCategory>{post?.category}</PostCategory>
           <PostMeta
             color="inherit"
-            authorName={post.user.username}
+            authorName={post?.user.username}
             userId={post?.user._id}
             date={post?.date}
           ></PostMeta>
         </div>
-        <PostTitle size="large" to={`/post/${post._id}`}>
+        <PostTitle size="large" to={`/post/${post?._id}`}>
           {truncatedTitle}
         </PostTitle>
       </div>

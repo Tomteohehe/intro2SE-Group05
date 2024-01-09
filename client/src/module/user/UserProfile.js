@@ -10,14 +10,21 @@ import InputPasswordToggle from "components/input/InputPasswordToggle";
 import TextArea from "components/input/TextArea";
 import { authContext } from "contexts/authContext";
 import CloudinaryUploader from "components/image/CloudinaryUploader";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  password: yup.string().min(8, "Password must be at least 8 characters"),
+});
 
 const UserProfile = () => {
   const {
     control,
     handleSubmit,
-    formState: { isValid, isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
+    resolver: yupResolver(schema),
   });
 
   const {
@@ -32,8 +39,11 @@ const UserProfile = () => {
     let avatar;
     let { username, email, contact, password, textarea } = values;
     username = username == undefined ? user.username : username;
+    username = username == "" ? user.username : username;
     password = password == undefined ? user.password : password;
+    password = password == "" ? user.password : password;
     email = email == undefined ? user.email : email;
+    email = email == "" ? user.email : email;
     contact = contact == undefined ? user.contact : contact;
     avatar = url == undefined ? user.avatar : url;
     const description = textarea !== "" ? textarea : user.description;
@@ -54,9 +64,16 @@ const UserProfile = () => {
         toast.error(updateData["message"]);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(["message"]);
     }
   };
+
+  useEffect(() => {
+    const arrErrors = Object.values(errors);
+    if (arrErrors.length > 0) {
+      toast.error(arrErrors[0]?.message);
+    }
+  }, [errors]);
 
   function handleOnUpload(error, result, widget) {
     if (error) {

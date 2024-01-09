@@ -48,7 +48,13 @@ const PostMeta = ({
     <PostMetaStyles className={className} color={color}>
       <span className="post-time">{date || formatDate}</span>
       <span className="post-dot"></span>
-      <span className="post-author" onClick={() => navigate(`/user/${userId}`)}>
+      <span
+        className="post-author"
+        onClick={() => {
+          navigate(`/user/${userId}`);
+          window.location.reload();
+        }}
+      >
         {authorName || user?.fullname}
       </span>
     </PostMetaStyles>

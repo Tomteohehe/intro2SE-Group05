@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { Label } from "../components/label";
 import { useForm } from "react-hook-form";
 import Input from "../components/input/Input";
 import { Field } from "../components/field";
 import { Button } from "../components/button";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -25,16 +25,15 @@ const schema = yup.object({
 });
 
 const SignUpPage = () => {
-  const navigate = useNavigate();
   const { registerUser } = useContext(authContext);
 
   const {
     control,
     handleSubmit,
-    formState: { isValid, isSubmitting, errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
-    // resolver: yupResolver(schema),
+    resolver: yupResolver(schema),
   });
 
   const handleSignUp = async (values) => {
