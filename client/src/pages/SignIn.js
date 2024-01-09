@@ -9,19 +9,6 @@ import AuthenticationPage from "./AuthenticationPage";
 import { toast } from "react-toastify";
 import InputPasswordToggle from "../components/input/InputPasswordToggle";
 import { authContext } from "../contexts/authContext";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-
-const schema = yup.object({
-  username: yup
-    .string()
-    .email("Your username is not valid!")
-    .required("Please enter your username"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Please enter your password"),
-});
 
 const SignInPage = () => {
   const { loginUser } = useContext(authContext);
@@ -34,7 +21,6 @@ const SignInPage = () => {
     formState: { isSubmitting, errors },
   } = useForm({
     mode: "onChange",
-    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
